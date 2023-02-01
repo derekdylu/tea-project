@@ -1,0 +1,69 @@
+.container {
+    margin: 0;
+    height: 200vh;
+    width: 100vw;
+    background-color: var(--sky-color);
+}
+
+.section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: gray;
+}
+
+.panel {
+    height: 80vh;
+    background-color: pink;
+}
+
+.frontGrass {
+    position: fixed;
+    z-index: 5;
+    width: 100%;
+    bottom: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.hand {
+    position: fixed;
+    z-index: 4;
+    width: 40%;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.backGrass {
+    position: fixed;
+    z-index: 3;
+    width: 100%;
+    bottom: 18%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.logo {
+    position: fixed;
+    z-index: 2;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75vw;
+    // transition: all 1s ease-in-out;
+}
+
+.mountain {
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    top: 20%;
+}
+
+.cloud {
+    position: fixed;
+    z-index: 0;
+    width: 100%;
+    top: 4%;
+}
