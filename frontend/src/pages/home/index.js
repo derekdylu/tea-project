@@ -47,7 +47,6 @@ export const Home = ({}) => {
               <div className={`${styles.circleRight} ${second ? styles.target : ""}`} />
             </div>
             <div className={`${styles.squareCutOut} ${second ? styles.target : ""}`} />
-            {/* <div className={styles.squareCutOut} /> */}
           </div>
           <div className={`${styles.intro} ${second ? styles.target : ""}`}>
             <div className={styles.title}>
