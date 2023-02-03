@@ -13,6 +13,8 @@ import { ReactComponent as MountainLeft } from "../../images/home/mountainLeft.s
 import { ReactComponent as MountainRight } from "../../images/home/mountainRight.svg";
 import styles from "./styles.module.scss";
 
+import { NavBar } from "../navBar";
+
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
@@ -114,8 +116,8 @@ export const Home = ({}) => {
 
   return (
     <div id="container" className={styles.container}>
+      <NavBar hideLogo={!second} />
       <div id="trigger" className={styles.trigger} />
-
       <div className={`${styles.background} ${second ? styles.target : ""}`}>
         <CloudLeft id="cloudLeft" className={styles.cloud} />
         <CloudRight id="cloudRight" className={styles.cloud} />
