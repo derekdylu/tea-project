@@ -1,0 +1,44 @@
+@import "../../variable.scss";
+
+.container {
+    position: fixed;
+    z-index: 100;
+    width: 100vw;
+    padding: 1.5rem 1rem 1.5rem 1.5rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    height: 2rem;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+
+    > * {
+        height: 100%;
+    }
+
+    &.hidden {
+        opacity: 0;
+    }
+}
+
+.left {
+    display: flex;
+    flex-direction: row;
+
+    .sound {
+        > path {
+            transition: all 2s ease;
+        }
+    }
+
+    > svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin: 0.5rem;
+    }
+}
