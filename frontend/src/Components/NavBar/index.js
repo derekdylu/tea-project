@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import { ReactComponent as Logo } from "../../images/logo.svg";
-import { ReactComponent as SoundOn } from "../../images/navBar/sound_on.svg";
-import { ReactComponent as SoundOff } from "../../images/navBar/sound_off.svg";
-import { ReactComponent as Menu } from "../../images/navBar/menu.svg";
+import { ReactComponent as Logo } from "../../Images/logo.svg";
+import { ReactComponent as SoundOn } from "../../Images/NavBar/sound_on.svg";
+import { ReactComponent as SoundOff } from "../../Images/NavBar/sound_off.svg";
+import { ReactComponent as Menu } from "../../Images/NavBar/menu.svg";
 import styles from "./styles.module.scss";
 
 export const NavBar = ({

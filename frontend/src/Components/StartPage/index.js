@@ -1,30 +1,28 @@
 import React, { useRef, useState, useEffect } from "react";
-import { ReactComponent as Logo } from "../../images/logo.svg";
-import { ReactComponent as Hand } from "../../images/home/hand.svg";
-import { ReactComponent as FrontCenter } from "../../images/home/frontCenter.svg";
-import { ReactComponent as FrontLeft } from "../../images/home/frontLeft.svg";
-import { ReactComponent as FrontRight } from "../../images/home/frontRight.svg";
-import { ReactComponent as BackCenter } from "../../images/home/backCenter.svg";
-import { ReactComponent as BackLeft } from "../../images/home/backLeft.svg";
-import { ReactComponent as BackRight } from "../../images/home/backRight.svg";
-import { ReactComponent as CloudLeft } from "../../images/home/cloudLeft.svg";
-import { ReactComponent as CloudRight } from "../../images/home/cloudRight.svg";
-import { ReactComponent as MountainLeft } from "../../images/home/mountainLeft.svg";
-import { ReactComponent as MountainRight } from "../../images/home/mountainRight.svg";
+import { ReactComponent as Logo } from "../../Images/logo.svg";
+import { ReactComponent as Hand } from "../../Images/Home/hand.svg";
+import { ReactComponent as FrontCenter } from "../../Images/Home/frontCenter.svg";
+import { ReactComponent as FrontLeft } from "../../Images/Home/frontLeft.svg";
+import { ReactComponent as FrontRight } from "../../Images/Home/frontRight.svg";
+import { ReactComponent as BackCenter } from "../../Images/Home/backCenter.svg";
+import { ReactComponent as BackLeft } from "../../Images/Home/backLeft.svg";
+import { ReactComponent as BackRight } from "../../Images/Home/backRight.svg";
+import { ReactComponent as CloudLeft } from "../../Images/Home/cloudLeft.svg";
+import { ReactComponent as CloudRight } from "../../Images/Home/cloudRight.svg";
+import { ReactComponent as MountainLeft } from "../../Images/Home/mountainLeft.svg";
+import { ReactComponent as MountainRight } from "../../Images/Home/mountainRight.svg";
 import styles from "./styles.module.scss";
 
-import { NavBar } from "../navBar";
+import { NavBar } from "../NavBar";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ ignoreMobileResize: true });
-// ScrollTrigger.normalizeScroll(true);
 
-export const Home = ({}) => {
+export const StartPage = ({}) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-  const handRef = useRef(null);
   const [second, setSecond] = useState(false);
 
   const content = [
