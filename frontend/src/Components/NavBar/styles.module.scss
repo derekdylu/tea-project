@@ -13,6 +13,7 @@
 }
 
 .logo {
+    z-index: 101;
     height: 2rem;
     opacity: 1;
     transition: opacity 0.3s ease;
@@ -27,6 +28,7 @@
 }
 
 .left {
+    z-index: 101;
     display: flex;
     flex-direction: row;
 
@@ -41,4 +43,78 @@
         height: 1.5rem;
         margin: 0.5rem;
     }
+}
+
+.burger {
+    stroke-width: 2px;
+    stroke: var(--text-color);
+
+    .top {
+        transform: translateY(-22%);
+        transition: all 0.5s ease-out;
+
+        &.opened {
+            transform: rotate(45deg);
+            transform-origin: center;
+        }
+    }
+
+    .middle {
+        transition: all 0.5s ease-out;
+
+        &.opened {
+            transform: scaleX(0.1);
+            transform-origin: center;
+        }
+    }
+
+    .bottom {
+        transform: translateY(22%);
+        transition: all 0.5s ease-out;
+
+        &.opened {
+            transform: rotate(-45deg);
+            transform-origin: center;
+        }
+    }
+}
+
+.menu {
+    background-color: var(--surface-variant-color);
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-radius: 0 0 0 99%;
+
+    .rowContainer {
+        z-index: 102;
+        width: 100vw;
+        padding: 0 1.5rem;
+        box-sizing: border-box;
+        position: absolute;
+        top: 65%;
+        left: 100%;
+    }
+
+    .row {
+        width: 100%;
+        padding: 1.5rem 0;
+        box-sizing: border-box;
+        border-bottom: solid 1px var(--border-variant-color);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.grass {
+    position: absolute;
+    z-index: 101;
+    left: -5%;
+    top: 100%;
+    width: 138%;
+    opacity: 0;
 }
