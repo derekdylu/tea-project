@@ -1,4 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { NavBar } from "../NavBar";
+
 import { ReactComponent as Logo } from "../../Images/logo.svg";
 import { ReactComponent as Hand } from "../../Images/Home/hand.svg";
 import { ReactComponent as FrontCenter } from "../../Images/Home/frontCenter.svg";
@@ -13,7 +15,9 @@ import { ReactComponent as MountainLeft } from "../../Images/Home/mountainLeft.s
 import { ReactComponent as MountainRight } from "../../Images/Home/mountainRight.svg";
 import styles from "./styles.module.scss";
 
-import { NavBar } from "../NavBar";
+import { ThemeProvider } from "@emotion/react";
+import { Typography } from "@mui/material";
+import theme from "../../Themes/Theme";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -97,15 +101,9 @@ export const StartPage = ({}) => {
   }, []);
 
   const handleOnScroll = () => {
-    // let percentage = window.pageYOffset / window.innerHeight;
+    let percentage = window.pageYOffset / window.innerHeight;
     // console.log(percentage);
-    // if (percentage >= 1.5) {
-    //   setSecond(true);
-    // } else {
-    //   setSecond(false);
-    // }
-
-    if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 10) {
+    if (percentage >= 1.5) {
       setSecond(true);
     } else {
       setSecond(false);
@@ -113,43 +111,55 @@ export const StartPage = ({}) => {
   }
 
   return (
-    <div id="container" className={styles.container}>
-      <NavBar hideLogo={!second} />
-      <div id="trigger" className={styles.trigger} />
-      <div className={`${styles.background} ${second ? styles.target : ""}`}>
-        <CloudLeft id="cloudLeft" className={styles.cloud} />
-        <CloudRight id="cloudRight" className={styles.cloud} />
-        <MountainLeft id="mountainLeft" className={`${styles.mountain} ${styles.left}`} />
-        <MountainRight id="mountainRight" className={`${styles.mountain} ${styles.right}`} />
-        <Logo id="logo" className={styles.logo} />
-        <BackLeft id="backLeft" className={`${styles.back} ${styles.left}`} />
-        <BackRight id="backRight" className={`${styles.back} ${styles.right}`} />
-        <BackCenter id="backCenter" className={`${styles.back} ${styles.center}`} />
-        <Hand id="hand" className={styles.hand} />
-        <FrontLeft id="frontLeft" className={`${styles.front} ${styles.left}`} />
-        <FrontRight id="frontRight" className={`${styles.front} ${styles.right}`} />
-        <FrontCenter id="frontCenter" className={`${styles.front} ${styles.center}`} />
-      </div>
-
-      <div className={styles.cutOutContainer}>
-        <div className={`${styles.circleCutOut} ${second ? styles.target : ""}`}>
-          <div className={`${styles.circleLeft} ${second ? styles.target : ""}`} />
-          <div className={`${styles.circleCenter} ${second ? styles.target : ""}`} />
-          <div className={`${styles.circleRight} ${second ? styles.target : ""}`} />
+    <ThemeProvider theme={theme}>
+      <NavBar defaultHideLogo={!second} />
+      <div id="container" className={styles.container}>
+        <div id="trigger" className={styles.trigger} />
+        <div className={`${styles.background} ${second ? styles.target : ""}`}>
+          <CloudLeft id="cloudLeft" className={styles.cloud} />
+          <CloudRight id="cloudRight" className={styles.cloud} />
+          <MountainLeft id="mountainLeft" className={`${styles.mountain} ${styles.left}`} />
+          <MountainRight id="mountainRight" className={`${styles.mountain} ${styles.right}`} />
+          <Logo id="logo" className={styles.logo} />
+          <BackLeft id="backLeft" className={`${styles.back} ${styles.left}`} />
+          <BackRight id="backRight" className={`${styles.back} ${styles.right}`} />
+          <BackCenter id="backCenter" className={`${styles.back} ${styles.center}`} />
+          <Hand id="hand" className={styles.hand} />
+          <FrontLeft id="frontLeft" className={`${styles.front} ${styles.left}`} />
+          <FrontRight id="frontRight" className={`${styles.front} ${styles.right}`} />
+          <FrontCenter id="frontCenter" className={`${styles.front} ${styles.center}`} />
         </div>
-        <div className={`${styles.squareCutOut} ${second ? styles.target : ""}`} />
-      </div>
 
-      <div className={`${styles.intro} ${second ? styles.target : ""}`}>
-        <div className={styles.title}>
-          你喝茶嗎？
-        </div>
-        { content.map((text, i) =>
-          <div key={i} className={styles.text}>
-            { text }
+        <div className={styles.cutOutContainer}>
+          <div className={`${styles.circleCutOut} ${second ? styles.target : ""}`}>
+            <div className={`${styles.circleLeft} ${second ? styles.target : ""}`} />
+            <div className={`${styles.circleCenter} ${second ? styles.target : ""}`} />
+            <div className={`${styles.circleRight} ${second ? styles.target : ""}`} />
           </div>
-        )}
+          <div className={`${styles.squareCutOut} ${second ? styles.target : ""}`} />
+        </div>
+
+        <div className={`${styles.intro} ${second ? styles.target : ""}`}>
+          <div className={styles.text}>
+            <Typography variant="displaySmall" color={theme.palette.background.contrastText} className={styles.title}>
+              你喝茶嗎？
+            </Typography>
+            { content.map((text, i) =>
+              <Typography key={i} variant="bodyLarge" color={theme.palette.background.contrastText} className={styles.body}>
+                { text }
+              </Typography>
+            )}
+          </div>
+
+          <button className={styles.button}>
+            <Typography variant="labelLarge" color={theme.palette.background.contrastText}>
+              開始探索
+            </Typography>
+          </button>
+        </div>
+
+        
       </div>
-    </div>
+    </ThemeProvider>
   )
 }
