@@ -1,22 +1,68 @@
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import Game from './Containers/Game'
+import Error from './Containers/Error'
+
+import useWindowDimensions from './Hooks/useWindowDimensions';
+
+import Dialog from '@mui/material/Dialog';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
 function App() {
+  const { width, height, ratio } = useWindowDimensions()
+  const [open, setOpen] = useState(false);
+  const [narrow, setNarrow] = useState(false);
+
+  useEffect(() => {
+    
+    if (width < 320) {
+      setNarrow(true)
+      setOpen(true)
+      return
+    } else {
+      if (ratio > 1) {
+        setNarrow(false)
+        setOpen(true)
+        return
+      } else {
+        setNarrow(false)
+        setOpen(false)
+        return
+      }
+    }
+  }, [ratio])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Dialog aria-labelledby="window-size" open={open} fullScreen>
+          <Grid container direction="column" alignItems="center" justifyContent="center" sx={{ my: 1 }} height="100%">
+            {
+              narrow ?
+              (
+                <Typography variant="body2" color="#2D3748" fontWeight="500" sx={{mt: 2.5}} align="center">
+                  最小螢幕寬度 320 px
+                </Typography>
+              ):(
+                <>
+                  <Typography variant="h6" color="#2D3748" fontWeight="700" sx={{mt: 2.5}} align="center">
+                    豎直手機螢幕或瀏覽器視窗以享受最佳遊戲體驗
+                  </Typography>
+                </>
+              )
+            }
+          </Grid>
+        </Dialog>
+        <Router>
+          <Routes>
+
+            <Route path="/game" element={<Game />} forceRefresh={true} />
+            <Route path="*" element={<Error />} />
+
+          </Routes>
+        </Router>
+    </>
   );
 }
 
