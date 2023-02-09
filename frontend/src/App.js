@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { StartPage } from "./Components/StartPage";
 import { Live } from "./Containers/Live";
 import { Anim } from "./Containers/Anim";
+import { Map } from "./Containers/Map";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path="/start" element={ <StartPage/> } />
           <Route path="/live" element={ <Live/> } />
           <Route path="/anim" element={ <Anim/> } />
+          <Route path="/map" element={ <Map/> } />
         </Routes>
       </BrowserRouter>
     </div>

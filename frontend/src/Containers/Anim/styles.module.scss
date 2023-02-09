@@ -1,0 +1,78 @@
+.background {
+    height: 100vh;
+    width: 100vw;
+    // background-color: var(--background-color);
+}
+
+.video {
+    position: fixed;
+    width: 100%;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    position: fixed;
+    z-index: 100;
+    color: var(--text-color)
+}
+
+.section {
+    height: 100vh;
+    width: 100vw;
+    scroll-snap-align: start;
+    position: relative;
+
+    > div {
+        position: absolute;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        text-align: justify;
+        transition: all 2s ease-in-out;
+        background-color: var(--background-color);
+        
+        > svg {
+            width: 20px;
+            height: 16px;
+            stroke-width: 2px;
+            stroke: var(--border-color);
+        }
+    }
+    
+    .first {
+        padding-right: 1.5rem;
+        width: 60%;
+        bottom: 15%;
+        right: 0;
+        opacity: 1;
+    }
+
+    .second {
+        padding-right: 1.5rem;
+        width: 60%;
+        bottom: 15%;
+        right: 0;
+        opacity: 0;
+    }
+
+    .third {
+        padding-left: 1.5rem;
+        width: 60%;
+        top: 15%;
+        left: 0;
+        opacity: 0;
+    }
+
+    .fourth {
+        padding: 0 1.5rem;
+        width: 100%;
+        bottom: 10%;
+        left: 0;
+        opacity: 0;
+    }
+}

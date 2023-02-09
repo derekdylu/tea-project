@@ -13,9 +13,6 @@ import theme from "../../Themes/Theme";
 
 import styles from "./styles.module.scss";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
-ScrollTrigger.config({ ignoreMobileResize: true });
 
 export const NavBar = ({
   defaultHideLogo = false,
