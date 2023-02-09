@@ -13,6 +13,7 @@ import Error from './Containers/Error'
 import { StartPage } from "./Components/StartPage";
 import { Live } from "./Containers/Live";
 import { Anim } from "./Containers/Anim";
+import { Map } from "./Containers/Map";
 
 function App() {
   const { width, height, ratio } = useWindowDimensions()
@@ -69,6 +70,7 @@ function App() {
             <Route path="/start" element={ <StartPage/> } />
             <Route path="/live" element={ <Live/> } />
             <Route path="/anim" element={ <Anim/> } />
+            <Route path="/map" element={ <Map/> } />
 
           </Routes>
         </Router>
