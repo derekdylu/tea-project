@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import GameContainer from './Containers/GameContainer'
-import Error from './Containers/Error'
-
 import useWindowDimensions from './Hooks/useWindowDimensions';
 
 import Dialog from '@mui/material/Dialog';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+
+import GameContainer from './Containers/GameContainer'
+import Error from './Containers/Error'
+
+import { StartPage } from "./Components/StartPage";
+import { Live } from "./Containers/Live";
+import { Anim } from "./Containers/Anim";
 
 function App() {
   const { width, height, ratio } = useWindowDimensions()
@@ -36,6 +40,7 @@ function App() {
 
   return (
     <div>
+    {/* TODO page for bigger screen doesn't need this vertical restriction */}
       <Dialog aria-labelledby="window-size" open={open} fullScreen>
           <Grid container direction="column" alignItems="center" justifyContent="center" sx={{ my: 1 }} height="100%">
             {
@@ -59,6 +64,11 @@ function App() {
 
             <Route path="/game" element={<GameContainer />} forceRefresh={true} />
             <Route path="*" element={<Error />} />
+
+            <Route path="/" element={ <StartPage/> } />
+            <Route path="/start" element={ <StartPage/> } />
+            <Route path="/live" element={ <Live/> } />
+            <Route path="/anim" element={ <Anim/> } />
 
           </Routes>
         </Router>
