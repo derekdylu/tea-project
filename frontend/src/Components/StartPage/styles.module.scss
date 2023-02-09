@@ -1,0 +1,248 @@
+@import "../../variable.scss";
+
+.container {
+    margin: 0;
+    height: 265vh; // 250
+    width: 100vw;
+    background-color: var(--sky-color);
+}
+
+.trigger {
+    position: fixed;
+    z-index: 0;
+    width: 1px;
+    height: 1px;
+    background-color: transparent;
+    bottom: -50%;
+}
+
+.background {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0%;
+    left: 0%;
+    background-color: var(--sky-color);
+    // overflow: visible;
+    transition: all 1.5s ease;
+
+    &.target {
+        width: 95vw;
+        height: 95vh;
+        top: 13%;
+        left: 16%;
+    }
+}
+
+.front {
+    position: absolute;
+    width: 100%;
+    
+    &.center {
+        z-index: 10;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    &.right {
+        z-index: 8;
+        top: 45%;
+        right: 0%;
+    }
+    
+    &.left {
+        z-index: 9;
+        top: 45%;
+        left: 0%;
+    }
+}
+
+.hand {
+    position: absolute;
+    z-index: 6;
+    width: 100%;
+    top: 90%;
+}
+
+.back {
+    position: absolute;
+    width: 100%;
+
+    &.left {
+        top: 45%;
+        z-index: 7;
+        right: 0%;
+    }
+    
+    &.right {
+        top: 55%;
+        z-index: 5;
+        right: 0%;
+    }
+
+    &.center {
+        z-index: 4;
+        top: 45%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+.logo {
+    position: absolute;
+    z-index: 3;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 72%;
+    opacity: 1;
+}
+
+.mountain {
+    position: absolute;
+    width: 100%;
+    top: 28%;
+
+    &.left {
+        z-index: 1;
+    }
+
+    &.right {
+        z-index: 2;
+    }
+}
+
+.cloud {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    top: 6%;
+}
+
+.cutOutContainer {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    z-index: 11;
+    display: flex;
+    flex-direction: column;
+}
+
+.circleCutOut {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    transition: all 1.5s ease;
+
+    &.target {
+        height: 70%;
+    }
+}
+
+.circleLeft {
+    width: 0%;
+    height: 100%;
+    background-color: var(--background-color);
+    transition: all 1.5s ease;
+
+    &.target {
+        width: 45%;
+    }
+}
+
+.circleRight {
+    width: 0%;
+    height: 100%;
+    background-color: var(--background-color);
+    transition: all 1.5s ease;
+
+    &.target {
+        width: 10%;
+    }
+}
+
+.circleCenter{
+    width: 100%;
+    height: 0%;
+    position: relative;
+    overflow: hidden;
+    transition: all 1.5s ease;
+    
+    &.target {
+        width: 80%;
+        height: 50%;
+    }
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        box-shadow: 0px 300px 0px 600px var(--background-color);
+    }
+}
+
+.squareCutOut {
+    width: 100%;
+    height: 0%;
+    background-color: var(--background-color);
+    transition: all 1.5s ease;
+
+    &.target {
+        height: 30%;
+    }
+}
+
+.intro {
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 1rem 1.5rem;
+    position: fixed;
+    top: 100%;
+    left: 0%;
+    z-index: 11;
+    transition: all 0.8s ease-out 0.5s;
+
+    .text {
+        width: 70%;
+        margin-bottom: 5rem;
+        background-color: var(--background-color);
+        padding: 0.5rem 0;
+
+        .title {
+            display: block;
+            padding-bottom: 0.5rem;
+            // border-bottom: 1px solid var(--neutralVariant-color-50);
+        }
+    
+        .body {
+            display: block;
+            width: 100%;
+            // text-align: justify;
+            margin-top: 0.5rem;
+        }
+    }
+
+    &.target {
+        // top: calc(100% - 370px);
+        position: relative;
+        top: calc(220.5vh);
+    }
+
+    
+}
+
+.button {
+    width: 100%;
+    background-color: var(--background-color);
+    padding: 0.5rem 0;
+    border: solid 1px var(--border-color);
+    border-radius: 100px;
+}
