@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Game from './Containers/Game'
+import GameContainer from './Containers/GameContainer'
 import Error from './Containers/Error'
 
 import useWindowDimensions from './Hooks/useWindowDimensions';
@@ -35,7 +35,7 @@ function App() {
   }, [ratio])
 
   return (
-    <>
+    <div>
       <Dialog aria-labelledby="window-size" open={open} fullScreen>
           <Grid container direction="column" alignItems="center" justifyContent="center" sx={{ my: 1 }} height="100%">
             {
@@ -57,12 +57,12 @@ function App() {
         <Router>
           <Routes>
 
-            <Route path="/game" element={<Game />} forceRefresh={true} />
+            <Route path="/game" element={<GameContainer />} forceRefresh={true} />
             <Route path="*" element={<Error />} />
 
           </Routes>
         </Router>
-    </>
+    </div>
   );
 }
 
