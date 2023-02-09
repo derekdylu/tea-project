@@ -100,7 +100,7 @@ export const StartPage = ({}) => {
     })
   }, []);
 
-  const handleOnScroll = () => {
+  const handleOnScroll = (e) => {
     let percentage = window.pageYOffset / window.innerHeight;
     // console.log(percentage);
     if (percentage >= 1.5) {
@@ -113,7 +113,7 @@ export const StartPage = ({}) => {
   return (
     <ThemeProvider theme={theme}>
       <NavBar defaultHideLogo={!second} />
-      <div id="container" className={styles.container}>
+      <div id="container" className={styles.container} onScroll={(e) => handleOnScroll(e)}>
         <div id="trigger" className={styles.trigger} />
         <div className={`${styles.background} ${second ? styles.target : ""}`}>
           <CloudLeft id="cloudLeft" className={styles.cloud} />
@@ -141,11 +141,14 @@ export const StartPage = ({}) => {
 
         <div className={`${styles.intro} ${second ? styles.target : ""}`}>
           <div className={styles.text}>
-            <Typography variant="displaySmall" color={theme.palette.background.contrastText} className={styles.title}>
+            <Typography variant="displaySmall" color={theme.palette.background.contrastText}>
               你喝茶嗎？
             </Typography>
+            <svg>
+              <line x1="0%" y1="50%" x2="100%" y2="50%" />
+            </svg>
             { content.map((text, i) =>
-              <Typography key={i} variant="bodyLarge" color={theme.palette.background.contrastText} className={styles.body}>
+              <Typography key={i} variant="bodyLarge" color={theme.palette.background.contrastText}>
                 { text }
               </Typography>
             )}
