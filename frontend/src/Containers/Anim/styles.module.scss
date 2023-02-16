@@ -1,7 +1,8 @@
 .background {
     height: 100vh;
     width: 100vw;
-    // background-color: var(--background-color);
+    overflow-x: hidden;
+    background: linear-gradient(0deg, rgba(95, 98, 0, 0.14), rgba(95, 98, 0, 0.14)), #FEFCF4;
 }
 
 .video {
@@ -20,6 +21,7 @@
 }
 
 .section {
+    overflow-x: hidden;
     height: 100vh;
     width: 100vw;
     scroll-snap-align: start;
@@ -34,7 +36,7 @@
         gap: 0.5rem;
         text-align: justify;
         transition: all 2s ease-in-out;
-        background-color: var(--background-color);
+        // background-color: var(--background-color);
         
         > svg {
             width: 20px;
@@ -45,11 +47,22 @@
     }
     
     .first {
-        padding-right: 1.5rem;
-        width: 60%;
-        bottom: 15%;
-        right: 0;
+        padding: 0 1.5rem;
+        width: 100%;
+        bottom: 30%;
+        left: 0;
         opacity: 1;
+
+        .title {
+            max-width: 60%;
+            text-align: left !important;
+        }
+
+        .body {
+            position: relative;
+            left: 50%;
+            width: 50%;
+        }
     }
 
     .second {
@@ -57,7 +70,7 @@
         width: 60%;
         bottom: 15%;
         right: 0;
-        opacity: 0;
+        opacity: 1;
     }
 
     .third {
@@ -65,7 +78,7 @@
         width: 60%;
         top: 15%;
         left: 0;
-        opacity: 0;
+        opacity: 1;
     }
 
     .fourth {
@@ -73,6 +86,24 @@
         width: 100%;
         bottom: 10%;
         left: 0;
-        opacity: 0;
+        opacity: 1;
+        z-index: 202;
+    }
+}
+
+.nonVideoSection {
+    padding: 4rem 0;
+    // height: 100vh;
+    width: 100vw;
+    scroll-snap-align: start;
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .scrollingText {
+        margin-bottom: 4rem;
+        overflow: hidden;
     }
 }

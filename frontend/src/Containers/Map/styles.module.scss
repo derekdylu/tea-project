@@ -1,12 +1,12 @@
 .background {
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(0deg, rgba(95, 98, 0, 0.14), rgba(95, 98, 0, 0.14)), #FEFCF4;;
+    // background: linear-gradient(0deg, rgba(95, 98, 0, 0.14), rgba(95, 98, 0, 0.14)), #FEFCF4;;
 }
 
 .container {
     width: 100%;
-    position: fixed;
+    position: absolute;
     left: -100%;
     top: 70%;
     // left: 50%;
