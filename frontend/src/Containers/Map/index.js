@@ -16,10 +16,10 @@ export const Map = ({}) => {
     const mapTl = gsap.timeline();
 
     mapTl.to("#map", {left: "0%", top: "50%", y: "-50%", duration: 3, ease: "sine.inOut"})
-         .to("#circle", {opacity: 1, duration: 0.3, ease: "sine.inOut"})
-         .to("#line", {width: "100%", duration: 0.4, ease: "sine.inOut"})
-         .to("#text", {opacity: 1, duration: 0.3, ease: "sine.inOut"})
-         .to("#map", {left: "15%", top: "15%", y: "0", duration: 2, ease: "sine.inOut" })
+        .to("#circle", {opacity: 1, duration: 0.3, ease: "sine.inOut"})
+        .to("#line", {width: "100%", duration: 0.4, ease: "sine.inOut"})
+        .to("#text", {opacity: 1, duration: 0.3, ease: "sine.inOut"})
+        .to("#map", {left: "15%", top: "10%", y: "0", duration: 2, ease: "sine.inOut" })
         //  .to("#line", {})
   }, []);
 

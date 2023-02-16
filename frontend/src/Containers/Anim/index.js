@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
+import { Food } from "../../Components/Food";
+import { Map } from "../Map";
 import styles from "./styles.module.scss";
 
 import { ThemeProvider } from "@emotion/react";
 import { Typography } from "@mui/material";
 import theme from "../../Themes/Theme";
-import { elementTypeAcceptingRef } from "@mui/utils";
+import Marquee from "react-fast-marquee";
 
 export const Anim = ({
 
@@ -12,7 +14,7 @@ export const Anim = ({
   const selfScroll = true;
   const videoRef = useRef();
   const [prevPosition, setPrevPosition] = useState(0);
-  const [source, setSource] = useState("videos/test_v1.mp4");
+  const [source, setSource] = useState("videos/noBg.webm");
   const [fastFwd, setFastFwd] = useState({
     element: null,
     isSeeking: false,
@@ -25,9 +27,9 @@ export const Anim = ({
   const contents = [
     {
       id: "first",
-      title: "與你最香配",
+      title: "碧螺春綠茶",
       body: [
-        "碧螺春綠茶為不發酵茶，在臺茶風味輪中隸屬於臺灣綠茶。傳統綠茶製造過程不經過萎凋及攪拌的程序，雖為炒菁綠茶，但農友在生產時常會攤放靜置茶菁數小時，以改善茶葉的風味。",
+        "碧螺春綠茶為不發酵茶，在臺茶風味輪中隸屬於臺灣綠茶。",
       ],
       start: 0,
       end: 8
@@ -62,98 +64,109 @@ export const Anim = ({
     }
   ]
 
+  const foodData = [
+    {
+      shop: "甘樂文創",
+      name: "碧螺春綠茶磅蛋糕",
+      desc: "嚴選在地碧螺春茶葉製成，口感紮實，茶香濃郁，全新配方還加入滿滿的碧螺春內餡，一口咬下紮實的蛋糕體中，品嚐的到濕潤香厚且綿密的餡雙重口感~",
+      link: "http://www.google.com",
+    },
+    {
+      shop: "甘樂文創",
+      name: "碧螺春綠茶磅蛋糕",
+      desc: "嚴選在地碧螺春茶葉製成，口感紮實，茶香濃郁，全新配方還加入滿滿的碧螺春內餡，一口咬下紮實的蛋糕體中，品嚐的到濕潤香厚且綿密的餡雙重口感~",
+      link: "http://www.google.com",
+    }
+  ]
+
   useEffect(() => {    
     videoRef.current?.load();
   }, [source]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      let video = document.getElementById("video");
-      if (fastFwd.isSeeking) {
-        if (fastFwd.reverse === true) {
-          if(video.currentTime <= fastFwd.endTime + 0.3){
-            fastFwd.element.style.opacity = 1;
-            video.playbackRate = 1;
-            setSource(fastFwd.nextSource);
-            setFastFwd({...fastFwd, isSeeking: false});
-          }
-          else {
-            video.currentTime += -0.2;
-          }
-        }
+    // const interval = setInterval(() => {
+    //   let video = document.getElementById("video");
+    //   if (fastFwd.isSeeking) {
+    //     if (fastFwd.reverse === true) {
+    //       if(video.currentTime <= fastFwd.endTime + 0.3){
+    //         fastFwd.element.style.opacity = 1;
+    //         video.playbackRate = 1;
+    //         setSource(fastFwd.nextSource);
+    //         setFastFwd({...fastFwd, isSeeking: false});
+    //       }
+    //       else {
+    //         video.currentTime += -0.2;
+    //       }
+    //     }
 
-        else if (video.currentTime >= fastFwd.endTime) {
-          fastFwd.element.style.opacity = 1;
-          video.playbackRate = 1;
-          setSource(fastFwd.nextSource);
-          setFastFwd({...fastFwd, isSeeking: false});
-        }
-      }
+    //     else if (video.currentTime >= fastFwd.endTime) {
+    //       fastFwd.element.style.opacity = 1;
+    //       video.playbackRate = 1;
+    //       setSource(fastFwd.nextSource);
+    //       setFastFwd({...fastFwd, isSeeking: false});
+    //     }
+    //   }
       
-    }, 30);
+    // }, 30);
 
-    return () => clearInterval(interval);
+    // return () => clearInterval(interval);
   }, [fastFwd.isSeeking]);
 
   useEffect(() => {
-    if (!selfScroll) {
-      const interval = setInterval(() => {
-        let currTime = time + 1;
-        console.log("hello")
-        contents.map((content, i) => {
-          console.log(content.end, currTime)
-          if (content.end === currTime) {
-            document.getElementById(contents[i + 1].id).scrollIntoView();
-            document.getElementById(contents[i + 1].id).childNodes[0].style.opacity = 1;
-          }
-        });
-        setTime(currTime);
-      }, 1000);
-  
-      return () => clearInterval(interval)
-    }
+    // const interval = setInterval(() => {
+    //   let currTime = time + 1;
+    //   console.log("hello")
+    //   contents.map((content, i) => {
+    //     console.log(content.end, currTime)
+    //     if (content.end === currTime) {
+    //       document.getElementById(contents[i + 1].id).scrollIntoView();
+    //       document.getElementById(contents[i + 1].id).childNodes[0].style.opacity = 1;
+    //     }
+    //   });
+    //   setTime(currTime);
+    // }, 1000);
+
+    // return () => clearInterval(interval)
   }, [time])
 
   const handleScroll = async(e) => {
-    if (selfScroll) {
-      let contentElements = contents.map((content, i) => document.getElementById(content.id).childNodes[0])
-      let position = contents.map((content, i) => document.getElementById(content.id).getBoundingClientRect().top)
-      let top = false;
-      let video = document.getElementById("video");
-  
-      for (var i = position.length - 1; i >= 0; i--) {
-        if (position[i] === 0) {
-          console.log(i < prevPosition);
-          let reverse = i < prevPosition;
-          let endTime = reverse ? contents[i].start : contents[i - 1].end;
-          console.log(endTime)
-          video.playbackRate = reverse ? 2 : 10;
-  
-          setFastFwd({
-            element: contentElements[i],
-            isSeeking: true,
-            endTime: endTime,
-            nextSource: `videos/test_v1.mp4#t=${contents[i].start},${contents[i].end}`,
-            reverse: reverse
-          });
-  
-          setPrevPosition(i);
-          top = true;
-          break;
-        }
-      }
-  
-      if (!top) {
-        contentElements.map((element, i) => {
-          element.style.opacity = 0;
-        })
-      }
-    }
+    // let contentElements = contents.map((content, i) => document.getElementById(content.id).childNodes[0])
+    // let position = contents.map((content, i) => document.getElementById(content.id).getBoundingClientRect().top)
+    // let top = false;
+    // let video = document.getElementById("video");
+
+    // for (var i = position.length - 1; i >= 0; i--) {
+    //   if (position[i] === 0) {
+    //     console.log(i < prevPosition);
+    //     let reverse = i < prevPosition;
+    //     let endTime = reverse ? contents[i].start : contents[i - 1].end;
+    //     console.log(endTime)
+    //     video.playbackRate = reverse ? 2 : 10;
+
+    //     setFastFwd({
+    //       element: contentElements[i],
+    //       isSeeking: true,
+    //       endTime: endTime,
+    //       nextSource: `videos/test_v1.mp4#t=${contents[i].start},${contents[i].end}`,
+    //       reverse: reverse
+    //     });
+
+    //     setPrevPosition(i);
+    //     top = true;
+    //     break;
+    //   }
+    // }
+
+    // if (!top) {
+    //   contentElements.map((element, i) => {
+    //     element.style.opacity = 0;
+    //   })
+    // }
   }
 
 
   useEffect(() => {
-    let video = document.getElementById("video");
+    // let video = document.getElementById("video");
     // video.play();
     // video.playbackRate = 0.5;
   }, [])
@@ -162,28 +175,63 @@ export const Anim = ({
     <ThemeProvider theme={theme}>
       <div className={styles.background}>
         <video id="video" ref={videoRef} className={styles.video} autoPlay loop playsInline muted>
-          <source id="videoSrc" src={source} type="video/mp4" />
+          <source id="videoSrc" src={source} type="video/webm" />
         </video>
         <div className={styles.container} onScroll={(e) => handleScroll(e)}>
           { contents.map((content, i) => (
             <div key={i} className={styles.section} id={content.id}>
-              <div className={styles[content.id]}>
-                <Typography variant="displaySmall">
-                  { content.title }
-                </Typography>
-
-                <svg>
-                  <line x1="0%" y1="50%" x2="100%" y2="50%" />
-                </svg>
-
-                { (content.body).map((text, j) => (
-                  <Typography key={j} variant="bodyLarge">
-                    {text}
+              { i == 0 ?
+                <div className={styles[content.id]}>
+                  <Typography variant="titleMedium">
+                    與你最香配！
                   </Typography>
-                ))}
-              </div>
+
+                  <Typography variant="displayLarge" className={styles.title}>
+                    { content.title }
+                  </Typography>
+
+                  <div className={styles.body}>
+                    { (content.body).map((text, j) => (
+                      <Typography key={j} variant="bodyLargeHighlighted">
+                        {text}
+                      </Typography>
+                    ))}
+                  </div>
+                </div>
+              :
+                <>
+                  <div className={styles[content.id]}>
+                    <Typography variant="displaySmall">
+                      { content.title }
+                    </Typography>
+
+                    <svg>
+                      <line x1="0%" y1="50%" x2="100%" y2="50%" />
+                    </svg>
+
+                    { (content.body).map((text, j) => (
+                      <Typography key={j} variant="bodyLarge">
+                        {text}
+                      </Typography>
+                    ))}
+                  </div>
+                  { i == 3 &&
+                    <Map />
+                  }
+                </>
+              }
             </div>
           ))}
+          <div className={styles.nonVideoSection}>
+            <Marquee gradient={false} speed={10} className={styles.scrollingText}>
+              <Typography variant="displayMedium">
+                不是只有喝的。不是只有喝的。
+              </Typography>
+            </Marquee>
+            { foodData.map((data, i) => (
+              <Food key={i} data={data} />
+            ))}
+          </div>
         </div>
       </div>
     </ThemeProvider>
