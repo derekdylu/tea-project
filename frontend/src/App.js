@@ -16,6 +16,7 @@ import { NavBar } from "./Components/NavBar";
 import { StartPage } from "./Components/StartPage";
 import { Live } from "./Containers/Live";
 import { Anim } from "./Containers/Anim";
+import { Map } from "./Containers/Map";
 
 function App() {
   const { width, height, ratio } = useWindowDimensions()
@@ -70,12 +71,13 @@ function App() {
           <Route path="/start" element={ <StartPage /> } />
           <Route path="/anim" element={ <Anim /> } />
           <Route path="/cards" element={ <Cards /> } />
-
-          {/* big screen */}
-          <Route path="/live" element={ <Live /> } />
           <Route path="/wall" element={ <Wall /> } />
-        </Routes>
-      </Router>
+
+          <Route path="/live" element={ <Live/> } />
+          <Route path="/map" element={ <Map/> } />
+
+          </Routes>
+        </Router>
     </div>
   );
 }
