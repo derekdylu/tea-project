@@ -23,6 +23,9 @@ const globalPalette = createTheme({
       contrastText: '#48473C',
       outline: '#79786A',
     },
+    button: {
+      main: '#48473C'
+    },
     neutral: {
       main: '#FEFCF4',
       0: '#000000',
@@ -60,6 +63,11 @@ const globalPalette = createTheme({
   },
   typography: {
     fontFamily: "'Noto Sanc TC', sans-serif",
+    displayLargeEnglish: {
+      fontSize: '96px',
+      lineHeight: '116px',
+      fontWeight: '400',
+    },
     displayLarge: {
       fontSize: '57px',
       lineHeight: '64px',
