@@ -113,7 +113,6 @@ export const StartPage = ({}) => {
   return (
     <ThemeProvider theme={theme}>
       <NavBar defaultHideLogo={!second} />
-      <div id="container" className={styles.container}>
         <div id="trigger" className={styles.trigger} />
         <div className={`${styles.background} ${second ? styles.target : ""}`}>
           <CloudLeft id="cloudLeft" className={styles.cloud} />
@@ -158,8 +157,6 @@ export const StartPage = ({}) => {
           </button>
         </div>
 
-        
-      </div>
     </ThemeProvider>
   )
 }
