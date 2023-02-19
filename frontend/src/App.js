@@ -7,9 +7,12 @@ import Dialog from '@mui/material/Dialog';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import GameContainer from './Containers/GameContainer'
-import Error from './Containers/Error'
+import Wrapper from './Components/Game/Wrapper';
+import Wall from './Components/Wall/Wall';
+import Error from './Containers/Error';
+import Cards from './Components/Game/Cards';
 
+import { NavBar } from "./Components/NavBar";
 import { StartPage } from "./Components/StartPage";
 import { Live } from "./Containers/Live";
 import { Result } from "./Containers/Result";
@@ -64,16 +67,21 @@ function App() {
         </Dialog> */}
         <Router>
           <Routes>
-
-            <Route path="/game" element={<GameContainer />} forceRefresh={true} />
+            {/* mobile */}
+            <Route path="/game" element={<Wrapper />} forceRefresh={true} />
             <Route path="*" element={<Error />} />
-
             <Route path="/" element={ <StartPage/> } />
             <Route path="/start" element={ <StartPage/> } />
             <Route path="/live" element={ <Live/> } />
             <Route path="/result" element={ <Anim/> } />
             <Route path="/map" element={ <Map/> } />
             <Route path="/share" element={ <Share/> } />
+            <Route path="/cards" element={ <Cards /> } />
+            <Route path="/wall" element={ <Wall /> } />
+
+            <Route path="/live" element={ <Live/> } />
+            <Route path="/map" element={ <Map/> } />
+
           </Routes>
         </Router>
     </div>

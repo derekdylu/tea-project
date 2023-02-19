@@ -117,7 +117,7 @@ export const StartPage = ({}) => {
     createGame([], [], -1)
     .then((res) => {
       console.log(res);
-      sessionStorage.setItem('gameId', res.id);
+      sessionStorage.setItem('id', res.id);
       console.log(sessionStorage);
       navigate("/game");
     })
@@ -176,8 +176,6 @@ export const StartPage = ({}) => {
             </Typography>
           </button>
         </div>
-
-        
       </div>
     </ThemeProvider>
   )
