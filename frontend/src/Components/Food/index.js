@@ -1,5 +1,6 @@
 import React from "react";
-import { ReactComponent as ShareIcon } from "../../Images/arrow_outward.svg"
+import { ReactComponent as ShareIcon } from "../../Images/Icon/arrow_outward.svg"
+import { ReactComponent as AddIcon } from "../../Images/Icon/add.svg";
 import testImgSrc from "../../Images/testImg.png";
 import styles from "./styles.module.scss";
 
@@ -29,9 +30,18 @@ export const Food = ({data}) => {
             { data.desc }
           </Typography>
           <img src={testImgSrc} />
-          <a className={styles.link} href={data.link} target="_blank">
-            <ShareIcon />
+          <a href={data.link} target="_blank">
+            <button className={styles.button}>
+              <AddIcon />
+              <Typography variant="labelLarge">
+                深入瞭解
+              </Typography>
+            </button>
           </a>
+          {/* <a className={styles.link} href={data.link} target="_blank">
+            <ShareIcon />
+          </a> */}
+
         </div>
       </div>
     </ThemeProvider>

@@ -5,7 +5,7 @@
 
 .group {
     color: var(--text-color);
-    padding: 0 3.5rem 0 1.5rem;
+    padding: 0 1.5rem;
     display: flex;
     flex-direction: column;
     text-align: justify;
@@ -50,5 +50,18 @@
             transform: translate(-50%, -50%);
             fill: #FFFFFF;
         }
+    }
+
+    .button {
+        width: 100%;
+        background-color: transparent;
+        padding: 0.5rem 0;
+        border: solid 1px var(--border-color);
+        border-radius: 100px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-color);
     }
 }

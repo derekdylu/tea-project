@@ -12,9 +12,10 @@ import Error from './Containers/Error'
 
 import { StartPage } from "./Components/StartPage";
 import { Live } from "./Containers/Live";
+import { Result } from "./Containers/Result";
+import { Map } from "./Components/Map";
 import { Anim } from "./Containers/Anim";
-import { Map } from "./Containers/Map";
-import { Food } from './Components/Food';
+import { Share } from './Components/Share';
 
 function App() {
   const { width, height, ratio } = useWindowDimensions()
@@ -43,7 +44,7 @@ function App() {
   return (
     <div>
     {/* TODO page for bigger screen doesn't need this vertical restriction */}
-      <Dialog aria-labelledby="window-size" open={open} fullScreen>
+      {/* <Dialog aria-labelledby="window-size" open={open} fullScreen>
           <Grid container direction="column" alignItems="center" justifyContent="center" sx={{ my: 1 }} height="100%">
             {
               narrow ?
@@ -60,7 +61,7 @@ function App() {
               )
             }
           </Grid>
-        </Dialog>
+        </Dialog> */}
         <Router>
           <Routes>
 
@@ -70,10 +71,9 @@ function App() {
             <Route path="/" element={ <StartPage/> } />
             <Route path="/start" element={ <StartPage/> } />
             <Route path="/live" element={ <Live/> } />
-            <Route path="/anim" element={ <Anim/> } />
+            <Route path="/result" element={ <Anim/> } />
             <Route path="/map" element={ <Map/> } />
-            <Route path="/food" element={ <Food/> } />
-
+            <Route path="/share" element={ <Share/> } />
           </Routes>
         </Router>
     </div>

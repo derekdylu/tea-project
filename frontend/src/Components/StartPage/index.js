@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { NavBar } from "../NavBar";
+import { createGame } from "../../Utils/Axios";
 
 import { ReactComponent as Logo } from "../../Images/logo.svg";
 import { ReactComponent as Hand } from "../../Images/Home/hand.svg";
@@ -25,6 +27,7 @@ gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ ignoreMobileResize: true });
 
 export const StartPage = ({}) => {
+  const navigate = useNavigate()
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const [second, setSecond] = useState(false);
@@ -110,6 +113,19 @@ export const StartPage = ({}) => {
     }
   }
 
+  const handleStartButtonOnClick = async(e) => {
+    createGame([], [], -1)
+    .then((res) => {
+      console.log(res);
+      sessionStorage.setItem('gameId', res.id);
+      console.log(sessionStorage);
+      navigate("/game");
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <NavBar defaultHideLogo={!second} />
@@ -154,7 +170,7 @@ export const StartPage = ({}) => {
             )}
           </div>
 
-          <button className={styles.button}>
+          <button className={styles.button} onClick={handleStartButtonOnClick}>
             <Typography variant="labelLarge" color={theme.palette.background.contrastText}>
               開始探索
             </Typography>
