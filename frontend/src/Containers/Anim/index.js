@@ -1,12 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Food } from "../../Components/Food";
-import { Map } from "../Map";
+import { Share } from "../../Components/Share";
 import styles from "./styles.module.scss";
 
 import { ThemeProvider } from "@emotion/react";
 import { Typography } from "@mui/material";
 import theme from "../../Themes/Theme";
 import Marquee from "react-fast-marquee";
+import { ReactComponent as Flower } from "../../Images/flower.svg";
+import { ReactComponent as MapSvg } from "../../Images/map.svg"
+
+import gsap from "gsap";
 
 export const Anim = ({
 
@@ -14,7 +18,8 @@ export const Anim = ({
   const selfScroll = true;
   const videoRef = useRef();
   const [prevPosition, setPrevPosition] = useState(0);
-  const [source, setSource] = useState("videos/noBg.webm");
+  const [startMap, setStartMap] = useState(false);
+  const [source, setSource] = useState("videos/noBg.webm#t=0,7");
   const [fastFwd, setFastFwd] = useState({
     element: null,
     isSeeking: false,
@@ -24,15 +29,19 @@ export const Anim = ({
   });
   const [time, setTime] = useState(0);
 
+  const teaName = [["碧", "螺春"], "綠茶"];
+  const teaSubName = ""
+  const hashtags = ["清香", "淡雅",	"臺灣綠茶", "不發酵茶"]
+
   const contents = [
     {
       id: "first",
-      title: "碧螺春綠茶",
+      title: "與你最香配！",
       body: [
         "碧螺春綠茶為不發酵茶，在臺茶風味輪中隸屬於臺灣綠茶。",
       ],
       start: 0,
-      end: 8
+      end: 7
     },
     {
       id: "second",
@@ -40,18 +49,18 @@ export const Anim = ({
       body: [
         "傳統綠茶製造過程不經過萎凋及攪拌的程序，雖為炒菁綠茶，但農友在生產時常會攤放靜置茶菁數小時，以改善茶葉的風味。",
       ],
-      start: 8,
-      end: 24,
+      start: 7,
+      end: 23,
     },
     {
       id: "third",
       title: "特性",
       body: [
-        "碧螺春茶樹品種主要為青心柑仔及青心烏龍。在 3~5 月及 10~12 月生產的品質較佳。",
-        "碧螺春茶葉外觀新鮮碧綠，芽尖白毫多，形狀細緊捲曲似螺旋，乾茶清香鮮雅，茶湯碧綠清澈。",
+        "碧螺春茶樹品種主要為青心柑仔及青心烏龍，其外觀新鮮碧綠，芽尖白毫多，形狀細緊捲曲似螺旋，乾茶清香鮮雅，茶湯碧綠清澈。",
+        "碧螺春在 3~5 月及 10~12 月生產的品質較佳。",
       ],
-      start: 24,
-      end: 36,
+      start: 23,
+      end: 34,
     },
     {
       id: "fourth",
@@ -59,7 +68,7 @@ export const Anim = ({
       body: [
         "新北市三峽茶區毗鄰新店、土城、樹林、鶯歌、大溪，連接文山茶區，是臺灣唯一僅剩的專業炒菁綠茶產區。"
       ],
-      start: 36,
+      start: 34,
       end: 50
     }
   ]
@@ -69,13 +78,7 @@ export const Anim = ({
       shop: "甘樂文創",
       name: "碧螺春綠茶磅蛋糕",
       desc: "嚴選在地碧螺春茶葉製成，口感紮實，茶香濃郁，全新配方還加入滿滿的碧螺春內餡，一口咬下紮實的蛋糕體中，品嚐的到濕潤香厚且綿密的餡雙重口感~",
-      link: "http://www.google.com",
-    },
-    {
-      shop: "甘樂文創",
-      name: "碧螺春綠茶磅蛋糕",
-      desc: "嚴選在地碧螺春茶葉製成，口感紮實，茶香濃郁，全新配方還加入滿滿的碧螺春內餡，一口咬下紮實的蛋糕體中，品嚐的到濕潤香厚且綿密的餡雙重口感~",
-      link: "http://www.google.com",
+      link: "https://www.fresh-farm.com.tw/page/product/show.aspx?num=644&kind=104&page=1&lang=TW",
     }
   ]
 
@@ -84,89 +87,93 @@ export const Anim = ({
   }, [source]);
 
   useEffect(() => {
-    // const interval = setInterval(() => {
-    //   let video = document.getElementById("video");
-    //   if (fastFwd.isSeeking) {
-    //     if (fastFwd.reverse === true) {
-    //       if(video.currentTime <= fastFwd.endTime + 0.3){
-    //         fastFwd.element.style.opacity = 1;
-    //         video.playbackRate = 1;
-    //         setSource(fastFwd.nextSource);
-    //         setFastFwd({...fastFwd, isSeeking: false});
-    //       }
-    //       else {
-    //         video.currentTime += -0.2;
-    //       }
-    //     }
+    const interval = setInterval(() => {
+      let video = document.getElementById("video");
+      if (fastFwd.isSeeking) {
+        if (fastFwd.reverse === true) {
+          if(video.currentTime <= fastFwd.endTime + 0.3){
+            fastFwd.element.style.opacity = 1;
+            video.playbackRate = 1;
+            setSource(fastFwd.nextSource);
+            setFastFwd({...fastFwd, isSeeking: false});
+          }
+          else {
+            video.currentTime += -0.2;
+          }
+        }
 
-    //     else if (video.currentTime >= fastFwd.endTime) {
-    //       fastFwd.element.style.opacity = 1;
-    //       video.playbackRate = 1;
-    //       setSource(fastFwd.nextSource);
-    //       setFastFwd({...fastFwd, isSeeking: false});
-    //     }
-    //   }
+        else if (video.currentTime >= fastFwd.endTime) {
+          fastFwd.element.style.opacity = 1;
+          video.playbackRate = 1;
+          setSource(fastFwd.nextSource);
+          setFastFwd({...fastFwd, isSeeking: false});
+        }
+      }
       
-    // }, 30);
+    }, 30);
 
-    // return () => clearInterval(interval);
+    return () => clearInterval(interval);
   }, [fastFwd.isSeeking]);
 
-  useEffect(() => {
-    // const interval = setInterval(() => {
-    //   let currTime = time + 1;
-    //   console.log("hello")
-    //   contents.map((content, i) => {
-    //     console.log(content.end, currTime)
-    //     if (content.end === currTime) {
-    //       document.getElementById(contents[i + 1].id).scrollIntoView();
-    //       document.getElementById(contents[i + 1].id).childNodes[0].style.opacity = 1;
-    //     }
-    //   });
-    //   setTime(currTime);
-    // }, 1000);
-
-    // return () => clearInterval(interval)
-  }, [time])
-
   const handleScroll = async(e) => {
-    // let contentElements = contents.map((content, i) => document.getElementById(content.id).childNodes[0])
-    // let position = contents.map((content, i) => document.getElementById(content.id).getBoundingClientRect().top)
-    // let top = false;
-    // let video = document.getElementById("video");
+    let contentElements = contents.map((content, i) => document.getElementById(content.id).childNodes[0])
+    let position = contents.map((content, i) => document.getElementById(content.id).getBoundingClientRect().top)
+    let top = false;
+    let video = document.getElementById("video");
 
-    // for (var i = position.length - 1; i >= 0; i--) {
-    //   if (position[i] === 0) {
-    //     console.log(i < prevPosition);
-    //     let reverse = i < prevPosition;
-    //     let endTime = reverse ? contents[i].start : contents[i - 1].end;
-    //     console.log(endTime)
-    //     video.playbackRate = reverse ? 2 : 10;
+    for (var i = position.length - 1; i >= 0; i--) {
+      if (position[i] === 0) {
+        if (i === 3) {
+          setStartMap(true);
+        }
+        console.log(i < prevPosition);
+        let reverse = i < prevPosition;
+        let endTime = reverse ? contents[i].start : contents[i - 1].end;
+        console.log(endTime)
+        video.playbackRate = reverse ? 2 : 10;
 
-    //     setFastFwd({
-    //       element: contentElements[i],
-    //       isSeeking: true,
-    //       endTime: endTime,
-    //       nextSource: `videos/test_v1.mp4#t=${contents[i].start},${contents[i].end}`,
-    //       reverse: reverse
-    //     });
+        setFastFwd({
+          element: contentElements[i],
+          isSeeking: true,
+          endTime: endTime,
+          nextSource: `videos/noBg.webm#t=${contents[i].start},${contents[i].end}`,
+          reverse: reverse
+        });
 
-    //     setPrevPosition(i);
-    //     top = true;
-    //     break;
-    //   }
-    // }
+        setPrevPosition(i);
+        top = true;
+        break;
+      }
+    }
 
-    // if (!top) {
-    //   contentElements.map((element, i) => {
-    //     element.style.opacity = 0;
-    //   })
-    // }
+    if (!top) {
+      contentElements.map((element, i) => {
+        element.style.opacity = 0;
+      })
+      setStartMap(false);
+    }
   }
 
+  useEffect(() => {
+    const mapTl = gsap.timeline();
+
+    if (startMap) {
+      mapTl.to("#map", {left: "0%", top: "50%", y: "-50%", duration: 3, ease: "sine.inOut"})
+          .to("#circle", {opacity: 1, duration: 0.3, ease: "sine.inOut"})
+          .to("#line", {width: "100%", duration: 0.4, ease: "sine.inOut"})
+          .to("#text", {opacity: 1, duration: 0.3, ease: "sine.inOut"})
+          .to("#map", {left: "15%", top: "12%", y: "0", duration: 2, ease: "sine.inOut" })
+    }
+    else {
+      mapTl.to("#text", {opacity: 0, duration: 0.2, ease: "sine.inOut"})
+          .to("#line", {width: "0%", duration: 0.2, ease: "sine.inOut"})
+          .to("#circle", {opacity: 0, duration: 0.2, ease: "sine.inOut"})
+          .to("#map", {left: "-100%", top: "70%", duration: 0.5, ease: "sine.inOut" })
+    }
+  }, [startMap]);
 
   useEffect(() => {
-    // let video = document.getElementById("video");
+    let video = document.getElementById("video");
     // video.play();
     // video.playbackRate = 0.5;
   }, [])
@@ -174,7 +181,7 @@ export const Anim = ({
   return (
     <ThemeProvider theme={theme}>
       <div className={styles.background}>
-        <video id="video" ref={videoRef} className={styles.video} autoPlay loop playsInline muted>
+        <video id="video" ref={videoRef} className={styles.video} autoPlay playsInline muted>
           <source id="videoSrc" src={source} type="video/webm" />
         </video>
         <div className={styles.container} onScroll={(e) => handleScroll(e)}>
@@ -183,12 +190,32 @@ export const Anim = ({
               { i == 0 ?
                 <div className={styles[content.id]}>
                   <Typography variant="titleMedium">
-                    與你最香配！
-                  </Typography>
-
-                  <Typography variant="displayLarge" className={styles.title}>
                     { content.title }
                   </Typography>
+
+                  <div className={styles.name}>
+                    { teaName.map((line, j) => (
+                      typeof(line) == "string" ?
+                      <Typography key={j} variant="displayLarge">
+                        { line }
+                      </Typography>
+                      :
+                      <div key={j} className={styles.row}>
+                        <Typography variant="displayLarge">
+                          {line[0]}
+                        </Typography>
+                        <div></div>
+                        <Typography variant="displayLarge">
+                          {line[1]}
+                        </Typography>
+                      </div>
+                    ))}
+                    { teaSubName &&
+                      <Typography variant="bodyLarge" className={styles.subName}>
+                        ({teaSubName})
+                      </Typography>
+                    }
+                  </div>
 
                   <div className={styles.body}>
                     { (content.body).map((text, j) => (
@@ -216,7 +243,23 @@ export const Anim = ({
                     ))}
                   </div>
                   { i == 3 &&
-                    <Map />
+                    <div className={styles.mapContainer} id="map">
+                      <MapSvg className={styles.map}/>
+                      <div className={styles.area}>
+                        <Typography id="text" variant="bodyMedium" className={styles.text}>
+                          {/* { areaName } */}
+                          新北
+                        </Typography>
+                        <div className={styles.point}>
+                          <svg id="line" className={styles.line}>
+                            <line x1="0%" y1="50%" x2="100%" y2="50%" />
+                          </svg>
+                          <svg id="circle" className={styles.circle}>
+                            <circle r="4" cy="50%" cx="75.5" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
                   }
                 </>
               }
@@ -231,6 +274,7 @@ export const Anim = ({
             { foodData.map((data, i) => (
               <Food key={i} data={data} />
             ))}
+            <Share teaName={teaName} teaSubName={teaSubName} hashtags={hashtags} />
           </div>
         </div>
       </div>
