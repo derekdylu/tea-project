@@ -1,34 +1,31 @@
 .container {
-  position: absolute;
-  top: 0%;
-  left: 50%;
-  background: lightblue;
-  cursor: url('https://uploads.codesandbox.io/uploads/user/b3e56831-8b98-4fee-b941-0e27f39883ab/Ad1_-cursor.png') 39 39,
-    auto;
+  position: relative;;
   display: flex;
-  align-items: center;
   height: 100%;
+  align-items: center;
   justify-content: center;
+  max-width: 100%;
+  overflow-x: hidden;
 }
+
 .deck {
   position: absolute;
-  width: 300px;
-  height: 300px;
-  will-change: transform;
-  display: flex;
+  width: 288px;
+  height: 288px;
+  will-change: transform, display;
   align-items: center;
   justify-content: center;
   touch-action: none;
 }
 
 .deck > div {
-  background-color: white;
-  background-size: auto 85%;
+  background-color: transparent;
+  background-size: auto 100%;
   background-repeat: no-repeat;
   background-position: center center;
-  width: 300px;
-  height: 300px;
+  width: 288px;
+  height: 288px;
   will-change: transform;
-  border-radius: 10px;
-  box-shadow: 0 12.5px 100px -10px rgba(50, 50, 73, 0.4), 0 10px 10px -10px rgba(50, 50, 73, 0.3);
+  border-radius: 16px;
+  filter: drop-shadow(0px 4px 4px rgba(72, 71, 60, 0.08)) drop-shadow(0px 8px 15px rgba(72, 71, 60, 0.15));
 }

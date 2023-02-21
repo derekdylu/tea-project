@@ -3,40 +3,47 @@ import { ThemeProvider } from "@emotion/react";
 import theme from '../../Themes/Theme'
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import Marquee from "react-fast-marquee";
 import Game from "./Game";
 import { NavBar } from "../NavBar"
+import useWindowDimensions from '../../Hooks/useWindowDimensions';
 import './wrapper.css';
 
 import { db } from './Characteristics';
 
 const Wrapper = () => {
+  const { width, height, ratio } = useWindowDimensions()
   const [index, setIndex] = useState(db.length - 1)
-  const [page, setPage] = useState(0)
+  const [phaseTitle1, setPhaseTitle1] = useState(true)
 
   const onChangeIndex = (index) => {
     setIndex(index)
   }
 
-  const onChangePage = (page) => {
-    setPage(page)
+  const onChangePhaseTitle1 = (p) => {
+    setPhaseTitle1(p)
   }
 
   return (
     <ThemeProvider theme={theme}>
+      {/* <Grid
+        container
+        direction="column"
+        width={width}
+        height={height}
+      > */}
       <div className="container">
         <NavBar />
-        <Game onChangeIndex={onChangeIndex} onChangePage={onChangePage}/>
+        <Game onChangeIndex={onChangeIndex} onChangePhaseTitle1={onChangePhaseTitle1}/>
         {
-          (index > 1 && page === 1)&&
+          ( index > 1 && !phaseTitle1 ) &&
             <Marquee
             gradient={false}
             speed={10}
             style={{
               position: 'absolute',
-              top: '515px',
-              zIndex: -1
+              top: '580px',
+              zIndex: -1,
             }}
             >
               <Typography className="marquee-1" variant="displayLargeEnglish" sx={{ color: theme.palette.surface.main, mx: 1 }}>
@@ -51,6 +58,7 @@ const Wrapper = () => {
             </Marquee>
         }
       </div>
+      {/* </Grid> */}
     </ThemeProvider>
   )
 }
