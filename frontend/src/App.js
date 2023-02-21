@@ -14,8 +14,10 @@ import Error from './Containers/Error';
 import { NavBar } from "./Components/NavBar";
 import { StartPage } from "./Components/StartPage";
 import { Live } from "./Containers/Live";
+import { Result } from "./Containers/Result";
+import { Map } from "./Components/Map";
 import { Anim } from "./Containers/Anim";
-import { Map } from "./Containers/Map";
+import { Share } from './Components/Share';
 
 function App() {
   const { width, height, ratio } = useWindowDimensions()
@@ -43,6 +45,7 @@ function App() {
 
   return (
     <div>
+    {/* TODO page for bigger screen doesn't need this vertical restriction */}
       {/* <Dialog aria-labelledby="window-size" open={open} fullScreen>
         <Grid container direction="column" alignItems="center" justifyContent="center" sx={{ my: 1 }} height="100%">
           {
@@ -69,6 +72,7 @@ function App() {
           <Route path="/" element={ <StartPage /> } />
           <Route path="/start" element={ <StartPage /> } />
           <Route path="/anim" element={ <Anim /> } />
+          <Route path="/cards" element={ <Cards /> } />
           <Route path="/wall" element={ <Wall /> } />
 
           <Route path="/live" element={ <Live/> } />
