@@ -160,7 +160,7 @@ export const StartPage = ({}) => {
             </Typography>
           </button>
         </div>
-
+      </div>
     </ThemeProvider>
   )
 }
