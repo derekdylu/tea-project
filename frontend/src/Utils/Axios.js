@@ -9,6 +9,29 @@ const jsonHeader = {
   }
 }
 
+// --- Game
+// get all games
+export const getGames = async () => {
+  return await instance.get('/games').then((res) => {
+      return res.data;
+  })
+}
+
+// create a game
+export const createGame = async (_selection, _selected, _decision) => {
+  const param = JSON.stringify({
+      selection: _selection,
+      selected: _selected,
+      decision: _decision,
+  });
+
+  console.log(param);
+
+  return await instance.post('/create_game', param, jsonHeader).then((res) => {
+      return res.data;
+  })
+}
+
 // calculate a game
 export const calculateGame = async (id, selection) => {
   return await instance.put(`/calculate_game/${id}`, selection, jsonHeader).then((res) => {
