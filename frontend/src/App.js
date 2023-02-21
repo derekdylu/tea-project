@@ -10,7 +10,6 @@ import Typography from '@mui/material/Typography';
 import Wrapper from './Components/Game/Wrapper';
 import Wall from './Components/Wall/Wall';
 import Error from './Containers/Error';
-import Cards from './Components/Game/Cards';
 
 import { NavBar } from "./Components/NavBar";
 import { StartPage } from "./Components/StartPage";
@@ -70,7 +69,6 @@ function App() {
           <Route path="/" element={ <StartPage /> } />
           <Route path="/start" element={ <StartPage /> } />
           <Route path="/anim" element={ <Anim /> } />
-          <Route path="/cards" element={ <Cards /> } />
           <Route path="/wall" element={ <Wall /> } />
 
           <Route path="/live" element={ <Live/> } />
