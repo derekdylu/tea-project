@@ -14,7 +14,7 @@ const jsonHeader = {
 export const getGames = async () => {
   return await instance.get('/games').then((res) => {
       return res.data;
-  })
+  });
 }
 
 // create a game
