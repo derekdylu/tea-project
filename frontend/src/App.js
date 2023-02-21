@@ -72,7 +72,6 @@ function App() {
           <Route path="/" element={ <StartPage /> } />
           <Route path="/start" element={ <StartPage /> } />
           <Route path="/anim" element={ <Anim /> } />
-          <Route path="/cards" element={ <Cards /> } />
           <Route path="/wall" element={ <Wall /> } />
 
           <Route path="/live" element={ <Live/> } />
