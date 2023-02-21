@@ -75,7 +75,6 @@ function App() {
             <Route path="/result" element={ <Anim/> } />
             <Route path="/map" element={ <Map/> } />
             <Route path="/share" element={ <Share/> } />
-            <Route path="/cards" element={ <Cards /> } />
             <Route path="/wall" element={ <Wall /> } />
 
             <Route path="/live" element={ <Live/> } />
