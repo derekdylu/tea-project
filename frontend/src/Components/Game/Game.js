@@ -57,6 +57,8 @@ import 花香 from '../../Images/Card/花香.png'
 import 青香 from '../../Images/Card/青香.png'
 import 收斂感 from '../../Images/Card/收斂感.png'
 
+const resultLink = "http://localhost:3000/result"
+
 const cards = [
   蔬菜香,
   豆子,
@@ -274,7 +276,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
     localStorage.setItem("selection", selection);
     calculateGame(id, selection).then((res) => {
       console.log(res);
-      window.location.replace("http://localhost:3000/");
+      window.location.replace(resultLink);
     }).catch((err) => {
       console.log(err);
     })
