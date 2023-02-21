@@ -1,8 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled, { keyframes } from "styled-components";
+import { ThemeProvider } from "@emotion/react";
+import theme from '../../Themes/Theme'
 import useWindowDimensions from '../../Hooks/useWindowDimensions';
+import { getGames } from '../../Utils/Axios';
+import useSWR from 'swr'
 import './wall.css'
-
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import background from '../../Images/Wall/background.png'
 
 import 凍頂烏龍茶 from '../../Images/Wall/凍頂烏龍茶.gif'
@@ -14,6 +19,9 @@ import 紅烏龍茶 from '../../Images/Wall/紅烏龍茶.gif'
 import 紅韻紅茶 from '../../Images/Wall/紅韻紅茶.gif'
 import 蜜香紅茶 from '../../Images/Wall/蜜香紅茶.gif'
 import 鐵觀音茶 from '../../Images/Wall/鐵觀音茶.gif'
+
+// const fetcher = (...args) => fetch(...args).then(res => res.json())
+// const fetcher = url => axios.get(url).then(res => res.data)
 
 function timeout(delay: number) {
   return new Promise( res => setTimeout(res, delay) );
@@ -62,12 +70,18 @@ const yAxis = keyframes`
 `
 
 const Wall = () => {
+  // TODO add motion tea background and background color
+  // TODO align all tea motion materials
+  // TODO create a valid loop function for multiple teas displaying
+  // TODO subscription (GraphQL) or automatic refetch in a certain time without messing up the currently displaying order
+
   const { width, height, ratio } = useWindowDimensions()
-  const [teaIndex, setTeaIndex] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState(1)
 
   var Cup = styled.div`
     animation-name: ${xAxis};
-    animation-duration: 26s;
+    animation-duration: 40s;
     animation-iteration-count: infinite;
     animation-timing-function: cubic-bezier(0.12, 0, 0.39, 0);
     &::after {
@@ -75,22 +89,35 @@ const Wall = () => {
       display: block;
       width: 200px;
       height: 200px;
-      background-image: url(${teas[teaIndex]});
+      background-image: url(${teas[currentIndex]});
       background-size: 200px;
       animation-name: ${yAxis};
-      animation-duration: 26s;
+      animation-duration: 40s;
       animation-iteration-count: infinite;
       animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1);
     }
   `;
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
+      <div>
+        {
+          isLoading && (
+            <Box sx={{ m: 2, display: 'flex' }}>
+              <CircularProgress size={18} style={{ color: theme.palette.neutral[80] }} />
+            </Box>
+          )
+        }
+      </div>
       <div style={{ position: 'absolute', left: '400px', top: '-200px' }}>
-        <Cup />
+        {
+          currentIndex >= 0 && (
+            <Cup />
+          )
+        }
       </div>
       <img alt="bg" src={background} height={ 3 * height / 4} style={{ position: 'fixed', bottom: '0px', right: '-50px' }}/>
-    </>
+    </ThemeProvider>
   )
 }
 
