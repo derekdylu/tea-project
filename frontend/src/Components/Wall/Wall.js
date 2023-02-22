@@ -76,8 +76,25 @@ const Wall = () => {
   // TODO subscription (GraphQL) or automatic refetch in a certain time without messing up the currently displaying order
 
   const { width, height, ratio } = useWindowDimensions()
+  const [lastUpdatedTime, setLastUpdatedTime] = useState()
   const [isLoading, setIsLoading] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(1)
+  const [data, setData] = useState()
+
+  async function update() {
+    setIsLoading(true)
+    const _data = await getGames()
+    const __data = _data.filter(x => x.timestamp > lastUpdatedTime)
+    setData(__data)
+    setIsLoading(false)
+  }
+
+  useEffect(() =>{
+    let interval = setInterval(() => {
+      update()
+    }, (10000))
+    return () => clearInterval(interval)
+  })
 
   var Cup = styled.div`
     animation-name: ${xAxis};
