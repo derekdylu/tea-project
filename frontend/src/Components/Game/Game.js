@@ -610,6 +610,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
             <img alt="bg" src={background} width={2 * width} />
           )
         }
+
     </ThemeProvider>
   )
 }
