@@ -10,15 +10,15 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import background from '../../Images/Wall/background.png'
 
-import 凍頂烏龍茶 from '../../Images/Wall/凍頂烏龍茶.gif'
+import 凍頂烏龍茶 from '../../Images/Wall/小葉種紅茶.gif'
 import 小葉種紅茶 from '../../Images/Wall/小葉種紅茶.gif'
-import 文山包種茶 from '../../Images/Wall/文山包種茶.gif'
-import 東方美人茶 from '../../Images/Wall/東方美人茶.gif'
-import 碧螺春綠茶 from '../../Images/Wall/碧螺春綠茶.gif'
-import 紅烏龍茶 from '../../Images/Wall/紅烏龍茶.gif'
-import 紅韻紅茶 from '../../Images/Wall/紅韻紅茶.gif'
-import 蜜香紅茶 from '../../Images/Wall/蜜香紅茶.gif'
-import 鐵觀音茶 from '../../Images/Wall/鐵觀音茶.gif'
+import 文山包種茶 from '../../Images/Wall/小葉種紅茶.gif'
+import 東方美人茶 from '../../Images/Wall/小葉種紅茶.gif'
+import 碧螺春綠茶 from '../../Images/Wall/小葉種紅茶.gif'
+import 紅烏龍茶 from '../../Images/Wall/小葉種紅茶.gif'
+import 紅韻紅茶 from '../../Images/Wall/小葉種紅茶.gif'
+import 蜜香紅茶 from '../../Images/Wall/小葉種紅茶.gif'
+import 鐵觀音茶 from '../../Images/Wall/小葉種紅茶.gif'
 
 // const fetcher = (...args) => fetch(...args).then(res => res.json())
 // const fetcher = url => axios.get(url).then(res => res.data)
