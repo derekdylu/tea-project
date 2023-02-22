@@ -70,7 +70,7 @@ const yAxis = keyframes`
 `
 
 const Wall = () => {
-  // TODO add motion tea background and background color
+  // TODO add motion tea background, background color, and import all cup motions
   // TODO align all tea motion materials
   // TODO create a valid loop function for multiple teas displaying
   // TODO subscription (GraphQL) or automatic refetch in a certain time without messing up the currently displaying order
