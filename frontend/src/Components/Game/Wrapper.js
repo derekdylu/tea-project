@@ -9,6 +9,8 @@ import { NavBar } from "../NavBar"
 import useWindowDimensions from '../../Hooks/useWindowDimensions';
 import './wrapper.css';
 
+import background from '../../Images/flower.svg';
+
 import { db } from './Characteristics';
 
 const Wrapper = () => {
@@ -56,6 +58,9 @@ const Wrapper = () => {
                 {db[index].engName}
               </Typography>
             </Marquee>
+        }
+        {
+          index <= 1 && <img src={background} alt="bg" width={width} height={height} />
         }
       </div>
       {/* </Grid> */}

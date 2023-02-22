@@ -10,6 +10,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import background from '../../Images/Wall/background.png'
 
+// CHECK update the file path after materials are finished
 import 凍頂烏龍茶 from '../../Images/Wall/小葉種紅茶.gif'
 import 小葉種紅茶 from '../../Images/Wall/小葉種紅茶.gif'
 import 文山包種茶 from '../../Images/Wall/小葉種紅茶.gif'
@@ -78,7 +79,7 @@ const Wall = () => {
   const { width, height, ratio } = useWindowDimensions()
   const [lastUpdatedTime, setLastUpdatedTime] = useState()
   const [isLoading, setIsLoading] = useState(false)
-  const [currentIndex, setCurrentIndex] = useState(1)
+  const [currentIndex, setCurrentIndex] = useState(0)
   const [data, setData] = useState()
 
   async function update() {
