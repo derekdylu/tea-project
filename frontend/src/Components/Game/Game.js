@@ -427,7 +427,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
       <Grid
         container
         direction="column"
-        sx={{ pt: 16, px: 3 , mb: 1 }}
+        sx={{ pt: 14, px: 3 , mb: 1 }}
       >
 
         {/* NOTE title module */}
@@ -435,9 +435,20 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
           ( index >= 0 && !phaseTitle1 && !phaseTitle2 ) &&
           <>
             <Box width="100%" sx={{ py: 1, pr: 1, mb: 1, border: theme.palette.surface.contrastText, borderStyle: 'hidden hidden solid hidden' }}>
-              <Typography variant="bodyMedium" sx={{ color: theme.palette.neutralVariant[30] }}>
-                你喜歡什麼樣的茶？
-              </Typography>
+              <Grid
+                container
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                  <Typography variant="bodyMedium" sx={{ color: theme.palette.neutralVariant[30] }}>
+                    你喜歡什麼樣的茶？
+                  </Typography>
+                <Button color="button" onClick={() => undoSwipe(cards.length - selection.length)}>
+                  <ReplayIcon sx={{ mr: 1, color: theme.palette.neutralVariant[30] }} />
+                  上一題
+                </Button>
+              </Grid>
             </Box>
             <Grid
               container
@@ -458,12 +469,9 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
                   </Typography>
                 </Grid>
               </Grid>
-              <IconButton onClick={() => undoSwipe(cards.length - selection.length)}>
-                <ReplayIcon sx={{ color: theme.palette.neutralVariant[30] }} />
-              </IconButton>
             </Grid>
-            <Typography variant="bodyLarge" sx={{ mt: 1, mb: 2, color: theme.palette.neutralVariant[30] }}>
-              花香就是花香，懂？
+            <Typography variant="bodyLarge" sx={{ mt: 1/2, mb: 2, color: theme.palette.neutralVariant[30] }}>
+              {db[index].description}
             </Typography>
           </>
         }
@@ -499,12 +507,14 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
             >
               <Box sx={{ height: '64px', width: 0.49, border: theme.palette.neutralVariant[50], borderStyle: 'solid solid solid hidden' }}>
                 <Button onClick={() => buttonSwipe(cards.length - selection.length - 1, -1)} color="button" fullWidth sx={{ height: '64px' }}>
-                  <CloseIcon sx={{ color: theme.palette.neutralVariant[30] }} />
+                  <CloseIcon sx={{ mr: 1, color: theme.palette.neutralVariant[30] }} />
+                  不喜歡
                 </Button>
               </Box>
               <Box sx={{ height: '64px', width: 0.49, border: theme.palette.neutralVariant[50], borderStyle: 'solid hidden solid hidden' }}>
                 <Button onClick={() => buttonSwipe(cards.length - selection.length - 1, 1)} color="button" fullWidth sx={{ height: '64px' }}>
-                  <FavoriteBorderIcon sx={{ color: theme.palette.neutralVariant[30] }} />
+                  <FavoriteBorderIcon sx={{ mr: 1, color: theme.palette.neutralVariant[30] }} />
+                  喜歡
                 </Button>
               </Box>
             </Grid>
