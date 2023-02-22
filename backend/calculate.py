@@ -58,4 +58,4 @@ def similarity(input):
     print("id", i, ", name", TEA[i])
 
   # CHECK only return the first one
-  return selected[0]
+  return selected
