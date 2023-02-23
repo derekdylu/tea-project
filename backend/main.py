@@ -118,6 +118,7 @@ async def update_game(id: str, game: models.UpdateGame = Body(...)):
 async def calculate_game(id: str, selection: list):
   selected = calculate.similarity(selection)
 
+  # CHECK directly choose the first selected one to be the decision
   update_result = game_col.update_one({"_id": id}, {"$set": { "selected": selected, "decision": selected[0] }})
   
   if update_result.modified_count == 1:
