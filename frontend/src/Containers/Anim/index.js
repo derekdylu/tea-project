@@ -9,7 +9,7 @@ import theme from "../../Themes/Theme";
 import Marquee from "react-fast-marquee";
 import { ReactComponent as Flower } from "../../Images/flower.svg";
 import { ReactComponent as MapSvg } from "../../Images/map.svg"
-
+import loading from "../../Images/loading.gif"
 import gsap from "gsap";
 
 export const Anim = ({
@@ -17,6 +17,7 @@ export const Anim = ({
 }) => {
   const selfScroll = true;
   const videoRef = useRef();
+  const [showLoading, setShowLoading] = useState(true);
   const [prevPosition, setPrevPosition] = useState(0);
   const [startMap, setStartMap] = useState(false);
   const [source, setSource] = useState("videos/noBg.webm#t=0,7");
@@ -173,13 +174,30 @@ export const Anim = ({
   }, [startMap]);
 
   useEffect(() => {
-    let video = document.getElementById("video");
+    // let video = document.getElementById("video");
     // video.play();
     // video.playbackRate = 0.5;
   }, [])
 
+  useEffect(() => {
+    let video = document.getElementById("video");
+    video.pause()
+    
+    setTimeout(() => {
+      setShowLoading(false);
+      console.log('Hello, World!');
+      video.play()
+    }, 2000);
+  }, [])
+
   return (
     <ThemeProvider theme={theme}>
+      <div className={styles.loadingPage} hidden={!showLoading}>
+        <img src={loading} />
+        <Typography variant="labelLarge" className={styles.text}>
+          Loading...
+        </Typography>
+      </div>
       <div className={styles.background}>
         <video id="video" ref={videoRef} className={styles.video} autoPlay playsInline muted>
           <source id="videoSrc" src={source} type="video/webm" />
@@ -248,7 +266,7 @@ export const Anim = ({
                       <div className={styles.area}>
                         <Typography id="text" variant="bodyMedium" className={styles.text}>
                           {/* { areaName } */}
-                          新北
+                          新北市，三峽
                         </Typography>
                         <div className={styles.point}>
                           <svg id="line" className={styles.line}>
