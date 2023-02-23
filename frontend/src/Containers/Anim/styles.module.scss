@@ -1,3 +1,30 @@
+.loadingPage {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 300;
+    background-color: var(--background-color);
+
+    > img {
+        max-width: 50%;
+        height: auto;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 302;
+    }
+}
+
 .background {
     height: 100vh;
     width: 100vw;
@@ -184,6 +211,10 @@
     .scrollingText {
         // margin-bottom: 4rem;
         overflow: hidden;
+
+        > * {
+            font-family: 'NotoSansTc' !important;
+        }
     }
 
     .shareContainer {

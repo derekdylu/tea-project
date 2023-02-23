@@ -2,12 +2,13 @@
     width: 100vw;
     height: 100vh;
     background-color: var(--background-color);
-    color: var(--primary-color);
+    color: var(--text-color);
     /* display: flex;
     flex-direction: column;
     padding: 1rem 2.5rem; */
     box-sizing: border-box;
     /* justify-content: space-around; */
+    background-size: fit;
 }
 
 .graph {
@@ -32,7 +33,14 @@
 }
 
 .bar {
-    height: 1rem;
-    background-color: var(--primary-color);
+    height: 1.5rem;
+    background-color: var(--text-color);
     transition: width 0.5s ease-in;
+}
+
+.tmp {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
 }
