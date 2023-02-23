@@ -434,20 +434,24 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
         {
           ( index >= 0 && !phaseTitle1 && !phaseTitle2 ) &&
           <>
-            <Box width="100%" sx={{ py: 1, pr: 1, mb: 1, border: theme.palette.surface.contrastText, borderStyle: 'hidden hidden solid hidden' }}>
+            <Box width="100%" sx={{ py: 1, mb: 1, border: theme.palette.surface.contrastText, borderStyle: 'hidden hidden solid hidden' }}>
               <Grid
                 container
                 direction="row"
                 justifyContent="space-between"
                 alignItems="center"
               >
-                  <Typography variant="bodyMedium" sx={{ color: theme.palette.neutralVariant[30] }}>
-                    你喜歡什麼樣的茶？
+                <Typography variant="bodyMedium" sx={{ color: theme.palette.neutralVariant[30] }}>
+                  你喜歡什麼樣的茶？
+                </Typography>
+                <Grid item>
+                  <Typography variant="bodyLarge" sx={{ color: theme.palette.neutralVariant[30], mr: 1/2}}>
+                    {selection.length + 1} /
                   </Typography>
-                <Button color="button" onClick={() => undoSwipe(cards.length - selection.length)}>
-                  <ReplayIcon sx={{ mr: 1, color: theme.palette.neutralVariant[30] }} />
-                  上一題
-                </Button>
+                  <Typography variant="bodySmall" sx={{ color: theme.palette.neutralVariant[30] }}>
+                    {db.length}
+                  </Typography>
+                </Grid>
               </Grid>
             </Box>
             <Grid
@@ -499,6 +503,20 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
                   />
                 </animated.div>
               ))}
+            </Grid>
+            <Grid
+              container
+              direction="row"
+              justifyContent="flex-start"
+              alignItems="center"
+              sx={{
+                mb: 3/2
+              }}
+            >
+              <Button color="button" onClick={() => undoSwipe(cards.length - selection.length)}>
+                <ReplayIcon sx={{ mr: 1, color: theme.palette.neutralVariant[30] }} />
+                復原
+              </Button>
             </Grid>
             <Grid
               container
