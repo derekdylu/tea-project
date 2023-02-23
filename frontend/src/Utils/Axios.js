@@ -18,14 +18,13 @@ export const getGames = async () => {
 }
 
 // create a game
-export const createGame = async (_selection, _selected, _decision) => {
+export const createGame = async (_selection, _selected, _decision, _timestamp) => {
   const param = JSON.stringify({
       selection: _selection,
       selected: _selected,
       decision: _decision,
+      timestamp: _timestamp
   });
-
-  console.log(param);
 
   return await instance.post('/create_game', param, jsonHeader).then((res) => {
       return res.data;
