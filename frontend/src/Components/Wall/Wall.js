@@ -127,7 +127,7 @@ const Wall = () => {
     // const fetchedData = await getGames()
     const fetchedData = testData
 
-    const _fetchedData = fetchedData.filter(x => x.timestamp >= lastUpdateTime)
+    const _fetchedData = fetchedData.filter(x => x.decision !== -1).filter(y => y.timestamp >= lastUpdateTime)
     if ( data ) {
       const currentData = data
       const _currentData = currentData.slice(1)

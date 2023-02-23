@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo, createRef } from 'react'
 import { useSpring, useSprings, animated, to as interpolate } from '@react-spring/web'
+import { useNavigate } from "react-router-dom";
 import { useDrag } from 'react-use-gesture'
 import { ThemeProvider } from "@emotion/react";
 import theme from '../../Themes/Theme'
@@ -165,7 +166,8 @@ const trans = (r: number, s: number) =>
   `perspective(1500px) rotateX(9deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
 const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
-  const id = sessionStorage.getItem('id') || '123'
+  const navigate = useNavigate()
+  const id = sessionStorage.getItem('id') || 'game_id_not_found'
   const { width, height, ratio } = useWindowDimensions()
   const [phaseTitle1, setPhaseTitle1] = useState(false)
   const [phaseTitle2, setPhaseTitle2] = useState(false)
@@ -276,7 +278,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
     localStorage.setItem("selection", selection);
     calculateGame(id, selection).then((res) => {
       console.log(res);
-      window.location.replace(resultLink);
+      navigate("/result");
     }).catch((err) => {
       console.log(err);
     })
