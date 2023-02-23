@@ -11,7 +11,7 @@ import Marquee from "react-fast-marquee";
 import testRes from "../../Images/testRes.png";
 import { ReactComponent as Flower } from "../../Images/flower.svg";
 import { ReactComponent as MapSvg } from "../../Images/map.svg"
-
+import loading from "../../Images/loading.gif"
 import gsap from "gsap";
 
 
@@ -210,6 +210,9 @@ export const Result = ({
   return (
     <ThemeProvider theme={theme}>
       {/* <NavBar /> */}
+      <div className={styles.loadingPage}>
+
+      </div>
       <div className={styles.background}>
         <video id="video" ref={videoRef} className={styles.video} autoPlay muted playsInline>
           {/* <source id="videoSrc" src="videos/noBg_H.265.mp4" type="video/mp4;codecs=hvc1" /> */}

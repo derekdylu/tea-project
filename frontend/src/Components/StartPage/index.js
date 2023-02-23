@@ -114,7 +114,7 @@ export const StartPage = ({}) => {
   }
 
   const handleStartButtonOnClick = async(e) => {
-    createGame([], [], -1)
+    createGame([], [], -1, Date.now())
     .then((res) => {
       console.log(res);
       sessionStorage.setItem('id', res.id);
