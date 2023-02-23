@@ -11,10 +11,10 @@ import Box from '@mui/material/Box';
 import background from '../../Images/Wall/background.png'
 
 // CHECK update the file path after materials are finished
-import 凍頂烏龍茶 from '../../Images/Wall/小葉種紅茶.gif'
+import 凍頂烏龍茶 from '../../Images/Wall/凍頂烏龍.gif'
 import 小葉種紅茶 from '../../Images/Wall/小葉種紅茶.gif'
-import 文山包種茶 from '../../Images/Wall/小葉種紅茶.gif'
-import 東方美人茶 from '../../Images/Wall/小葉種紅茶.gif'
+import 文山包種茶 from '../../Images/Wall/文山包種茶.gif'
+import 東方美人茶 from '../../Images/Wall/東方美人茶.gif'
 import 碧螺春綠茶 from '../../Images/Wall/小葉種紅茶.gif'
 import 紅烏龍茶 from '../../Images/Wall/小葉種紅茶.gif'
 import 紅韻紅茶 from '../../Images/Wall/小葉種紅茶.gif'
@@ -23,6 +23,39 @@ import 鐵觀音茶 from '../../Images/Wall/小葉種紅茶.gif'
 
 // const fetcher = (...args) => fetch(...args).then(res => res.json())
 // const fetcher = url => axios.get(url).then(res => res.data)
+
+const testData = [
+  {
+    "selection": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    "selected": [0,1,2,3],
+    "decision": 1,
+    "timestamp": '1677142881955',
+  },
+  {
+    "selection": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    "selected": [0,1,2,3],
+    "decision": 1,
+    "timestamp": '1677142881955',
+  },
+  {
+    "selection": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    "selected": [0,1,2,3],
+    "decision": 2,
+    "timestamp": '1677142881955',
+  },
+  {
+    "selection": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    "selected": [0,1,2,3],
+    "decision": 3,
+    "timestamp": '1677142881955',
+  },
+  {
+    "selection": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    "selected": [0,1,2,3],
+    "decision": 0,
+    "timestamp": '1677142881955',
+  },
+]
 
 function timeout(delay: number) {
   return new Promise( res => setTimeout(res, delay) );
@@ -78,8 +111,45 @@ const Wall = () => {
 
   const { width, height, ratio } = useWindowDimensions()
   const [isLoading, setIsLoading] = useState(false)
-  const [currentIndex, setCurrentIndex] = useState(0)
   const [data, setData] = useState()
+  const [path, setPath] = useState("")
+  const lastUpdateTime = Date.now()
+
+  useEffect(() => {
+    fetchAndDrop()
+  }, [])
+
+  console.log("last update time: " + lastUpdateTime)
+
+  async function fetchAndDrop () {
+    setIsLoading(true)
+
+    // const fetchedData = await getGames()
+    const fetchedData = testData
+
+    const _fetchedData = fetchedData.filter(x => x.timestamp >= lastUpdateTime)
+    if ( data ) {
+      const currentData = data
+      const _currentData = currentData.slice(1)
+      const __currentData = _currentData.concat(_fetchedData)
+      setData(__currentData)
+    } else {
+      setData(_fetchedData)
+    }
+    if ( data === undefined || data.length <= 0 ) {
+      setPath("")
+    } else {
+      setPath(teas[data[0].decision])
+    }
+    setIsLoading(false)
+  }
+
+  useEffect(() =>{
+    let interval = setInterval(() => {
+      fetchAndDrop()
+    }, (21 * 1000))
+    return () => clearInterval(interval)
+  })
 
   var Cup = styled.div`
     animation-name: ${xAxis};
@@ -91,7 +161,7 @@ const Wall = () => {
       display: block;
       width: 200px;
       height: 200px;
-      background-image: url(${teas[currentIndex]});
+      background-image: url(${path});
       background-size: 200px;
       animation-name: ${yAxis};
       animation-duration: 40s;
@@ -112,11 +182,7 @@ const Wall = () => {
         }
       </div>
       <div style={{ position: 'absolute', left: '400px', top: '-200px' }}>
-        {
-          currentIndex >= 0 && (
-            <Cup />
-          )
-        }
+        <Cup />
       </div>
       <img alt="bg" src={background} height={ 3 * height / 4} style={{ position: 'fixed', bottom: '0px', right: '-50px' }}/>
     </ThemeProvider>
