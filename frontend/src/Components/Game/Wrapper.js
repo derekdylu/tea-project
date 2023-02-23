@@ -28,12 +28,6 @@ const Wrapper = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      {/* <Grid
-        container
-        direction="column"
-        width={width}
-        height={height}
-      > */}
       <div className="container">
         <NavBar />
         <Game onChangeIndex={onChangeIndex} onChangePhaseTitle1={onChangePhaseTitle1}/>
@@ -44,17 +38,16 @@ const Wrapper = () => {
             speed={10}
             style={{
               position: 'absolute',
-              top: '580px',
-              zIndex: -1,
+              top: '550px',
             }}
             >
-              <Typography className="marquee-1" variant="displayLargeEnglish" sx={{ color: theme.palette.surface.main, mx: 1 }}>
+              <Typography className="marquee-1" variant="displayLargeEnglish" sx={{ color: "#E8E7D8", mx: 1 }}>
                 {db[index].engName}
               </Typography>
-              <Typography className="marquee-2" variant="displayLargeEnglish" sx={{ color: theme.palette.surface.main, mx: 0 }}>
+              <Typography className="marquee-2" variant="displayLargeEnglish" sx={{ color: "#E8E7D8", mx: 0 }}>
                 ∗
               </Typography>
-              <Typography className="marquee-3" variant="displayLargeEnglish" sx={{ color: theme.palette.surface.main, mx: 1 }}>
+              <Typography className="marquee-3" variant="displayLargeEnglish" sx={{ color: "#E8E7D8", mx: 1 }}>
                 {db[index].engName}
               </Typography>
             </Marquee>
@@ -63,7 +56,6 @@ const Wrapper = () => {
           index <= 1 && <img src={background} alt="bg" width={width} height={height} />
         }
       </div>
-      {/* </Grid> */}
     </ThemeProvider>
   )
 }
