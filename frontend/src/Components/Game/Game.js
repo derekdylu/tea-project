@@ -25,71 +25,93 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import SmallVerticalDivider from '../../Images/Icon/small_vertical_divider.svg';
 
 import { db } from './Characteristics';
 
 import 蔬菜香 from '../../Images/Card/蔬菜香.png'
-import 豆子 from '../../Images/Card/豆子.png'
+import 豆子香 from '../../Images/Card/豆子香.png'
 import 茶色淺 from '../../Images/Card/茶色淺.png'
 import 茶色深 from '../../Images/Card/茶色深.png'
 import 焙香 from '../../Images/Card/焙香.png'
 import 清香 from '../../Images/Card/清香.png'
-import 龍眼乾 from '../../Images/Card/龍眼乾.png'
-import 無花果乾 from '../../Images/Card/無花果乾.png'
-import 熱帶果香 from '../../Images/Card/熱帶果香.png'
+import 龍眼乾味 from '../../Images/Card/龍眼乾味.png'
+import 無花果乾味 from '../../Images/Card/無花果乾味.png'
+import 熱帶水果味 from '../../Images/Card/熱帶水果味.png'
 import 果香 from '../../Images/Card/果香.png'
 import 口感較厚 from '../../Images/Card/口感較厚.png'
-import 野薑花 from '../../Images/Card/野薑花.png'
+import 野薑花香 from '../../Images/Card/野薑花香.png'
 import 柑橘味 from '../../Images/Card/柑橘味.png'
-import 薄荷 from '../../Images/Card/薄荷.png'
+import 薄荷味 from '../../Images/Card/薄荷味.png'
 import 肉桂味 from '../../Images/Card/肉桂味.png'
 import 口感濃稠 from '../../Images/Card/口感濃稠.png'
 import 甜香 from '../../Images/Card/甜香.png'
 import 蜜香 from '../../Images/Card/蜜香.png'
 import 中藥味 from '../../Images/Card/中藥味.png'
 import 濃郁果香 from '../../Images/Card/濃郁果香.png'
-import 果酸 from '../../Images/Card/果酸.png'
+import 果酸味 from '../../Images/Card/果酸味.png'
 import 淡雅花香 from '../../Images/Card/淡雅花香.png'
 import 草麥味 from '../../Images/Card/草麥味.png'
-import 玄米 from '../../Images/Card/玄米.png'
-import 茉莉花 from '../../Images/Card/茉莉花.png'
+import 玄米味 from '../../Images/Card/玄米味.png'
+import 茉莉花香 from '../../Images/Card/茉莉花香.png'
 import 奶香 from '../../Images/Card/奶香.png'
 import 花香 from '../../Images/Card/花香.png'
 import 青香 from '../../Images/Card/青香.png'
 import 收斂感 from '../../Images/Card/收斂感.png'
 
-const resultLink = "http://localhost:3000/result"
-
 const cards = [
-  蔬菜香,
-  豆子,
   茶色淺,
   茶色深,
+  口感較厚,
+  口感濃稠,
+  收斂感,
+  無花果乾味,
+  熱帶水果味,
+  龍眼乾味,
+  柑橘味,
+  薄荷味,
+  肉桂味,
+  中藥味,
+  果酸味,
+  草麥味,
+  玄米味,
+  蔬菜香,
+  豆子香,
+  果香,
   焙香,
   清香,
-  龍眼乾,
-  無花果乾,
-  熱帶果香,
-  果香,
-  口感較厚,
-  野薑花,
-  柑橘味,
-  薄荷,
-  肉桂味,
-  收斂感,
+  野薑花香,
   甜香,
   蜜香,
-  中藥味,
   濃郁果香,
-  果酸,
-  口感濃稠,
   淡雅花香,
-  草麥味,
-  玄米,
-  茉莉花,
+  茉莉花香,
   奶香,
   花香,
   青香,
+]
+
+const type = [
+  [
+    "香氣",
+    "共 14 種",
+    "選擇你偏好的香氣",
+  ],
+  [
+    "口味",
+    "共 10 種",
+    "選擇你偏好的口味",
+  ],
+  [
+    "口感",
+    "共 3 種",
+    "選擇你偏好的口感",
+  ],
+  [
+    "茶色",
+    "共 2 種",
+    "選擇你偏好的茶色",
+  ],
 ]
 
 const phase = [
@@ -174,8 +196,10 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
 
   const [openSnackYes, setOpenSnackYes] = useState(false)
   const [openSnackNo, setOpenSnackNo] = useState(false)
-  const [open, setOpen] = useState(false)
+  const [openDialog, setOpenDialog] = useState(false)
   const [dialogIndex, setDialogIndex] = useState(0)
+  const [openTypeDialog, setOpenTypeDialog] = useState(false)
+  const [typeDialogIndex, setTypeDialogIndex] = useState(0)
 
   const [index, setIndex] = useState(db.length - 1)
   const [gone] = useState(() => new Set())
@@ -188,25 +212,31 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
   const multipleChoiceIndex = useRef(0)
 
   const pushSelection = (select, swipedIndex) => {
-    // check the swipe index to see if user swipe the card that's not on the top,
-    // -1 means button swipe is implemented and no need for checking
-    console.log("change index to", index - 1)
-    index - 1 === 1 && handlePhase2Change()
-    onChangeIndex(index - 1)
-    setIndex(index - 1)
+    // swipedIndex = -1 means button swipe is implemented and no need for checking
     let _selection = selection
     _selection.push(select)
     setSelection(_selection)
     console.log("selection", selection)
-    if (swipedIndex !== -1) {
-      if (selection.length + swipedIndex !== db.length - 2) {
-        console.log("invalid swipe: selection len", selection.length, "index to be swiped", swipedIndex, "supposed sum", db.length - 2)
-        undoSwipe(swipedIndex)
-      }
-    }
+
+    console.log("change index to", index - 1)
     if ( index - 1 === -1 ) {
       handleSubmit()
       return
+    }
+    index - 1 === 1 && handlePhase2Change()
+    onChangeIndex(index - 1)
+    setIndex(index - 1)
+
+    // check the swipe index to see if user swipe the card that's not on the top,
+    if ( swipedIndex !== -1 ) {
+      if (selection.length + swipedIndex !== db.length - 2) {
+        console.log("invalid swipe: selection len", selection.length, "index to be swiped", swipedIndex, "supposed sum", db.length - 2)
+        undoSwipe(swipedIndex)
+      } else {
+        handleTypeDialogOpen(index - 1)
+      }
+    } else {
+      handleTypeDialogOpen(index - 1)
     }
   }
 
@@ -252,11 +282,40 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
   };
 
   const handleDialogOpen = () => {
-    setOpen(true);
+    setOpenDialog(true);
   }
 
   const handleDialogClose = () => {
-    setOpen(false);
+    setOpenDialog(false);
+    handleTypeDialogOpen("startPage")
+  }
+
+  const handleTypeDialogOpen = (val) => {
+    if ( val === "startPage" ) {
+      setTypeDialogIndex(0)
+      setOpenTypeDialog(true)
+      handleTypeDialogClose()
+    }
+    if ( val === 16 ) {
+      setTypeDialogIndex(1)
+      setOpenTypeDialog(true)
+      handleTypeDialogClose()
+    }
+    if ( val === 6 ) {
+      setTypeDialogIndex(2)
+      setOpenTypeDialog(true)
+      handleTypeDialogClose()
+    }
+    if ( val === 3 ) {
+      setTypeDialogIndex(3)
+      setOpenTypeDialog(true)
+      handleTypeDialogClose()
+    }
+  }
+
+  async function handleTypeDialogClose () {
+    await timeout(2000)
+    setOpenTypeDialog(false)
   }
 
   async function handlePhase1Change () {
@@ -338,6 +397,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
 
   return (
     <ThemeProvider theme={theme}>
+      {/* --- snackbar */}
       <Snackbar
         open={openSnackYes}
         onClose={handleCloseSnackYes}
@@ -392,8 +452,9 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
         </Box>
       </Snackbar>
 
+      {/* --- dialog */}
       <Dialog
-        open={open}
+        open={openDialog}
         onClose={handleDialogClose}
         PaperProps={{
           style: { backgroundColor: theme.palette.surface.main, borderRadius: 28 }
@@ -423,6 +484,51 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
             {dialog[dialogIndex][3]}
           </Button>
         </DialogActions>
+      </Dialog>
+      
+      <Dialog
+        open={openTypeDialog}
+        onClose={handleTypeDialogClose}
+        fullWidth
+        PaperProps={{
+          style: { backgroundColor: theme.palette.surface.main, borderRadius: 0 },
+          sx: { width: width, m: 0 }
+        }}
+      >
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={3}
+          sx={{ py: 2 }}
+        >
+          <Grid item>
+            <Typography variant="titleLarge" style={{ color: theme.palette.neutralVariant[30] }}>
+              {type[typeDialogIndex][0]}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <img src={SmallVerticalDivider} alt="divider" />
+          </Grid>
+          <Grid item>
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="flex-start"
+              sx={{  }}
+              style={{ borderRadius: '28px' }}
+            >
+              <Typography variant="bodySmall" style={{ color: theme.palette.neutralVariant[30] }}>
+                {type[typeDialogIndex][1]}
+              </Typography>
+              <Typography variant="bodySmall" style={{ color: theme.palette.neutralVariant[30] }}>
+                {type[typeDialogIndex][2]}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
       </Dialog>
       
       {/* --- module wrapper */}
