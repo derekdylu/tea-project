@@ -9,8 +9,6 @@ import { NavBar } from "../NavBar"
 import useWindowDimensions from '../../Hooks/useWindowDimensions';
 import './wrapper.css';
 
-import background from '../../Images/flower.svg';
-
 import { db } from './Characteristics';
 
 const Wrapper = () => {
@@ -28,17 +26,21 @@ const Wrapper = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="container">
+      <Grid
+        style={{
+          backgroundColor: "#FEFCF4"
+        }}
+      >
         <NavBar />
         <Game onChangeIndex={onChangeIndex} onChangePhaseTitle1={onChangePhaseTitle1}/>
         {
           ( index > 1 && !phaseTitle1 ) &&
             <Marquee
-            gradient={false}
-            speed={10}
-            style={{
-              position: 'absolute',
-              top: '550px',
+              gradient={false}
+              speed={10}
+              style={{
+                position: 'relative',
+                bottom: '16px',
             }}
             >
               <Typography className="marquee-1" variant="displayLargeEnglish" sx={{ color: "#E8E7D8", mx: 1 }}>
@@ -52,10 +54,8 @@ const Wrapper = () => {
               </Typography>
             </Marquee>
         }
-        {
-          index <= 1 && <img src={background} alt="bg" width={width} height={height} />
-        }
-      </div>
+
+      </Grid>
     </ThemeProvider>
   )
 }
