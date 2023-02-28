@@ -19,6 +19,7 @@ import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
 import Slide, { SlideProps } from '@mui/material/Slide';
 
 import background from '../../Images/Card/background.png';
+import background2 from '../../Images/flower.svg';
 
 import ReplayIcon from '@mui/icons-material/Replay';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -201,6 +202,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
   const [openTypeDialog, setOpenTypeDialog] = useState(false)
   const [typeDialogIndex, setTypeDialogIndex] = useState(0)
 
+  const [multipleChoiceIndex, setMultipleChoiceIndex] = useState(0)
   const [index, setIndex] = useState(db.length - 1)
   const [gone] = useState(() => new Set())
   const [selection, setSelection] = useState([])
@@ -208,8 +210,6 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
     ...to(i),
     from: from(i),
   }))
-
-  const multipleChoiceIndex = useRef(0)
 
   const pushSelection = (select, swipedIndex) => {
     // swipedIndex = -1 means button swipe is implemented and no need for checking
@@ -237,6 +237,10 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
       }
     } else {
       handleTypeDialogOpen(index - 1)
+    }
+
+    if ( index - 1 === 0 ) {
+      setMultipleChoiceIndex(1)
     }
   }
 
@@ -535,7 +539,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
       <Grid
         container
         direction="column"
-        sx={{ pt: 14, px: 3 , mb: 1 }}
+        sx={{ pt: 10, px: 3, mb: 1, }}
       >
 
         {/* NOTE title module */}
@@ -582,7 +586,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
                 </Grid>
               </Grid>
             </Grid>
-            <Typography variant="bodyLarge" sx={{ mt: 1/2, mb: 2, color: theme.palette.neutralVariant[30] }}>
+            <Typography variant="bodyLarge" sx={{ mt: 1, mb: 2, color: theme.palette.neutralVariant[30] }}>
               {db[index].description}
             </Typography>
           </>
@@ -618,7 +622,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
               justifyContent="flex-start"
               alignItems="center"
               sx={{
-                mb: 3/2
+                mb: 1
               }}
             >
               <Button color="button" onClick={() => undoSwipe(cards.length - selection.length)}>
@@ -699,6 +703,10 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
 
       </Grid>
 
+      {
+        index <= 1 && <img src={background2} alt="bg" width={width} height="288px" />
+      }
+
       {/* NOTE multiple choice module */}
       {
           ( index >= 0 && index < 2 && !phaseTitle1 && !phaseTitle2 )&&
@@ -706,14 +714,12 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
             container
             direction="column"
             sx={{
+              pt: 2,
+              pb: 12,
               px: 3
             }}
-            style={{
-              bottom: '96px',
-              position: 'fixed',
-            }}
           >
-            {multipleChoice[multipleChoiceIndex.current].map((ele, key) => (
+            {multipleChoice[multipleChoiceIndex].map((ele, key) => (
               <Box sx={{ height: '80px', border: theme.palette.neutralVariant[50], borderStyle: 'hidden hidden solid hidden' }}>
                 <Button color="button" fullWidth onClick={() => pushSelection(key, -1)} sx={{ height: '80px' }}>
                   <Grid container direction="row" justifyContent="space-between" alignItems="center">

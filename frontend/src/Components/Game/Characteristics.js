@@ -184,6 +184,6 @@ export const db = [
     name: '青香',
     engName: 'Grass',
     img: '../../Images/Card/青香.png',
-    description: '',
+    description: '奶香就是奶香，懂？奶香就是奶香，懂？奶香就是奶香，懂？奶香就是奶香，懂？',
   },
 ]
