@@ -17,7 +17,6 @@ import { StartPage } from "./Components/StartPage";
 import { Live } from "./Containers/Live";
 import { Result } from "./Containers/Result";
 import { Map } from "./Components/Map";
-import { Anim } from "./Containers/Anim";
 import { Share } from './Components/Share';
 
 function App() {
@@ -73,7 +72,7 @@ function App() {
             <Route path="/" element={ <StartPage/> } />
             <Route path="/start" element={ <StartPage/> } />
             <Route path="/live" element={ <Live/> } />
-            <Route path="/result" element={ <Anim/> } />
+            <Route path="/result" element={ <Result/> } />
             <Route path="/map" element={ <Map/> } />
             <Route path="/share" element={ <Share/> } />
             <Route path="/cards" element={ <Cards /> } />

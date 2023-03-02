@@ -13,6 +13,7 @@ import theme from "../../Themes/Theme";
 
 import styles from "./styles.module.scss";
 import gsap from "gsap";
+import { Link } from "react-router-dom";
 
 export const NavBar = ({
   defaultHideLogo = false,
@@ -65,10 +66,12 @@ export const NavBar = ({
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={styles.container}>
-        <div className={`${styles.logo} ${defaultHideLogo && hideLogo ? styles.hidden : ""}`}>
-          <Logo />
-        </div>
+      <div className={`${styles.container} ${defaultHideLogo && hideLogo ? styles.alignLeft : ""}`}>
+        { !(defaultHideLogo && hideLogo) &&
+          <a className={styles.logo} href="/">
+            <Logo />
+          </a>
+        }
         <div className={styles.left}>
           { soundIsOn ?
             <SoundOn onClick={handleSoundOnClick} /> :
