@@ -17,6 +17,8 @@ export const getGames = async () => {
   })
 }
 
+// get a game
+
 // create a game
 export const createGame = async (_selection, _selected, _decision) => {
   const param = JSON.stringify({

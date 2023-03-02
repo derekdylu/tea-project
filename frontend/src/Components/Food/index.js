@@ -8,7 +8,9 @@ import { ThemeProvider } from "@emotion/react";
 import { Typography } from "@mui/material";
 import theme from "../../Themes/Theme";
 
-export const Food = ({data}) => {
+export const Food = (
+  data
+) => {
   return (
     <ThemeProvider theme={theme}>
       <div className={styles.container}>
@@ -19,18 +21,18 @@ export const Food = ({data}) => {
                   <circle r="2" cx="50%" cy="50%" />
               </svg>
               <Typography variant="bodySmall">
-                { data.shop }
+                { data.data.shop }
               </Typography>
             </div>
             <Typography variant="headlineMedium">
-              { data.name }
+              { data.data.name }
             </Typography>
           </div>
           <Typography variant="bodyLarge">
-            { data.desc }
+            { data.data.content }
           </Typography>
-          <img src={testImgSrc} />
-          <a href={data.link} target="_blank">
+          <img src={ testImgSrc } />
+          <a href={data.data.link} target="_blank">
             <button className={styles.button}>
               <AddIcon />
               <Typography variant="labelLarge">
@@ -38,10 +40,6 @@ export const Food = ({data}) => {
               </Typography>
             </button>
           </a>
-          {/* <a className={styles.link} href={data.link} target="_blank">
-            <ShareIcon />
-          </a> */}
-
         </div>
       </div>
     </ThemeProvider>
