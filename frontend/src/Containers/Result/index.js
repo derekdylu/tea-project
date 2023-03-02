@@ -168,7 +168,7 @@ export const Result = () => {
 
     // TODO: call API get result
 
-    setData(teaData[5]);
+    setData(teaData[0]);
     let video = document.getElementById("video");
     video.pause()
     
@@ -179,12 +179,13 @@ export const Result = () => {
     }, 2000);
   }, [])
 
-  const handleOpenDialog = () => {
+  const handleOpenDialog = (keyword) => {
     let video = document.getElementById("video");
     video.pause();
-    setExplanation({
-      "title": "萎凋",
-      "context": "萎凋可分為日光（熱風）萎凋及室內萎凋，日光（熱風）萎凋室藉由熱能使茶葉水分消散，日光萎凋後移入室內進行室內萎凋繼續使茶葉水分消散。萎凋過程可使茶葉重量、體積、硬度降低，促進化學反應產生特殊香氣及滋味。",
+    setExplanation({...explanation,
+      "title": keyword,
+      "context": keyword
+      // "context": "萎凋可分為日光（熱風）萎凋及室內萎凋，日光（熱風）萎凋室藉由熱能使茶葉水分消散，日光萎凋後移入室內進行室內萎凋繼續使茶葉水分消散。萎凋過程可使茶葉重量、體積、硬度降低，促進化學反應產生特殊香氣及滋味。",
     })
     setShowDialog(true);
   }
@@ -263,12 +264,14 @@ export const Result = () => {
 
                     { (data.contents[i]).map((text, j) => (
                       <Typography key={j} variant="bodyLarge">
-                        { text }
+                        { text.map((keyword, j) => (
+                          j % 2 ?
+                            <u onClick={() => handleOpenDialog(keyword)}>{ keyword }</u>
+                          :
+                            <>{ keyword }</>
+                        ))}
                       </Typography>
                     ))}
-                    <Typography variant="bodyLarge" sx={{textDecoration: "underline"}} display="inline" onClick={handleOpenDialog}>
-                      test
-                    </Typography>
                   </div>
                   { i == 3 &&
                     <div className={styles.mapContainer} id="map">
