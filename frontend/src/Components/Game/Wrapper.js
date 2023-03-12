@@ -3,6 +3,7 @@ import { ThemeProvider } from "@emotion/react";
 import theme from '../../Themes/Theme'
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import Marquee from "react-fast-marquee";
 import Game from "./Game";
 import { NavBar } from "../NavBar"
@@ -31,7 +32,9 @@ const Wrapper = () => {
           backgroundColor: "#FEFCF4"
         }}
       >
-        <NavBar />
+        <Box width={width} height={88} style={{ background: "#fefcf4", position: "fixed"}}>
+          <NavBar forGame={true}/>
+        </Box>
         <Game onChangeIndex={onChangeIndex} onChangePhaseTitle1={onChangePhaseTitle1}/>
         {
           ( index > 1 && !phaseTitle1 ) &&

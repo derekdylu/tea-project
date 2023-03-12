@@ -30,6 +30,10 @@ import SmallVerticalDivider from '../../Images/Icon/small_vertical_divider.svg';
 
 import { db } from './Characteristics';
 
+import dislike from '../../Images/Dialog/dislike.gif';
+import like from '../../Images/Dialog/like.gif';
+import undo from '../../Images/Dialog/undo.gif';
+
 import 蔬菜香 from '../../Images/Card/蔬菜香.png'
 import 豆子香 from '../../Images/Card/豆子香.png'
 import 茶色淺 from '../../Images/Card/茶色淺.png'
@@ -113,6 +117,11 @@ const type = [
     "共 2 種",
     "選擇你偏好的茶色",
   ],
+  [
+    "完成",
+    "即將呈現",
+    "你的專屬茶品",
+  ]
 ]
 
 const phase = [
@@ -127,6 +136,12 @@ const phase = [
     "Phase 2",
     "依據喝茶的時機找到合適的茶"
   ]
+]
+
+const dialogGif = [
+  like,
+  dislike,
+  undo,
 ]
 
 const dialog = [
@@ -220,6 +235,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
 
     console.log("change index to", index - 1)
     if ( index - 1 === -1 ) {
+      handleTypeDialogOpen(index - 1)
       handleSubmit()
       return
     }
@@ -315,6 +331,11 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
       setOpenTypeDialog(true)
       handleTypeDialogClose()
     }
+    if ( val === -1 ) {
+      // final loading
+      setTypeDialogIndex(4)
+      setOpenTypeDialog(true)
+    }
   }
 
   async function handleTypeDialogClose () {
@@ -348,6 +369,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
   }
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     handlePhase1Change()
   }, [])
 
@@ -472,11 +494,11 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
           sx={{ px: 3, pt: 3 }}
           style={{ borderRadius: '28px' }}
         >
-          {/* <img src={placeholder} alt="placeholder" width="278px" /> */}
-          <Typography variant="headlineLarge" style={{ color: theme.palette.neutralVariant[30], mt: 3 }}>
+          <img src={dialogGif[dialogIndex]} alt="placeholder" width="278px" style={{ marginBottom: '8px' }}/>
+          <Typography variant="headlineMedium" style={{ color: theme.palette.neutralVariant[30], mt: 3 }}>
             {dialog[dialogIndex][0]}
           </Typography>
-          <Typography variant="headlineLarge" sx={{ color: theme.palette.neutralVariant[30], mt: 1/2 }}>
+          <Typography variant="headlineMedium" sx={{ color: theme.palette.neutralVariant[30], mt: 1/2 }}>
             {dialog[dialogIndex][1]}
           </Typography>
           <Typography variant="bodyMedium" sx={{ color: theme.palette.neutralVariant[30], mt: 1 }}>
@@ -703,10 +725,6 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
 
       </Grid>
 
-      {
-        ( index <= 1 && !phaseTitle2 ) && <img src={background2} alt="bg" width={width} height="288px" />
-      }
-
       {/* NOTE multiple choice module */}
       {
           ( index >= 0 && index < 2 && !phaseTitle1 && !phaseTitle2 )&&
@@ -714,8 +732,8 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
             container
             direction="column"
             sx={{
-              pt: 2,
-              pb: 12,
+              pt: 12,
+              pb: height/16,
               px: 3
             }}
           >
