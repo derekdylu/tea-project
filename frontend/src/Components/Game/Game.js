@@ -382,11 +382,11 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
   }
   
   const swipeAnimation = (index, down, mx, dir, velocity) => {
-    if ( mx >= 144 ) {
+    if ( mx >= 72 ) {
       handleCloseSnackNo()
       handleClickSnackYes()
     }
-    if ( mx <= -144 ) {
+    if ( mx <= -72 ) {
       handleCloseSnackYes()
       handleClickSnackNo()
     }
