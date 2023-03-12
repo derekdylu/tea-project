@@ -704,7 +704,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
       </Grid>
 
       {
-        index <= 1 && <img src={background2} alt="bg" width={width} height="288px" />
+        ( index <= 1 && !phaseTitle2 ) && <img src={background2} alt="bg" width={width} height="288px" />
       }
 
       {/* NOTE multiple choice module */}
