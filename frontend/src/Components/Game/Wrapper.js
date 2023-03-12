@@ -41,7 +41,7 @@ const Wrapper = () => {
               style={{
                 position: 'relative',
                 bottom: '16px',
-            }}
+              }}
             >
               <Typography className="marquee-1" variant="displayLargeEnglish" sx={{ color: "#E8E7D8", mx: 1 }}>
                 {db[index].engName}
