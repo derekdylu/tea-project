@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../../Images/logo.svg";
 import { ReactComponent as SoundOn } from "../../Images/NavBar/sound_on.svg";
@@ -16,7 +17,9 @@ import gsap from "gsap";
 
 export const NavBar = ({
   defaultHideLogo = false,
+  forGame = false,
 }) => {
+  const navigate = useNavigate()
   const [windowHeight, setWindowHeight] = useState(`${document.documentElement.clientHeight}px`);
   const [soundIsOn, setSoundIsOn] = useState(true);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -67,36 +70,39 @@ export const NavBar = ({
     <ThemeProvider theme={theme}>
       <div className={styles.container}>
         <div className={`${styles.logo} ${defaultHideLogo && hideLogo ? styles.hidden : ""}`}>
-          <Logo />
+          <Logo onClick={() => navigate("/")} />
         </div>
         <div className={styles.left}>
           { soundIsOn ?
             <SoundOn onClick={handleSoundOnClick} /> :
             <SoundOff onClick={handleSoundOnClick} />
           }
-          {/* <Menu /> */}
-          <svg className={styles.burger} onClick={handleBurgerOnClick}>
-            <line x1="12%" y1="50%" x2="88%" y2="50%"
-              className={`${styles.top} ${menuIsOpen ? styles.opened : ""}`} />
-            <line x1="12%" y1="50%" x2="88%" y2="50%"
-              className={`${styles.middle} ${menuIsOpen ? styles.opened : ""}`} />
-            <line x1="12%" y1="50%" x2="88%" y2="50%"
-              className={`${styles.bottom} ${menuIsOpen ? styles.opened : ""}`} />
-          </svg>
+          { !forGame &&
+            <svg className={styles.burger} onClick={handleBurgerOnClick}>
+              <line x1="12%" y1="50%" x2="88%" y2="50%"
+                className={`${styles.top} ${menuIsOpen ? styles.opened : ""}`} />
+              <line x1="12%" y1="50%" x2="88%" y2="50%"
+                className={`${styles.middle} ${menuIsOpen ? styles.opened : ""}`} />
+              <line x1="12%" y1="50%" x2="88%" y2="50%"
+                className={`${styles.bottom} ${menuIsOpen ? styles.opened : ""}`} />
+            </svg>
+          }
         </div>
-        <div id="menu" className={styles.menu}>
-          <div id="row" className={styles.rowContainer}>
-            { menus.map((menu, i) => (
-              <div key={i} className={styles.row}>
-                <Typography variant="titleLarge" color={theme.palette.surface.contrastText}>
-                  { menu }
-                </Typography>
-                <ArrowForward />
-              </div>
-            ))}
+        { !forGame &&
+          <div id="menu" className={styles.menu}>
+            <div id="row" className={styles.rowContainer}>
+              { menus.map((menu, i) => (
+                <div key={i} className={styles.row}>
+                  <Typography variant="titleLarge" color={theme.palette.surface.contrastText}>
+                    { menu }
+                  </Typography>
+                  <ArrowForward />
+                </div>
+              ))}
+            </div>
+            <FrontCenter id="grass" className={styles.grass} />
           </div>
-          <FrontCenter id="grass" className={styles.grass} />
-        </div>
+        }
       </div>    
     </ThemeProvider>
   )
