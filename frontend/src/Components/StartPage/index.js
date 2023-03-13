@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { NavBar } from "../NavBar";
 import { createGame } from "../../Utils/Axios";
 
@@ -21,6 +21,10 @@ import { ThemeProvider } from "@emotion/react";
 import { Typography } from "@mui/material";
 import theme from "../../Themes/Theme";
 
+import useWindowDimensions from '../../Hooks/useWindowDimensions';
+import Dialog from '@mui/material/Dialog';
+import Grid from '@mui/material/Grid';
+
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
@@ -28,6 +32,9 @@ ScrollTrigger.config({ ignoreMobileResize: true });
 
 export const StartPage = ({}) => {
   const navigate = useNavigate()
+  const { width, height, ratio } = useWindowDimensions()
+  const [open, setOpen] = useState(false);
+  const [narrow, setNarrow] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const [second, setSecond] = useState(false);
@@ -37,6 +44,24 @@ export const StartPage = ({}) => {
     "生活中隨處可以看見台灣茶的蹤影，可是我們總是與他們擦身而過，錯失了認識他們的好機會。",
     "現在讓我們一起看看你適合哪些台灣茶，把握與他的認識機會吧！"
   ]
+
+  useEffect(() => {
+    if (width < 320) {
+      setNarrow(true)
+      setOpen(true)
+      return
+    } else {
+      if (ratio > 1) {
+        setNarrow(false)
+        setOpen(true)
+        return
+      } else {
+        setNarrow(false)
+        setOpen(false)
+        return
+      }
+    }
+  }, [ratio])
 
   useEffect(() => {
     console.log("done rendering");
@@ -122,7 +147,6 @@ export const StartPage = ({}) => {
       sessionStorage.setItem('id', res.id);
       console.log(sessionStorage);
       navigate("/game");
-      // return redirect("/game");
     })
     .catch((err) => {
       setIsLoading(false)
@@ -132,6 +156,24 @@ export const StartPage = ({}) => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Dialog aria-labelledby="window-size" open={open} fullScreen>
+        <Grid container direction="column" alignItems="center" justifyContent="center" sx={{ my: 1 }} height="100%">
+          {
+            narrow ?
+            (
+              <Typography variant="body2" color="#2D3748" fontWeight="500" sx={{mt: 2.5}} align="center">
+                最小螢幕寬度 320 px
+              </Typography>
+            ):(
+              <>
+                <Typography variant="h6" color="#2D3748" fontWeight="700" sx={{mt: 2.5}} align="center">
+                  豎直手機螢幕或瀏覽器視窗以享受最佳遊戲體驗
+                </Typography>
+              </>
+            )
+          }
+        </Grid>
+      </Dialog>
       <NavBar defaultHideLogo={!second} />
       <div id="container" className={styles.container} onScroll={(e) => handleOnScroll(e)}>
         <div id="trigger" className={styles.trigger} />

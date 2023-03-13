@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo, createRef } from 'react'
 import { useSpring, useSprings, animated, to as interpolate } from '@react-spring/web'
-import { useNavigate, redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDrag } from 'react-use-gesture'
 import { ThemeProvider } from "@emotion/react";
 import theme from '../../Themes/Theme'
@@ -363,13 +363,15 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
     calculateGame(id, selection).then((res) => {
       console.log(res);
       navigate("/result");
-      // return redirect("/result")
     }).catch((err) => {
       console.log(err);
     })
   }
 
   useEffect(() => {
+    if (id === 'game_id_not_found') {
+      navigate("/")
+    }
     window.scrollTo(0, 0)
     handlePhase1Change()
   }, [])
