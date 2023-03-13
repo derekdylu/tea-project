@@ -26,6 +26,7 @@ app = FastAPI()
 origins = [
   "http://localhost",
   "http://localhost:3000",
+  "https://ntu-tea-tinder.netlify.app",
 ]
 
 app.add_middleware(
