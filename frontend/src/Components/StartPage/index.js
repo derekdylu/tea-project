@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, redirect } from "react-router-dom";
 import { NavBar } from "../NavBar";
 import { createGame } from "../../Utils/Axios";
 
@@ -31,6 +31,7 @@ export const StartPage = ({}) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const [second, setSecond] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const content = [
     "生活中隨處可以看見台灣茶的蹤影，可是我們總是與他們擦身而過，錯失了認識他們的好機會。",
@@ -114,14 +115,17 @@ export const StartPage = ({}) => {
   }
 
   const handleStartButtonOnClick = async(e) => {
+    setIsLoading(true)
     createGame([], [], -1, Date.now())
     .then((res) => {
       console.log(res);
       sessionStorage.setItem('id', res.id);
       console.log(sessionStorage);
       navigate("/game");
+      // return redirect("/game");
     })
     .catch((err) => {
+      setIsLoading(false)
       console.log(err);
     })
   }
@@ -172,7 +176,10 @@ export const StartPage = ({}) => {
 
           <button className={styles.button} onClick={handleStartButtonOnClick}>
             <Typography variant="labelLarge" color={theme.palette.background.contrastText}>
-              開始探索
+              { isLoading ?
+                <div>Loading...</div> :
+                <div>開始探索</div>
+              }
             </Typography>
           </button>
         </div>
