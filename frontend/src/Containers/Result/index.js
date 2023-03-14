@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Food } from "../../Components/Food";
 import { Share } from "../../Components/Share";
-import teaData from "./data";
+import { teaData, termData } from "./data";
 import styles from "./styles.module.scss";
 
 import { ThemeProvider } from "@emotion/react";
@@ -30,7 +30,8 @@ export const Result = () => {
     reverse: false,
   });
   const [time, setTime] = useState(0);
-  const [showDialog, setShowDialog] = useState(false);
+  const [showTermDialog, setShowTermDialog] = useState(false);
+  const [showShareDialog, setShowShareDialog] = useState(false);
   const [explanation, setExplanation] = useState({
     "title": "",
     "context": "",
@@ -60,15 +61,6 @@ export const Result = () => {
       title: "產區",
       start: 34,
       end: 50
-    }
-  ]
-
-  const foodData = [
-    {
-      shop: "甘樂文創",
-      name: "碧螺春綠茶磅蛋糕",
-      desc: "嚴選在地碧螺春茶葉製成，口感紮實，茶香濃郁，全新配方還加入滿滿的碧螺春內餡，一口咬下紮實的蛋糕體中，品嚐的到濕潤香厚且綿密的餡雙重口感~",
-      link: "https://www.fresh-farm.com.tw/page/product/show.aspx?num=644&kind=104&page=1&lang=TW",
     }
   ]
 
@@ -184,18 +176,16 @@ export const Result = () => {
     video.pause();
     setExplanation({...explanation,
       "title": keyword,
-      "context": keyword
-      // "context": "萎凋可分為日光（熱風）萎凋及室內萎凋，日光（熱風）萎凋室藉由熱能使茶葉水分消散，日光萎凋後移入室內進行室內萎凋繼續使茶葉水分消散。萎凋過程可使茶葉重量、體積、硬度降低，促進化學反應產生特殊香氣及滋味。",
+      "context": termData[keyword]
     })
-    setShowDialog(true);
+    setShowTermDialog(true);
   }
 
   const handleCloseDialog = () => {
     let video = document.getElementById("video");
     video.play();
-    setShowDialog(false);
+    setShowTermDialog(false);
   }
-
   
 
   return (
@@ -264,11 +254,11 @@ export const Result = () => {
 
                     { (data.contents[i]).map((text, j) => (
                       <Typography key={j} variant="bodyLarge">
-                        { text.map((keyword, j) => (
-                          j % 2 ?
-                            <u onClick={() => handleOpenDialog(keyword)}>{ keyword }</u>
+                        { text.split("**").map((keyword, k) => (
+                          k % 2 ?
+                          <u onClick={() => handleOpenDialog(keyword)} key={k}>{ keyword }</u>
                           :
-                            <>{ keyword }</>
+                          <>{ keyword }</>
                         ))}
                       </Typography>
                     ))}
@@ -310,7 +300,7 @@ export const Result = () => {
         </div>
       </div>
       <Dialog
-        open={showDialog}
+        open={showTermDialog}
         onClose={handleCloseDialog}
         PaperProps={{
           style: { backgroundColor: theme.palette.surface.main, borderRadius: 28 }
