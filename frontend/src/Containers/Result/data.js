@@ -18,7 +18,7 @@ export const teaData = [
         "新北市三峽茶區毗鄰新店、土城、樹林、鶯歌、大溪，連接文山茶區，是臺灣唯一僅剩的專業炒菁綠茶產區。"
       ]
     ],
-    "areaName": "新北市、三峽",
+    "areaName": ["newTaipei"],
     "foodProduct": {
       "name": "碧螺春千層蛋糕",
       "content": "特選青心柑仔之茶種，滋味甘醇。搭配進口伊娃娜白巧克力內餡，帶出清爽甘甜，尾韻回甘的茶香味，外觀碧綠清澈如翡翠，搭配顆顆玄米撒下更顯茶香芬芳！",
@@ -45,7 +45,7 @@ export const teaData = [
         "南投為其產區。"
       ]
     ],
-    "areaName": "南投",
+    "areaName": ["nantou"],
     "foodProduct": {
       "name": "台灣玉露綠茶-四兩茶葉",
       "content": "",
@@ -73,7 +73,7 @@ export const teaData = [
         "產區分布於新北市坪林區、石碇區、深坑區、平溪區、汐止區、新店區及三峽區，台北市南港區及木柵區等。"
       ]
     ],
-    "areaName": "新北市",
+    "areaName": ["newTaipei", "taipei"],
     "foodProduct": {
       "name": "包種茶酥",
       "content": "包種茶酥選用來自在素有茶鄉之稱的坪林，以最純淨的水源、最清新的空氣，製作出最好的包種茶，結合娃娃酥做成的茶酥，酥脆口感、清淡茶香不黏牙。",
@@ -100,7 +100,7 @@ export const teaData = [
         "主產於南投縣竹山鎮、仁愛鄉及信義鄉，臺中市和平區。"
       ]
     ],
-    "areaName": "",
+    "areaName": ["nantou", "taichung"],
     "foodProduct": {
       "name": "台灣高山烏龍茶千層",
       "content": "與台北第三代茶莊配合，精選清香型台灣高山烏龍茶研磨製成， 手工製作的蛋糕餅皮，堅持嚴選的日本鮮奶油及麵粉，手工直火製作充滿焦糖化香氣，完整呈現出高山烏龍特有的茶香。",
@@ -127,7 +127,7 @@ export const teaData = [
         "主產於嘉義縣梅山鄉、阿里山鄉，番路鄉及竹崎鄉等地。"
       ]
     ],
-    "areaName": "",
+    "areaName": ["jiayi"],
     "foodProduct": {
       "name": "台灣高山烏龍茶千層",
       "content": "與台北第三代茶莊配合，精選清香型台灣高山烏龍茶研磨製成， 手工製作的蛋糕餅皮，堅持嚴選的日本鮮奶油及麵粉，手工直火製作充滿焦糖化香氣，完整呈現出高山烏龍特有的茶香。",
@@ -154,7 +154,7 @@ export const teaData = [
         "主產於宜蘭、桃園蘆竹。"
       ]
     ],
-    "areaName": "",
+    "areaName": ["yilan", "taoyuan"],
     "foodProduct": {
       "name": "台灣高山烏龍茶千層",
       "content": "與台北第三代茶莊配合，精選清香型台灣高山烏龍茶研磨製成， 手工製作的蛋糕餅皮，堅持嚴選的日本鮮奶油及麵粉，手工直火製作充滿焦糖化香氣，完整呈現出高山烏龍特有的茶香。",
@@ -181,7 +181,7 @@ export const teaData = [
         "凍頂茶原產於南投縣鹿谷鄕，現今其產製技術已經擴展到南投縣竹山鎮、名間鄉及臺灣其他茶區。"
       ]
     ],
-    "areaName": "",
+    "areaName": ["nantou"],
     "foodProduct": {
       "name": "凍頂烏龍茶蕨餅生乳捲",
       "content": "凍頂烏龍茶是選自於華剛茶場。發酵後的熟果香跟烘焙後烤米香，韻味十足！烏龍茶戚風蛋糕捲內再加入軟Q的烏龍茶蕨餅.外層再批覆烏龍茶甘那許！",
@@ -208,7 +208,7 @@ export const teaData = [
         "主要生產於臺北市木柵區及新北市石門區。"
       ]
     ],
-    "areaName": "",
+    "areaName": ["taipei", "newTaipei"],
     "foodProduct": {
       "name": "鐵觀音奶霜蛋糕",
       "content": "口感輕盈細膩的舒芙蕾溫和地襯托鐵觀音醇厚的茶香，隨著口中溫度的變化，北海道鮮奶油的恬淡奶香漸漸與茶香融合釋出第二種溫和柔順的層次口感，尾韻留下茶葉淡淡的清甜果香。",
@@ -236,7 +236,7 @@ export const teaData = [
         "主產於台東鹿野。"
       ]
     ],
-    "areaName": "",
+    "areaName": ["taidong"],
     "foodProduct": {
       "name": "鹿野紅烏龍生乳捲",
       "content": "使用台東初鹿特產的鮮奶，與鹿野紅烏龍茶葉結合而成。濕潤軟綿的戚風蛋糕搭配法國進口鮮奶油，每一口香醇的像在喝鮮奶。",
@@ -263,7 +263,7 @@ export const teaData = [
         "主要生產於新北市石碇區、桃園市龍潭區、新竹縣北埔、峨眉及苗栗縣頭份、銅鑼一帶茶區。"
       ]
     ],
-    "areaName": "",
+    "areaName": ["newTaipei", "taoyuan", "hsinchu"],
     "foodProduct": {
       "name": "台灣茶詩蛋糕-東方美人茶",
       "content": "東方美人茶詩蛋糕選用台灣麵粉＆日本昭和麵粉，以法國依思尼奶油提升香氣，東方美人茶是台灣特有的半發酵青茶，不苦不澀的味道依著麵糊沉睡一晚，紅鹽漬櫻花像是美人嘴上的胭脂，在日本的千代田烤模裡甦醒，有點鹹甜鹹甜的東方味道獨特動人。",
@@ -290,7 +290,7 @@ export const teaData = [
         "各地茶產區皆有。"
       ]
     ],
-    "areaName": "",
+    "areaName": [],
     "foodProduct": {
       "name": "小葉紅茶",
       "content": "與鮮奶油共同熬煮後，有別於一般紅茶的濃厚、強烈，小葉紅茶溫和、香醇、順口、且不帶有澀味。",
@@ -317,7 +317,7 @@ export const teaData = [
         "台灣南投縣魚池鄉日月潭是臺灣阿薩姆紅茶主要產地。"
       ]
     ],
-    "areaName": "",
+    "areaName": ["nantou"],
     "foodProduct": {
       "name": "阿薩姆紅茶瑞士捲",
       "content": "精選的阿薩姆紅茶製成卡士達內餡與戚風蛋糕外皮，其淡雅特殊的茶香有別於一般紅茶綠茶的味道，淡定的滋味，讓妳每一口都有幸福的感覺。",
@@ -344,7 +344,7 @@ export const teaData = [
         "台灣南投縣魚池鄉與台東為主要種植區域。"
       ]
     ],
-    "areaName": "",
+    "areaName": ["nantou", "taidong"],
     "foodProduct": {
       "name": "日月潭紅玉紅茶燒布丁",
       "content": "上層的輕乳酪蛋糕搭配下層布丁",
@@ -371,7 +371,7 @@ export const teaData = [
         "台灣南投縣魚池鄉為主要種植區域。"
       ]
     ],
-    "areaName": "",
+    "areaName": ["nantou"],
     "foodProduct": {
       "name": "紅韻厚奶茶生巧克力",
       "content": "使用排骨紅茶家的上等原葉茶葉 一根根曲線優美、落盤有聲！",
@@ -398,7 +398,7 @@ export const teaData = [
         "花東地區、新北市坪林、三峽、南投、台中、嘉義都有，尤以花蓮縣瑞穗鄉舞鶴村所產的蜜香紅茶品質極為優。"
       ]
     ],
-    "areaName": "",
+    "areaName": ["hualian", "hsinchu", "nantou", "taichung", "jiayi", "hualian"],
     "foodProduct": {
       "name": "蜜香紅茶生乳慕斯",
       "content": "蜜香紅茶，是茶樹生長過程中遭小綠葉蟬吸吮，具獨特的天然熟果香，滋味帶顯著的蜂蜜味，甘甜後韻。製做在甜點風味中，搭配法國奶油乳酪，上頭再擠上玫瑰草莓香緹，吃一口同時可以感受到茶香及奶香的濃郁口感！",
@@ -425,7 +425,7 @@ export const teaData = [
         "主要的著名產地位於南投竹山杉林溪和嘉義阿里山"
       ]
     ],
-    "areaName": "",
+    "areaName": ["nantou", "jiayi"],
     "foodProduct": {
       "name": "檸檬金萱千層蛋糕",
       "content": "把金萱茶粉，融入了奶霜裡，做成了金萱奶霜，利用奶霜的強烈感，去襯托茶的清香，再配上自己熬煮的檸檬醬，用一點酸，去把整個蛋糕的清爽感再拉高。",
@@ -452,7 +452,7 @@ export const teaData = [
         "最早由台北木柵地區引種栽種，現各地茶產區皆有。"
       ]
     ],
-    "areaName": "",
+    "areaName": ["taipei"],
     "foodProduct": {
       "name": "台灣四季春重乳酪蛋糕",
       "content": "揉合特選頂級乳酪與台灣高品質四季春茶葉，製作出的四季春重乳酪蛋糕，奶香味與四季春茶香各有風采，細膩的口感與香氣，讓每一口都是滿滿的幸福。",
