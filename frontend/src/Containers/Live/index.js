@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import liveBackground from "../../Images/liveBackground.png"
 import { ThemeProvider } from "@emotion/react";
 import { Typography } from "@mui/material";
 import theme from "../../Themes/Theme";
+import tea from "../../Images/Live/tea.png"
+import qrCode from "../../Images/Live/tmpQrCode.png" // TODO: change img source
 
-export const Live = ({
-
-}) => {
+export const Live = () => { // 1570 x 1200
   const [rank, setRank] = useState({
     "碧螺春綠茶": 60,
     "紅烏龍": 80,
@@ -15,14 +15,21 @@ export const Live = ({
     "鐵觀音": 85,
     "東方美人茶": 50,
     "四季春": 90,
-    // "tea7": 65,
-    // "tea8": 75,
-    // "tea9": 60,
-    // "tea10": 90,
   });
 
-  // const position = ["2%", "12%", "22%", "32%", "42%", "52%", "62%", "72%", "82%", "92%"];
-  const position = ["13%", "26%", "39%", "52%", "65%", "78%"];
+  const title = [
+    "大家",
+    "的喜好",
+    "TOP 6"
+  ]
+
+  const description = "圖表簡單說明圖比簡單說明圖表簡單說明圖比簡單說明圖表簡單說明圖比簡單說明圖表簡單說明圖比簡單說明圖表簡單說明圖比簡單說明圖表簡單說明圖比簡單說明。"
+  const qrDescription = [
+    "馬上加入配對，",
+    "找到屬於自己的一杯好茶。"
+  ]
+
+  const position = ["80%", "64%", "48%", "32%", "16%", "0%"];
 
   const [max, setMax] = useState(0);
   const [sortedKeys, setSortedKeys] = useState([]);
@@ -34,7 +41,7 @@ export const Live = ({
     sorted.map((key, i) => {
       let element = document.getElementById(key)
       console.log(element.style)
-      element.style.top = position[i]
+      element.style.bottom = position[i]
     })
   }, [rank]);
 
@@ -47,20 +54,51 @@ export const Live = ({
   return (
     <ThemeProvider theme={theme}>
       <div className={styles.container} style={{backgroundImage:`url(${liveBackground})`}}>
-        {/* <div className={styles.graph}> */}
-          { Object.keys(rank).map((key) => (
-            <div className={styles.row} id={key}>
-              <Typography variant="titleLarge" onClick={ (e) => handleOnClick(key) }> {key} {/*rank[key]*/} </Typography>
-              {/* <div onClick={ (e) => handleOnClick(key) }>{key}</div> */}
-              <div className={styles.tmp}>
-                <div className={styles.bar} style={{width: `${rank[key] / max * 100}%`}} />
-                <Typography variant="titleLarge" onClick={ (e) => handleOnClick(key) }>
-                  {rank[key]}
-                </Typography>
+        <div className={`${styles.rowContainer} ${styles.top}`}>
+          <div className={styles.title}>
+            { title.map((text, i) => (
+              <Typography variant="displayLarge">
+                { text }
+              </Typography>
+            ))
+            }
+          </div>
+          <div className={styles.graph}>
+            { Object.keys(rank).map((key) => (
+              <div className={styles.row} id={key}>
+                <img src={tea} />
+
+                <div className={styles.column} >
+                  <Typography variant="titleLarge" onClick={ (e) => handleOnClick(key) }> {key} {/*rank[key]*/} </Typography>
+                  <div className={styles.bar} style={{width: `calc(${rank[key] / max * 100}% - 1rem)`}}>
+                    <div className={styles.filled} />
+                    <Typography variant="titleMedium" onClick={ (e) => handleOnClick(key) }>
+                      {rank[key]}
+                    </Typography>
+                  </div>
+                </div>
               </div>
+            ))}
+          </div>
+        </div>
+        <svg>
+          <line x1="0%" y1="50%" x2="100%" y2="50%" />
+        </svg>
+        <div className={`${styles.rowContainer} ${styles.bottom}`}>
+          <Typography variant="headlineSmall">
+            { description }
+          </Typography>
+          <div className={styles.qrContainer}>
+            <div style={{display: "flex", flexDirection: "column"}}>
+              { qrDescription.map((text, i) => (
+                <Typography variant="headlineSmall" className={styles.description}>
+                  { text }
+                </Typography>
+              ))}
             </div>
-          ))}
-        {/* </div> */}
+            <img src={qrCode} />
+          </div>
+        </div>
       </div>
     </ThemeProvider>
   )
