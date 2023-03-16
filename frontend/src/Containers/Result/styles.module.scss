@@ -170,6 +170,61 @@
         top: 12%;
         right: 40%;
 
+        &.taipei {
+            top: 2%;
+            right: 35%;
+        }
+
+        &.newTaipei {
+            top: 6%;
+            right: 32%;
+        }
+
+        &.taoyuan {
+            top: 10%;
+            right: 42%;
+        }
+
+        &.hsinchu {
+            top: 14%;
+            right: 45%;
+        }
+
+        &.miaoli {
+            top: 18%;
+            right: 50%;
+        }
+
+        &.yilan {
+            top: 17%;
+            right: 39%;
+        }
+
+        &.nantou {
+            top: 30%;
+            right: 50%;
+        }
+
+        &.hualian {
+            top: 40%;
+            right: 35%;
+        }
+
+        &.taichung {
+            top: 22%;
+            right: 45%;
+        }
+
+        &.jiayi {
+            top: 50%;
+            right: 60%;
+        }
+
+        &.taidong {
+            top: 60%;
+            right: 40%;
+        }
+
         .text {
             opacity: 0;
             color: var(--text-color);
@@ -210,6 +265,7 @@
 }
 
 .nonVideoSection {
+    opacity: 0;
     padding: 4rem 0;
     // min-height: 100vh;
     width: 100vw;
@@ -223,6 +279,7 @@
     gap: 4rem;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    transition: all 2s ease-in-out;
     
     &::-webkit-scrollbar {
         display: none;

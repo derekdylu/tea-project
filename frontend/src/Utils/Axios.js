@@ -18,6 +18,11 @@ export const getGames = async () => {
 }
 
 // get a game
+export const getGameById = async (id) => {
+  return await instance.get(`/game/${id}`).then((res) => {
+    return res.data;
+  });
+}
 
 // create a game
 export const createGame = async (_selection, _selected, _decision) => {
