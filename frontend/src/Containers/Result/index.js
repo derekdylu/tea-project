@@ -29,6 +29,7 @@ export const Result = () => {
     endTime: 0,
     nextSource: "",
     reverse: false,
+    currSection: 0
   });
   const [showTermDialog, setShowTermDialog] = useState(false);
   const [explanation, setExplanation] = useState({
@@ -39,7 +40,7 @@ export const Result = () => {
   const [videoIsHidden, setVideoIsHidden] = useState(false);
 
   const [location, setLocation] = useState({
-    "taipei": false,
+    "taipei": true,
     "newTaipei": false,
     "taoyuan": false,
     "hsinchu": false,
@@ -63,19 +64,19 @@ export const Result = () => {
       id: "second",
       title: "製作",
       start: 7,
-      end: 23,
+      end: 21,
     },
     {
       id: "third",
       title: "特性",
-      start: 23,
-      end: 35,
+      start: 21,
+      end: 33,
     },
     {
       id: "fourth",
       title: "產區",
-      start: 35,
-      end: 50
+      start: 33,
+      end: 53
     },
     {
       id: "fifth",
@@ -85,9 +86,25 @@ export const Result = () => {
     }
   ]
 
-  useEffect(() => {    
-    videoRef.current?.load();
-  }, [timeSource]);
+  const [currTime, setCurrTime] = useState(0);
+  const [currSection, setCurrSection] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      let video = document.getElementById("video");
+      setCurrTime(video.currentTime);
+
+      sections.map((section, i) => {
+        if (section.end < video.currentTime && currSection == i) {
+          video.pause()
+        }
+      })
+    }, 1000);
+
+    return(() => {
+      clearInterval(interval);
+    })
+  }, [currTime, currSection]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -102,6 +119,7 @@ export const Result = () => {
             }
             setTimeSource(fastFwd.nextSource);
             setFastFwd({...fastFwd, isSeeking: false});
+            video.play()
           }
           else {
             video.currentTime += -0.2;
@@ -113,8 +131,9 @@ export const Result = () => {
           video.playbackRate = 1;
           setTimeSource(fastFwd.nextSource);
           setFastFwd({...fastFwd, isSeeking: false});
+          video.play()
           if (fastFwd.nextSource == `t=${sections[4].start},${sections[4].end}`)
-            setVideoIsHidden(true);
+          setVideoIsHidden(true);
         }
       }
       
@@ -143,8 +162,12 @@ export const Result = () => {
           isSeeking: true,
           endTime: endTime,
           nextSource: `t=${sections[i].start},${sections[i].end}`,
-          reverse: reverse
+          reverse: reverse,
+          currSection: reverse ? i : (i - 1)
         });
+
+        setCurrSection(i);
+        console.log(i)
 
         setPrevPosition(i);
         top = true;
@@ -179,8 +202,8 @@ export const Result = () => {
   }, [startMap]);
 
   useEffect(() => {
-    // let gamesId = sessionStorage.getItem("id");
-    let gameId = "640d799ecbd84b560e405ebe"; // debug
+    let gameId = sessionStorage.getItem("id");
+    // let gameId = "640d799ecbd84b560e405ebe"; // debug
 
     getGameById(gameId)
       .then((res) => {
@@ -232,8 +255,8 @@ export const Result = () => {
       </div>
       <div className={styles.background}>
         <video id="video" ref={videoRef} className={styles.video} autoPlay muted playsInline hidden={videoIsHidden}>
-          <source id="videoSrc" src={`videos/noBg.webm#${timeSource}`} type="video/webm" />
-          <source id="videoSrc" src={`videos/noBg_H.265.mp4#${timeSource}`} type="video/mp4;codecs=hvc1" />
+          <source id="videoSrc" src={`videos/noBg.webm`} type="video/webm" />
+          <source id="videoSrc" src={`videos/noBg_H.265.mp4`} type="video/mp4;codecs=hvc1" />
         </video>
         <div className={styles.container} onScroll={(e) => handleScroll(e)}>
           { sections.slice(0, 4).map((section, i) => (
