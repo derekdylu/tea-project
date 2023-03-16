@@ -6,7 +6,7 @@ export const tea = [
   },
   {
     id: 1,
-    name: "綠茶",
+    name: "八川綠茶",
     location: [],
   },
   {
@@ -26,7 +26,7 @@ export const tea = [
   },
   {
     id: 5,
-    name: "高山烏龍(低海拔)",
+    name: "台灣烏龍茶",
     location: ["宜蘭", "桃園蘆竹"],
   },
   {
@@ -56,17 +56,17 @@ export const tea = [
   },
   {
     id: 11,
-    name: "台茶8號",
+    name: "阿薩姆紅茶",
     location: [],
   },
   {
     id: 12,
-    name: "台茶18號(紅玉紅茶)",
+    name: "紅玉紅茶",
     location: [],
   },
   {
     id: 13,
-    name: "台茶21號(紅韻紅茶)",
+    name: "紅韻紅茶",
     location: [],
   },
   {
@@ -76,7 +76,7 @@ export const tea = [
   },
   {
     id: 15,
-    name: "金萱烏龍",
+    name: "金萱茶",
     location: ["石碇"],
   },
   {
