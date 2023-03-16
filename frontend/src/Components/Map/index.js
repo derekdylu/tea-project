@@ -72,10 +72,10 @@ export const Map = ({}) => {
             <Left />
           </div>
           <div className={`${styles.area} ${styles.newTaipei}`}>
-            <Right />
             <Typography id="text" variant="bodyMedium" className={styles.text}>
               新北
             </Typography>
+            <Left />
           </div>
           <div className={`${styles.area} ${styles.taoyuan}`}>
             <Typography id="text" variant="bodyMedium" className={styles.text}>
@@ -96,22 +96,22 @@ export const Map = ({}) => {
             <Left />
           </div>
           <div className={`${styles.area} ${styles.yilan}`}>
-            <Right />
             <Typography id="text" variant="bodyMedium" className={styles.text}>
               宜蘭
             </Typography>
+            <Left />
           </div>
           <div className={`${styles.area} ${styles.nantou}`}>
-            <Right />
             <Typography id="text" variant="bodyMedium" className={styles.text}>
               南投
             </Typography>
+            <Left />
           </div>
           <div className={`${styles.area} ${styles.hualian}`}>
-            <Right />
             <Typography id="text" variant="bodyMedium" className={styles.text}>
               花蓮
             </Typography>
+            <Left />
           </div>
           <div className={`${styles.area} ${styles.taichung}`}>
             <Typography id="text" variant="bodyMedium" className={styles.text}>
@@ -126,10 +126,10 @@ export const Map = ({}) => {
             <Left />
           </div>
           <div className={`${styles.area} ${styles.taidong}`}>
-            <Right />
             <Typography id="text" variant="bodyMedium" className={styles.text}>
               台東
             </Typography>
+            <Left />
           </div>
         </div>
       </div>
