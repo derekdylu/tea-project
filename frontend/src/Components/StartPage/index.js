@@ -131,7 +131,6 @@ export const StartPage = ({}) => {
 
   const handleOnScroll = (e) => {
     let percentage = window.pageYOffset / window.innerHeight;
-    // console.log(percentage);
     if (percentage >= 1.5) {
       setSecond(true);
     } else {
@@ -146,6 +145,7 @@ export const StartPage = ({}) => {
       console.log(res);
       sessionStorage.setItem('id', res.id);
       console.log(sessionStorage);
+      window.scrollTo({ top: 0 });
       navigate("/game");
     })
     .catch((err) => {
