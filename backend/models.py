@@ -42,6 +42,10 @@ class Game(BaseModel):
 
 class UpdateGame(BaseModel):
   selection: Optional[list]
+  selected: Optional[list]
+  decision: Optional[int]
+  timestamp: Optional[str]
+  shown: Optional[bool]
 
   class Config:
     arbitrary_types_allowed = True

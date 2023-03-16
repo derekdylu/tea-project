@@ -62,8 +62,10 @@ export const updateGame = async (id, _selection, _selected, _decision, _timestam
     param = {...param, "shown": _shown}
   }
 
+  console.log("param", param)
+
   param = JSON.stringify(param);
-  return instance.put(`/update_game/${id}`, param, jsonHeader).then((res) => {
+  return await instance.put(`/update_game/${id}`, param, jsonHeader).then((res) => {
     return res.data;
   })
 }
