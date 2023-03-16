@@ -86,16 +86,12 @@ const yAxis = keyframes`
 `
 
 const Wall = () => {
-  // TODO add motion tea background, background color, and import all cup motions
-  // TODO align all tea motion materials
-  // TODO create a valid loop function for multiple teas displaying
-  // TODO subscription (GraphQL) or automatic refetch in a certain time without messing up the currently displaying order
-
   const { width, height, ratio } = useWindowDimensions()
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState()
   const [path, setPath] = useState("")
-  // const lastUpdateTime = Date.now() - 20999
+  const [startTime, setStartTime] = useState(0)
+  // const lastUpdateTime = Date.now()
   // const lastUpdateTime = "1678947398956"
 
   useEffect(() => {
@@ -111,29 +107,38 @@ const Wall = () => {
     console.log("fetched data", fetchedData)
     // const fetchedData = testData
 
-    let demoData = []
-    const _fetchedData = fetchedData.filter(x => x.decision !== -1).filter(y => y.shown === false)
-    if ( data && data.length > 0 ) {
-      const currentData = data
+    // let demoData = []
+    const fetchedDataTop = fetchedData.filter(x => x.decision !== -1)
+                                      .filter(y => y.shown === false && y.timestamp >= startTime)
+                                      .sort((a, b) => a.timestamp - b.timestamp)[0]
+    
+    // if ( data && data.length > 0 ) {
+    //   const currentData = data
 
-      updateGame(currentData[0].id, null, null, null, null, true).then((res) => {
+    //   updateGame(currentData[0].id, null, null, null, null, true).then((res) => {
+    //     console.log("res", res)
+    //   }).catch((err) => {
+    //     console.log("err", err)
+    //   })
+
+    //   const _currentData = currentData.slice(1)
+    //   const __currentData = _currentData.concat(_fetchedData)
+    //   demoData = __currentData
+    // } else {
+    //   demoData = _fetchedData
+    // }
+    // setData(demoData)
+    // console.log("demo data", demoData)
+    
+    if ( fetchedDataTop === undefined ) {
+      setPath("")
+    } else {
+      setPath(teas[fetchedDataTop.decision])
+      updateGame(fetchedDataTop._id, null, null, null, null, true).then((res) => {
         console.log("res", res)
       }).catch((err) => {
         console.log("err", err)
       })
-
-      const _currentData = currentData.slice(1)
-      const __currentData = _currentData.concat(_fetchedData)
-      demoData = __currentData
-    } else {
-      demoData = _fetchedData
-    }
-    setData(demoData)
-    console.log("demo data", demoData)
-    if ( demoData === undefined || demoData.length <= 0 ) {
-      setPath("")
-    } else {
-      setPath(teas[demoData[0].decision])
     }
     setIsLoading(false)
   }
