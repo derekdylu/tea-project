@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components";
 import { ThemeProvider } from "@emotion/react";
 import theme from '../../Themes/Theme'
 import useWindowDimensions from '../../Hooks/useWindowDimensions';
-import { getGames } from '../../Utils/Axios';
+import { getGames, updateGame } from '../../Utils/Axios';
 import useSWR from 'swr'
 import './wall.css'
 import CircularProgress from '@mui/material/CircularProgress';
@@ -11,66 +11,49 @@ import Box from '@mui/material/Box';
 import background from '../../Images/Wall/background.png'
 
 // CHECK update the file path after materials are finished
-import 凍頂烏龍茶 from '../../Images/Wall/凍頂烏龍.gif'
-import 小葉種紅茶 from '../../Images/Wall/小葉種紅茶.gif'
-import 文山包種茶 from '../../Images/Wall/文山包種茶.gif'
+import 碧螺春綠茶 from '../../Images/Wall/碧螺春綠茶.gif'
+import 綠茶 from '../../Images/Wall/綠茶.gif'
+import 包種茶 from '../../Images/Wall/包種茶.gif'
+import 高山烏龍南部高海拔 from '../../Images/Wall/高山烏龍南部高海拔.gif'
+import 高山烏龍北部高海拔 from '../../Images/Wall/高山烏龍北部高海拔.gif'
+import 高山烏龍低海拔 from '../../Images/Wall/高山烏龍低海拔.gif'
+import 凍頂烏龍 from '../../Images/Wall/凍頂烏龍.gif'
+import 鐵觀音 from '../../Images/Wall/鐵觀音.gif'
+import 紅烏龍 from '../../Images/Wall/紅烏龍.gif'
 import 東方美人茶 from '../../Images/Wall/東方美人茶.gif'
-import 碧螺春綠茶 from '../../Images/Wall/小葉種紅茶.gif'
-import 紅烏龍茶 from '../../Images/Wall/小葉種紅茶.gif'
-import 紅韻紅茶 from '../../Images/Wall/小葉種紅茶.gif'
-import 蜜香紅茶 from '../../Images/Wall/小葉種紅茶.gif'
-import 鐵觀音茶 from '../../Images/Wall/小葉種紅茶.gif'
+import 小葉種紅茶 from '../../Images/Wall/小葉種紅茶.gif'
+import 台茶8號 from '../../Images/Wall/台茶8號.gif'
+import 台茶18號紅玉紅茶 from '../../Images/Wall/台茶18號紅玉紅茶.gif'
+import 台茶21號紅韻紅茶 from '../../Images/Wall/台茶21號紅韻紅茶.gif'
+import 蜜香紅茶 from '../../Images/Wall/蜜香紅茶.gif'
+import 金萱烏龍 from '../../Images/Wall/金萱烏龍.gif'
+import 四季春 from '../../Images/Wall/四季春.gif'
 
 // const fetcher = (...args) => fetch(...args).then(res => res.json())
 // const fetcher = url => axios.get(url).then(res => res.data)
-
-const testData = [
-  {
-    "selection": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    "selected": [0,1,2,3],
-    "decision": 1,
-    "timestamp": '1677142881955',
-  },
-  {
-    "selection": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    "selected": [0,1,2,3],
-    "decision": 1,
-    "timestamp": '1677142881955',
-  },
-  {
-    "selection": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    "selected": [0,1,2,3],
-    "decision": 2,
-    "timestamp": '1677142881955',
-  },
-  {
-    "selection": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    "selected": [0,1,2,3],
-    "decision": 3,
-    "timestamp": '1677142881955',
-  },
-  {
-    "selection": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    "selected": [0,1,2,3],
-    "decision": 0,
-    "timestamp": '1677142881955',
-  },
-]
 
 function timeout(delay: number) {
   return new Promise( res => setTimeout(res, delay) );
 }
 
 const teas = [
-  凍頂烏龍茶,
-  小葉種紅茶,
-  文山包種茶,
-  東方美人茶,
   碧螺春綠茶,
-  紅烏龍茶,
-  紅韻紅茶,
+  綠茶,
+  包種茶,
+  高山烏龍南部高海拔,
+  高山烏龍北部高海拔,
+  高山烏龍低海拔,
+  凍頂烏龍,
+  鐵觀音,
+  紅烏龍,
+  東方美人茶,
+  小葉種紅茶,
+  台茶8號,
+  台茶18號紅玉紅茶,
+  台茶21號紅韻紅茶,
   蜜香紅茶,
-  鐵觀音茶,
+  金萱烏龍,
+  四季春,
 ]
 
 const xAxis = keyframes `
@@ -113,33 +96,45 @@ const Wall = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState()
   const [path, setPath] = useState("")
-  const lastUpdateTime = Date.now()
+  // const lastUpdateTime = Date.now() - 20999
+  // const lastUpdateTime = "1678947398956"
 
   useEffect(() => {
     fetchAndDrop()
   }, [])
 
-  console.log("last update time: " + lastUpdateTime)
+  // console.log("last update time: " + lastUpdateTime)
 
   async function fetchAndDrop () {
     setIsLoading(true)
 
-    // const fetchedData = await getGames()
-    const fetchedData = testData
+    const fetchedData = await getGames()
+    console.log("fetched data", fetchedData)
+    // const fetchedData = testData
 
-    const _fetchedData = fetchedData.filter(x => x.decision !== -1).filter(y => y.timestamp >= lastUpdateTime)
-    if ( data ) {
+    let demoData = []
+    const _fetchedData = fetchedData.filter(x => x.decision !== -1).filter(y => y.shown === false)
+    if ( data && data.length > 0 ) {
       const currentData = data
+
+      updateGame(currentData[0].id, null, null, null, null, true).then((res) => {
+        console.log("res", res)
+      }).catch((err) => {
+        console.log("err", err)
+      })
+
       const _currentData = currentData.slice(1)
       const __currentData = _currentData.concat(_fetchedData)
-      setData(__currentData)
+      demoData = __currentData
     } else {
-      setData(_fetchedData)
+      demoData = _fetchedData
     }
-    if ( data === undefined || data.length <= 0 ) {
+    setData(demoData)
+    console.log("demo data", demoData)
+    if ( demoData === undefined || demoData.length <= 0 ) {
       setPath("")
     } else {
-      setPath(teas[data[0].decision])
+      setPath(teas[demoData[0].decision])
     }
     setIsLoading(false)
   }

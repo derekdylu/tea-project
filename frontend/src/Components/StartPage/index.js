@@ -141,7 +141,7 @@ export const StartPage = ({}) => {
 
   const handleStartButtonOnClick = async(e) => {
     setIsLoading(true)
-    createGame([], [], -1, Date.now())
+    createGame([], [], -1, Date.now(), false)
     .then((res) => {
       console.log(res);
       sessionStorage.setItem('id', res.id);

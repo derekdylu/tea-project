@@ -24,6 +24,7 @@ class Game(BaseModel):
   selected: list = Field(...)
   decision: int = Field(...)
   timestamp: str = Field(...)
+  shown: bool = Field(...)
 
   class Config:
     allow_population_by_field_name = True
@@ -35,6 +36,7 @@ class Game(BaseModel):
         "selected": [0,1,2,3],
         "decision": 3,
         "timestamp": '"1234567890',
+        "shown": False,
       }
     }
 
@@ -50,6 +52,7 @@ class UpdateGame(BaseModel):
         "selected": [0,1,2,3],
         "decision": 3,
         "timestamp": '"1234567890',
+        "shown": False,
       }
     }
 
@@ -60,4 +63,5 @@ def game_helper(game) -> dict:
     "selected": game["selected"],
     "decision": game["decision"],
     "timestamp": game["timestamp"],
+    "shown": game["shown"],
   }
