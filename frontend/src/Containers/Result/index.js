@@ -1,95 +1,110 @@
 import React, { useEffect, useState, useRef } from "react";
-import { NavBar } from "../../Components/NavBar";
-import { Food } from "../../Components/Food";
-// import { Map } from "../../Components/Map";
+import { Product } from "../../Components/Product";
+import { Share } from "../../Components/Share";
+import { teaData, termData } from "./data";
 import styles from "./styles.module.scss";
 
 import { ThemeProvider } from "@emotion/react";
 import { Typography } from "@mui/material";
 import theme from "../../Themes/Theme";
 import Marquee from "react-fast-marquee";
-import testRes from "../../Images/testRes.png";
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
 import { ReactComponent as Flower } from "../../Images/flower.svg";
 import { ReactComponent as MapSvg } from "../../Images/map.svg"
 import loading from "../../Images/loading.gif"
 import gsap from "gsap";
+import { getGameById } from "../../Utils/Axios";
 
-
-export const Result = ({
-
-}) => {
-  const selfScroll = true;
+export const Result = () => {
+  const [data, setData] = useState(teaData[14]);
   const videoRef = useRef();
+  const [showLoading, setShowLoading] = useState(true);
   const [prevPosition, setPrevPosition] = useState(0);
-  const [source, setSource] = useState("videos/noBg.webm#t=0,8");
   const [startMap, setStartMap] = useState(false);
+  const [timeSource, setTimeSource] = useState("t=0,7");
   const [fastFwd, setFastFwd] = useState({
     element: null,
     isSeeking: false,
     endTime: 0,
     nextSource: "",
     reverse: false,
+    currSection: 0
   });
-  const [time, setTime] = useState(0);
+  const [showTermDialog, setShowTermDialog] = useState(false);
+  const [explanation, setExplanation] = useState({
+    "title": "",
+    "context": "",
+  })
 
-  const contents = [
+  const [videoIsHidden, setVideoIsHidden] = useState(false);
+
+  const [location, setLocation] = useState({
+    "taipei": true,
+    "newTaipei": false,
+    "taoyuan": false,
+    "hsinchu": false,
+    "miaoli": false,
+    "yilan": false,
+    "nantou": false,
+    "hualian": false,
+    "taichung": false,
+    "jiayi": false,
+    "taidong": false,
+  })
+
+  const sections = [
     {
       id: "first",
-      title: "碧螺春綠茶",
-      body: [
-        "碧螺春綠茶為不發酵茶，在臺茶風味輪中隸屬於臺灣綠茶。",
-      ],
+      title: "與你最香配！",
       start: 0,
-      end: 8
+      end: 7
     },
     {
       id: "second",
       title: "製作",
-      body: [
-        "傳統綠茶製造過程不經過萎凋及攪拌的程序，雖為炒菁綠茶，但農友在生產時常會攤放靜置茶菁數小時，以改善茶葉的風味。",
-      ],
-      start: 8,
-      end: 24,
+      start: 7,
+      end: 21,
     },
     {
       id: "third",
       title: "特性",
-      body: [
-        "碧螺春茶樹品種主要為青心柑仔及青心烏龍。在 3~5 月及 10~12 月生產的品質較佳。",
-        "碧螺春茶葉外觀新鮮碧綠，芽尖白毫多，形狀細緊捲曲似螺旋，乾茶清香鮮雅，茶湯碧綠清澈。",
-      ],
-      start: 24,
-      end: 36,
+      start: 21,
+      end: 33,
     },
     {
       id: "fourth",
       title: "產區",
-      body: [
-        "新北市三峽茶區毗鄰新店、土城、樹林、鶯歌、大溪，連接文山茶區，是臺灣唯一僅剩的專業炒菁綠茶產區。"
-      ],
-      start: 36,
-      end: 50
+      start: 33,
+      end: 53
+    },
+    {
+      id: "fifth",
+      title: "",
+      start: 53,
+      end: 54
     }
   ]
 
-  const foodData = [
-    {
-      shop: "甘樂文創",
-      name: "碧螺春綠茶磅蛋糕",
-      desc: "嚴選在地碧螺春茶葉製成，口感紮實，茶香濃郁，全新配方還加入滿滿的碧螺春內餡，一口咬下紮實的蛋糕體中，品嚐的到濕潤香厚且綿密的餡雙重口感~",
-      link: "http://www.google.com",
-    },
-    // {
-    //   shop: "甘樂文創",
-    //   name: "碧螺春綠茶磅蛋糕",
-    //   desc: "嚴選在地碧螺春茶葉製成，口感紮實，茶香濃郁，全新配方還加入滿滿的碧螺春內餡，一口咬下紮實的蛋糕體中，品嚐的到濕潤香厚且綿密的餡雙重口感~",
-    //   link: "http://www.google.com",
-    // }
-  ]
+  const [currTime, setCurrTime] = useState(0);
+  const [currSection, setCurrSection] = useState(0);
 
-  useEffect(() => {    
-    videoRef.current?.load();
-  }, [source]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      let video = document.getElementById("video");
+      setCurrTime(video.currentTime);
+
+      sections.map((section, i) => {
+        if (section.end < video.currentTime && currSection == i) {
+          video.pause()
+        }
+      })
+    }, 1000);
+
+    return(() => {
+      clearInterval(interval);
+    })
+  }, [currTime, currSection]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -99,19 +114,26 @@ export const Result = ({
           if(video.currentTime <= fastFwd.endTime + 0.3){
             fastFwd.element.style.opacity = 1;
             video.playbackRate = 1;
-            setSource(fastFwd.nextSource);
+            if (fastFwd.nextSource == `t=${sections[0].start},${sections[0].end}`) {
+              setVideoIsHidden(false);
+            }
+            setTimeSource(fastFwd.nextSource);
             setFastFwd({...fastFwd, isSeeking: false});
+            video.play()
           }
           else {
-            video.currentTime += -0.1;
+            video.currentTime += -0.2;
           }
         }
 
         else if (video.currentTime >= fastFwd.endTime) {
           fastFwd.element.style.opacity = 1;
           video.playbackRate = 1;
-          setSource(fastFwd.nextSource);
+          setTimeSource(fastFwd.nextSource);
           setFastFwd({...fastFwd, isSeeking: false});
+          video.play()
+          if (fastFwd.nextSource == `t=${sections[4].start},${sections[4].end}`)
+          setVideoIsHidden(true);
         }
       }
       
@@ -120,53 +142,32 @@ export const Result = ({
     return () => clearInterval(interval);
   }, [fastFwd.isSeeking]);
 
-  useEffect(() => {
-    // const interval = setInterval(() => {
-    //   let currTime = time + 1;
-    //   console.log("hello")
-    //   contents.map((content, i) => {
-    //     console.log(content.end, currTime)
-    //     if (content.end === currTime) {
-    //       document.getElementById(contents[i + 1].id).scrollIntoView();
-    //       document.getElementById(contents[i + 1].id).childNodes[0].style.opacity = 1;
-    //     }
-    //   });
-    //   setTime(currTime);
-    // }, 1000);
-
-    // return () => clearInterval(interval)
-  }, [time])
-
   const handleScroll = async(e) => {
-    let contentElements = contents.map((content, i) => document.getElementById(content.id).childNodes[0])
-    let position = contents.map((content, i) => document.getElementById(content.id).getBoundingClientRect().top)
+    let contentElements = sections.map((content, i) => document.getElementById(content.id).childNodes[0])
+    let position = sections.map((content, i) => document.getElementById(content.id).getBoundingClientRect().top)
     let top = false;
     let video = document.getElementById("video");
 
     for (var i = position.length - 1; i >= 0; i--) {
       if (position[i] === 0) {
-        // console.log(i);
-        // console.log(contentElements[i].style.opacity );
-        if (i = 3) {
-          setStartMap(true)
-        } else {
-          setStartMap(false)
+        if (i === 3) {
+          setStartMap(true);
         }
-        // contentElements[i].style.opacity = 1;
-        // console.log(contentElements[i].style.opacity );
-        //     console.log(i < prevPosition);
         let reverse = i < prevPosition;
-        let endTime = reverse ? contents[i].start : contents[i - 1].end;
-        console.log(endTime)
+        let endTime = reverse ? sections[i].start : sections[i - 1].end;
         video.playbackRate = reverse ? 2 : 10;
 
         setFastFwd({
           element: contentElements[i],
           isSeeking: true,
           endTime: endTime,
-          nextSource: `videos/noBg.webm#t=${contents[i].start},${contents[i].end}`,
-          reverse: reverse
+          nextSource: `t=${sections[i].start},${sections[i].end}`,
+          reverse: reverse,
+          currSection: reverse ? i : (i - 1)
         });
+
+        setCurrSection(i);
+        console.log(i)
 
         setPrevPosition(i);
         top = true;
@@ -178,16 +179,9 @@ export const Result = ({
       contentElements.map((element, i) => {
         element.style.opacity = 0;
       })
-      setStartMap(false)
+      setStartMap(false);
     }
   }
-
-
-  useEffect(() => {
-    let video = document.getElementById("video");
-    // video.play();
-    // video.playbackRate = 0.5;
-  }, [])
 
   useEffect(() => {
     const mapTl = gsap.timeline();
@@ -207,61 +201,145 @@ export const Result = ({
     }
   }, [startMap]);
 
+  useEffect(() => {
+    let gameId = sessionStorage.getItem("id");
+    // let gameId = "640d799ecbd84b560e405ebe"; // debug
+
+    getGameById(gameId)
+      .then((res) => {
+        setData(teaData[res.decision]);
+
+        let tmpLocation = location;
+        teaData[res.decision].areaName.map((area, i) => {
+          location[area] = true
+        })
+        setLocation(tmpLocation);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+
+    let video = document.getElementById("video");
+    video.pause()
+    
+    setTimeout(() => {
+      setShowLoading(false);
+      video.play()
+    }, 2000);
+  }, [])
+
+  const handleOpenDialog = (keyword) => {
+    let video = document.getElementById("video");
+    video.pause();
+    setExplanation({...explanation,
+      "title": keyword,
+      "context": termData[keyword]
+    })
+    setShowTermDialog(true);
+  }
+
+  const handleCloseDialog = () => {
+    let video = document.getElementById("video");
+    video.play();
+    setShowTermDialog(false);
+  }
+  
+
   return (
     <ThemeProvider theme={theme}>
-      {/* <NavBar /> */}
-      <div className={styles.loadingPage}>
-
+      <div className={styles.loadingPage} hidden={!showLoading}>
+        <img src={loading} />
+        <Typography variant="labelLarge" className={styles.text}>
+          Loading...
+        </Typography>
       </div>
       <div className={styles.background}>
-        <video id="video" ref={videoRef} className={styles.video} autoPlay muted playsInline>
-          {/* <source id="videoSrc" src="videos/noBg_H.265.mp4" type="video/mp4;codecs=hvc1" /> */}
-          <source id="videoSrc" src={source} type="video/webm" />
+        <video id="video" ref={videoRef} className={styles.video} autoPlay muted playsInline hidden={videoIsHidden}>
+          <source id="videoSrc" src={`videos/noBg.webm`} type="video/webm" />
+          <source id="videoSrc" src={`videos/noBg_H.265.mp4`} type="video/mp4;codecs=hvc1" />
         </video>
         <div className={styles.container} onScroll={(e) => handleScroll(e)}>
-          { contents.map((content, i) => (
-            <div key={i} className={styles.section} id={content.id}>
-              { i === 0 ?
-                <div className={styles[content.id]}>
+          { sections.slice(0, 4).map((section, i) => (
+            <div key={i} className={styles.section} id={section.id}>
+              { i == 0 ?
+                <div className={styles[section.id]}>
                   <Typography variant="titleMedium">
-                    與你最香配！
+                    { section.title }
                   </Typography>
-
-                  <Typography variant="displayLarge" className={styles.title}>
-                    { content.title }
-                  </Typography>
-
+            
+                  <div className={styles.name}>
+                    { data.name.map((line, j) => (
+                      typeof(line) == "string" ?
+                      <Typography key={j} variant="displayLarge">
+                        { line }
+                      </Typography>
+                      :
+                      <div key={j} className={styles.row}>
+                        <Typography variant="displayLarge">
+                          { line[0] }
+                        </Typography>
+                        <div></div>
+                        <Typography variant="displayLarge">
+                          { line[1] }
+                        </Typography>
+                      </div>
+                    ))}
+                    { data.subName &&
+                      <Typography variant="bodyLarge" className={styles.subName}>
+                        ({ data.subName })
+                      </Typography>
+                    }
+                  </div>
+            
                   <div className={styles.body}>
-                    { (content.body).map((text, j) => (
+                    { (data.contents[i]).map((text, j) => (
                       <Typography key={j} variant="bodyLargeHighlighted">
-                        {text}
+                        { text }
                       </Typography>
                     ))}
                   </div>
                 </div>
               :
                 <>
-                  <div className={styles[content.id]}>
+                  <div className={styles[section.id]}>
                     <Typography variant="displaySmall">
-                      { content.title }
+                      { section.title }
                     </Typography>
 
                     <svg>
                       <line x1="0%" y1="50%" x2="100%" y2="50%" />
                     </svg>
 
-                    { (content.body).map((text, j) => (
+                    { (data.contents[i]).map((text, j) => (
                       <Typography key={j} variant="bodyLarge">
-                        {text}
+                        { text.split("**").map((keyword, k) => (
+                          k % 2 ?
+                          <u onClick={() => handleOpenDialog(keyword)} key={k}>{ keyword }</u>
+                          :
+                          <>{ keyword }</>
+                        ))}
                       </Typography>
                     ))}
                   </div>
-                  { i === 3 &&
+                  {/* MAP */}
+                  { i == 3 &&
                     <div className={styles.mapContainer} id="map">
                       <MapSvg className={styles.map}/>
-                      <div className={styles.area}>
+                      { location["taipei"] && <div className={`${styles.area} ${styles.taipei}`}>
                         <Typography id="text" variant="bodyMedium" className={styles.text}>
-                          {/* { areaName } */}
+                          臺北
+                        </Typography>
+                        <div className={styles.point}>
+                          <svg id="line" className={styles.line}>
+                            <line x1="0%" y1="50%" x2="100%" y2="50%" />
+                          </svg>
+                          <svg id="circle" className={styles.circle}>
+                            <circle r="4" cy="50%" cx="75.5" />
+                          </svg>
+                        </div>
+                      </div> }
+                      { location["newTaipei"] && <div className={`${styles.area} ${styles.newTaipei}`}>
+                        <Typography id="text" variant="bodyMedium" className={styles.text}>
                           新北
                         </Typography>
                         <div className={styles.point}>
@@ -272,28 +350,171 @@ export const Result = ({
                             <circle r="4" cy="50%" cx="75.5" />
                           </svg>
                         </div>
-                      </div>
+                      </div> }
+                      { location["taoyuan"] && <div className={`${styles.area} ${styles.taoyuan}`}>
+                        <Typography id="text" variant="bodyMedium" className={styles.text}>
+                          桃園
+                        </Typography>
+                        <div className={styles.point}>
+                          <svg id="line" className={styles.line}>
+                            <line x1="0%" y1="50%" x2="100%" y2="50%" />
+                          </svg>
+                          <svg id="circle" className={styles.circle}>
+                            <circle r="4" cy="50%" cx="75.5" />
+                          </svg>
+                        </div>
+                      </div> }
+                      { location["hsinchu"] && <div className={`${styles.area} ${styles.hsinchu}`}>
+                        <Typography id="text" variant="bodyMedium" className={styles.text}>
+                          新竹
+                        </Typography>
+                        <div className={styles.point}>
+                          <svg id="line" className={styles.line}>
+                            <line x1="0%" y1="50%" x2="100%" y2="50%" />
+                          </svg>
+                          <svg id="circle" className={styles.circle}>
+                            <circle r="4" cy="50%" cx="75.5" />
+                          </svg>
+                        </div>
+                      </div> }
+                      { location["miaoli"] && <div className={`${styles.area} ${styles.miaoli}`}>
+                        <Typography id="text" variant="bodyMedium" className={styles.text}>
+                          苗栗
+                        </Typography>
+                        <div className={styles.point}>
+                          <svg id="line" className={styles.line}>
+                            <line x1="0%" y1="50%" x2="100%" y2="50%" />
+                          </svg>
+                          <svg id="circle" className={styles.circle}>
+                            <circle r="4" cy="50%" cx="75.5" />
+                          </svg>
+                        </div>
+                      </div> }
+                      { location["yilan"] && <div className={`${styles.area} ${styles.yilan}`}>
+                        <Typography id="text" variant="bodyMedium" className={styles.text}>
+                          宜蘭
+                        </Typography>
+                        <div className={styles.point}>
+                          <svg id="line" className={styles.line}>
+                            <line x1="0%" y1="50%" x2="100%" y2="50%" />
+                          </svg>
+                          <svg id="circle" className={styles.circle}>
+                            <circle r="4" cy="50%" cx="75.5" />
+                          </svg>
+                        </div>
+                      </div> }
+                      { location["nantou"] && <div className={`${styles.area} ${styles.nantou}`}>
+                        <Typography id="text" variant="bodyMedium" className={styles.text}>
+                          南投
+                        </Typography>
+                        <div className={styles.point}>
+                          <svg id="line" className={styles.line}>
+                            <line x1="0%" y1="50%" x2="100%" y2="50%" />
+                          </svg>
+                          <svg id="circle" className={styles.circle}>
+                            <circle r="4" cy="50%" cx="75.5" />
+                          </svg>
+                        </div>
+                      </div> }
+                      { location["hualian"] && <div className={`${styles.area} ${styles.hualian}`}>
+                        <Typography id="text" variant="bodyMedium" className={styles.text}>
+                          花蓮
+                        </Typography>
+                        <div className={styles.point}>
+                          <svg id="line" className={styles.line}>
+                            <line x1="0%" y1="50%" x2="100%" y2="50%" />
+                          </svg>
+                          <svg id="circle" className={styles.circle}>
+                            <circle r="4" cy="50%" cx="75.5" />
+                          </svg>
+                        </div>
+                      </div> }
+                      { location["taichung"] && <div className={`${styles.area} ${styles.taichung}`}>
+                        <Typography id="text" variant="bodyMedium" className={styles.text}>
+                          台中
+                        </Typography>
+                        <div className={styles.point}>
+                          <svg id="line" className={styles.line}>
+                            <line x1="0%" y1="50%" x2="100%" y2="50%" />
+                          </svg>
+                          <svg id="circle" className={styles.circle}>
+                            <circle r="4" cy="50%" cx="75.5" />
+                          </svg>
+                        </div>
+                      </div> }
+                      { location["jiayi"] && <div className={`${styles.area} ${styles.jiayi}`}>
+                        <Typography id="text" variant="bodyMedium" className={styles.text}>
+                          嘉義
+                        </Typography>
+                        <div className={styles.point}>
+                          <svg id="line" className={styles.line}>
+                            <line x1="0%" y1="50%" x2="100%" y2="50%" />
+                          </svg>
+                          <svg id="circle" className={styles.circle}>
+                            <circle r="4" cy="50%" cx="75.5" />
+                          </svg>
+                        </div>
+                      </div> }
+                      { location["taidong"] && <div className={`${styles.area} ${styles.taidong}`}>
+                        <Typography id="text" variant="bodyMedium" className={styles.text}>
+                          台東
+                        </Typography>
+                        <div className={styles.point}>
+                          <svg id="line" className={styles.line}>
+                            <line x1="0%" y1="50%" x2="100%" y2="50%" />
+                          </svg>
+                          <svg id="circle" className={styles.circle}>
+                            <circle r="4" cy="50%" cx="75.5" />
+                          </svg>
+                        </div>
+                      </div> }
                     </div>
                   }
                 </>
               }
             </div>
           ))}
-          <div className={styles.nonVideoSection}>
-            <Marquee gradient={false} speed={10} className={styles.scrollingText}>
-              <Typography variant="displayMedium">
-                不是只有喝的。不是只有喝的。
-              </Typography>
-            </Marquee>
-            { foodData.map((data, i) => (
-              <Food key={i} data={data} />
-            ))}
-            <div className={styles.shareContainer}>
-              <Flower className={styles.flower} />
+          <div id="fifth">
+            <div className={styles.nonVideoSection}>
+              <div>
+                <Marquee gradient={false} speed={10} className={styles.scrollingText}>
+                  <Typography variant="displayMedium">
+                    不是只有喝的。不是只有喝的。
+                  </Typography>
+                </Marquee>
+              </div>
+              <Product data={data.foodProduct} />
+              <Share teaName={data.name} teaSubName={data.subName} hashtags={data.hashtags} />
             </div>
           </div>
         </div>
       </div>
+      <Dialog
+        open={showTermDialog}
+        onClose={handleCloseDialog}
+        PaperProps={{
+          style: { backgroundColor: theme.palette.surface.main, borderRadius: 28 }
+        }}
+      >
+        <DialogContent>
+          <div className={styles.dialog}>
+            <Typography variant="bodyMedium">
+              用詞解釋
+            </Typography>
+            <Typography variant="titleLarge">
+              { explanation.title }
+            </Typography>
+            <Typography variant="bodyLarge">
+              { explanation.context }
+            </Typography>
+            <button className={styles.button} onClick={handleCloseDialog}>
+              <Typography variant="labelLarge" color={theme.palette.primary.main}>
+                關閉
+              </Typography>
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </ThemeProvider>
   )
 }

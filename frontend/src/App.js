@@ -10,13 +10,31 @@ import { StartPage } from "./Components/StartPage";
 import { Live } from "./Containers/Live";
 import { Result } from "./Containers/Result";
 import { Map } from "./Components/Map";
-import { Anim } from "./Containers/Anim";
 import { Share } from './Components/Share';
 
 function App() {
 
   return (
     <div>
+      {/* TODO page for bigger screen doesn't need this vertical restriction */}
+      {/* <Dialog aria-labelledby="window-size" open={open} fullScreen>
+          <Grid container direction="column" alignItems="center" justifyContent="center" sx={{ my: 1 }} height="100%">
+            {
+              narrow ?
+              (
+                <Typography variant="body2" color="#2D3748" fontWeight="500" sx={{mt: 2.5}} align="center">
+                  最小螢幕寬度 320 px
+                </Typography>
+              ):(
+                <>
+                  <Typography variant="h6" color="#2D3748" fontWeight="700" sx={{mt: 2.5}} align="center">
+                    豎直手機螢幕或瀏覽器視窗以享受最佳遊戲體驗
+                  </Typography>
+                </>
+              )
+            }
+          </Grid>
+        </Dialog> */}
       <Router>
         <Routes>
           {/* mobile */}
@@ -25,14 +43,11 @@ function App() {
           <Route path="/" element={ <StartPage/> } />
           <Route path="/start" element={ <StartPage/> } />
           <Route path="/live" element={ <Live/> } />
-          <Route path="/result" element={ <Anim/> } />
+          <Route path="/result" element={ <Result/> } />
           <Route path="/map" element={ <Map/> } />
           <Route path="/share" element={ <Share/> } />
           <Route path="/wall" element={ <Wall /> } />
-
           <Route path="/live" element={ <Live/> } />
-          <Route path="/map" element={ <Map/> } />
-
         </Routes>
       </Router>
     </div>

@@ -14,6 +14,7 @@ import theme from "../../Themes/Theme";
 
 import styles from "./styles.module.scss";
 import gsap from "gsap";
+import { Link } from "react-router-dom";
 
 export const NavBar = ({
   defaultHideLogo = false,
