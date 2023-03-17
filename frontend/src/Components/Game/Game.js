@@ -64,6 +64,9 @@ import 花香 from '../../Images/Card/花香.png'
 import 青香 from '../../Images/Card/青香.png'
 import 收斂感 from '../../Images/Card/收斂感.png'
 
+const INTERVAL = 556;
+const MINCARDHEIGHT = 164;
+
 const cards = [
   茶色淺,
   茶色深,
@@ -207,6 +210,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
   const navigate = useNavigate()
   const id = sessionStorage.getItem('id') || 'game_id_not_found'
   const { width, height, ratio } = useWindowDimensions()
+  const [cardHeight, setCardHeight] = useState(height - INTERVAL)
   const [phaseTitle1, setPhaseTitle1] = useState(false)
   const [phaseTitle2, setPhaseTitle2] = useState(false)
 
@@ -225,6 +229,14 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
     ...to(i),
     from: from(i),
   }))
+
+  useEffect(() => {
+    if (height - INTERVAL < MINCARDHEIGHT) {
+      setCardHeight(MINCARDHEIGHT)
+    } else {
+      setCardHeight(height - INTERVAL)
+    }
+  }, [ratio])
 
   const pushSelection = (select, swipedIndex) => {
     // swipedIndex = -1 means button swipe is implemented and no need for checking
@@ -625,17 +637,19 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
               container
               direction="column"
               width="100%"
-              height="420px"
+              height={cardHeight + 90}
               justifyContent="center"
               alignItems="center"
             >
               {props.map(({ x, y, rot, scale }, i) => (
-                <animated.div className={styles.deck} key={i} style={{ x, y, display: x.animation.to > width ? 'none' : 'flex', }}>
+                <animated.div className={styles.deck} key={i} style={{ x, y, display: x.animation.to > width ? 'none' : 'flex', width: `${cardHeight}px`, height: `${cardHeight}px`, }}>
                   <animated.div
                     {...bind(i)}
                     style={{
                       transform: interpolate([rot, scale], trans),
                       backgroundImage: `url(${cards[i]})`,
+                      width: `${cardHeight}px`,
+                      height: `${cardHeight}px`,
                     }}
                   />
                 </animated.div>
