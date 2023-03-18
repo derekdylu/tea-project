@@ -30,7 +30,6 @@
     width: 100vw;
     overflow-x: hidden;
     background-color: #F1F0E0;
-    // background: linear-gradient(0deg, rgba(95, 98, 0, 0.14), rgba(95, 98, 0, 0.14)), #FEFCF4;
 }
 
 .video {
@@ -70,7 +69,6 @@
         gap: 0.5rem;
         text-align: justify;
         transition: all 2s ease-in-out;
-        // background-color: var(--background-color);
         
         > svg {
             width: 20px;
@@ -227,7 +225,6 @@
 
         .text {
             opacity: 0;
-            color: var(--text-color);
         }
         
         .point {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Product } from "../../Components/Product";
 import { Share } from "../../Components/Share";
-import { teaData, termData } from "./data";
+import { teaData, termData, videoData } from "./data";
 import styles from "./styles.module.scss";
 
 import { ThemeProvider } from "@emotion/react";
@@ -18,8 +18,9 @@ import gsap from "gsap";
 import { getGameById } from "../../Utils/Axios";
 
 export const Result = () => {
-  const [data, setData] = useState(teaData[16]);
+  const [data, setData] = useState(teaData[0]);
   const videoRef = useRef();
+  const [videoSrc, setVideoSrc] = useState()
   const [showLoading, setShowLoading] = useState(true);
   const [prevPosition, setPrevPosition] = useState(0);
   const [startMap, setStartMap] = useState(false);
@@ -213,36 +214,69 @@ export const Result = () => {
   }, [startMap]);
 
   useEffect(() => {
-    // let gameId = sessionStorage.getItem("id");
-    // let gameId = "640d799ecbd84b560e405ebe"; // debug
+    let gameId = sessionStorage.getItem("id");
 
-    data.areaName.map((area, i) => {
-      location[area] = true
-    });
+    // FOR LOCAL DEBUG
+    // let debugId = 6;
+    // setData(teaData[debugId]);
 
-    // getGameById(gameId)
-    //   .then((res) => {
-    //     setData(teaData[res.decision]);
+    // teaData[debugId].areaName.map((area, i) => {
+    //   location[area] = true
+    // });
 
-    //     let tmpLocation = location;
-    //     teaData[res.decision].areaName.map((area, i) => {
-    //       location[area] = true
-    //     })
-    //     setLocation(tmpLocation);
+    // let videoSources = {};
+
+    // Object.keys(videoData).map((keys, i) => {
+    //   let keyList = keys.split(",")
+    //   keyList.map((key, j) => {
+    //     videoSources[parseInt(key)] = videoData[keys].video;
+    //     console.log(parseInt(key))
     //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   })
+    // })
+
+    // setVideoSrc(videoSources[debugId]);
+
+    getGameById(gameId)
+      .then((res) => {
+        setData(teaData[res.decision]);
+
+        // set location for map
+        let tmpLocation = location;
+        teaData[res.decision].areaName.map((area, i) => {
+          location[area] = true
+        })
+        setLocation(tmpLocation);
+
+        // set video source
+        let videoSources = {};
+
+        Object.keys(videoData).map((keys, i) => {
+          let keyList = keys.split(",")
+          keyList.map((key, j) => {
+            videoSources[parseInt(key)] = videoData[keys].video;
+            console.log(parseInt(key))
+          })
+        })
+
+        setVideoSrc(videoSources[res.decision]);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
 
     let video = document.getElementById("video");
-    video.pause()
     
     setTimeout(() => {
       setShowLoading(false);
       setShowBatteryHint(true);
+      video.load()
       video.play()
-    }, 2000);
+    }, 12000);
   }, [])
+
+  useEffect(() => {
+    videoRef.current?.load();
+  }, [videoSrc])
 
   const handleOpenDialog = (keyword) => {
     let video = document.getElementById("video");
@@ -265,14 +299,12 @@ export const Result = () => {
     <ThemeProvider theme={theme}>
       <div className={styles.loadingPage} hidden={!showLoading}>
         <img src={loading} />
-        <Typography variant="labelLarge" className={styles.text}>
-          Loading...
-        </Typography>
       </div>
       <div className={styles.background}>
-        <video id="video" ref={videoRef} className={styles.video} autoPlay muted playsInline hidden={videoIsHidden}>
-          <source id="videoSrc" src={`videos/noBg.webm`} type="video/webm" />
-          <source id="videoSrc" src={`videos/noBg_H.265.mp4`} type="video/mp4;codecs=hvc1" />
+        <video id="video" ref={videoRef} className={styles.video} muted playsInline hidden={videoIsHidden}>
+          <source id="videoSrc" src={videoSrc} type="video/webm" />
+          {/* <source id="videoSrc" src={`videos/noBg.webm`} type="video/webm" /> */}
+          {/* <source id="videoSrc" src={`videos/test.mp4`} type="video/mp4;codecs=hvc1" /> */}
         </video>
         <div className={styles.container} onScroll={(e) => handleScroll(e)}>
           { sections.slice(0, 4).map((section, i) => (
