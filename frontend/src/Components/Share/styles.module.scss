@@ -1,7 +1,12 @@
 .container {
   width: 327px;
+  // width: 100vw;
+  // padding: calc((100vw - 327px) / 2);
+  // box-sizing: border-box;
   margin: 0 auto;
   position: relative;
+  // background-color: #F1F0E0;
+  // border-radius: 1rem;
 }
 
 .shareContainer {
@@ -130,6 +135,8 @@
   position: absolute;
   top: 0;
   left: -12px;
+  // top: calc((100vw - 327px) / 2);
+  // left: calc((100vw - 327px) / 2);
 
   -webkit-animation: rotating 30s linear infinite;
   -moz-animation: rotating 30s linear infinite;
