@@ -25,7 +25,7 @@ export const teaData = [
       "shop": "鮮農直賣所",
       "link": "https://www.fresh-farm.com.tw/page/product/show.aspx?num=644&kind=104&page=1&lang=TW"
     },
-    "hashtags": ["清香", "淡雅", "臺灣綠茶", "不發酵茶"]
+    "hashtags": ["青香", "蔬菜香", "臺灣綠茶", "不發酵茶"]
   },
   {
     "id": 2,
@@ -52,7 +52,7 @@ export const teaData = [
       "shop": "一手私藏-老茶行",
       "link": "https://www.itsoshop.com/product/%e5%8f%b0%e7%81%a3%e8%8c%b6%e7%a6%ae%e7%9b%92%ef%bd%9c%e5%8f%b0%e7%81%a3%e7%8e%89%e9%9c%b2%e7%b6%a0%e8%8c%b6-%e5%8d%8a%e6%96%a4%e8%8c%b6%e8%91%89300%e5%85%ac%e5%85%8b150%e5%85%ac%e5%85%8bx2%e7%bd%90/"
     },
-    "hashtags": ["清香", "淡雅", "臺灣綠茶", "不發酵茶"]
+    "hashtags": ["青香", "花香", "臺灣綠茶", "不發酵茶"]
   },
   {
     "id": 3,

@@ -12,64 +12,66 @@ import { toPng as htmlToImage } from 'html-to-image';
 
 import 蔬菜香 from '../../Images/Card/蔬菜香.png'
 import 豆子 from '../../Images/Card/豆子香.png'
-// import 茶色淺 from '../../Images/Card/茶色淺.png'
-// import 茶色深 from '../../Images/Card/茶色深.png'
-// import 焙香 from '../../Images/Card/焙香.png'
-// import 清香 from '../../Images/Card/清香.png'
-// import 龍眼乾 from '../../Images/Card/龍眼乾味.png'
-// import 無花果乾 from '../../Images/Card/無花果乾味.png'
-// import 熱帶果香 from '../../Images/Card/熱帶水果味.png'
-// import 果香 from '../../Images/Card/果香.png'
-// import 口感較厚 from '../../Images/Card/口感較厚.png'
-// import 野薑花 from '../../Images/Card/野薑花香.png'
-// import 柑橘味 from '../../Images/Card/柑橘味.png'
-// import 薄荷 from '../../Images/Card/薄荷味.png'
-// import 肉桂味 from '../../Images/Card/肉桂味.png'
-// import 口感濃稠 from '../../Images/Card/口感濃稠.png'
-// import 甜香 from '../../Images/Card/甜香.png'
-// import 蜜香 from '../../Images/Card/蜜香.png'
-// import 中藥味 from '../../Images/Card/中藥味.png'
-// import 濃郁果香 from '../../Images/Card/濃郁果香.png'
-// import 果酸 from '../../Images/Card/果酸.png'
-// import 淡雅花香 from '../../Images/Card/淡雅花香.png'
-// import 草麥味 from '../../Images/Card/草麥味.png'
-// import 玄米 from '../../Images/Card/玄米.png'
-// import 茉莉花 from '../../Images/Card/茉莉花.png'
-// import 奶香 from '../../Images/Card/奶香.png'
-// import 花香 from '../../Images/Card/花香.png'
-// import 青香 from '../../Images/Card/青香.png'
-// import 收斂感 from '../../Images/Card/收斂感.png'
+import 茶色淺 from '../../Images/Card/茶色淺.png'
+import 茶色深 from '../../Images/Card/茶色深.png'
+import 焙香 from '../../Images/Card/焙香.png'
+import 清香 from '../../Images/Card/清香.png'
+import 龍眼乾 from '../../Images/Card/龍眼乾味.png'
+import 無花果乾 from '../../Images/Card/無花果乾味.png'
+import 熱帶水果味 from '../../Images/Card/熱帶水果味.png'
+import 果香 from '../../Images/Card/果香.png'
+import 口感較厚 from '../../Images/Card/口感較厚.png'
+import 野薑花香 from '../../Images/Card/野薑花香.png'
+import 柑橘味 from '../../Images/Card/柑橘味.png'
+import 薄荷 from '../../Images/Card/薄荷味.png'
+import 肉桂味 from '../../Images/Card/肉桂味.png'
+import 口感濃稠 from '../../Images/Card/口感濃稠.png'
+import 甜香 from '../../Images/Card/甜香.png'
+import 蜜香 from '../../Images/Card/蜜香.png'
+import 中藥味 from '../../Images/Card/中藥味.png'
+import 濃郁果香 from '../../Images/Card/濃郁果香.png'
+import 果酸 from '../../Images/Card/果酸味.png'
+import 淡雅花香 from '../../Images/Card/淡雅花香.png'
+import 草麥味 from '../../Images/Card/草麥味.png'
+import 玄米 from '../../Images/Card/玄米味.png'
+import 茉莉花 from '../../Images/Card/茉莉花香.png'
+import 奶香 from '../../Images/Card/奶香.png'
+import 花香 from '../../Images/Card/花香.png'
+import 青香 from '../../Images/Card/青香.png'
+import 收斂感 from '../../Images/Card/收斂感.png'
 
 const images = {
   "蔬菜香": 蔬菜香,
   "豆子": 豆子,
-  // "茶色淺": 茶色淺,
-  // "茶色深": 茶色深,
-  // "焙香": 焙香,
-  // "清香": 清香,
-  // "龍眼乾": 龍眼乾,
-  // "無花果乾": 無花果乾,
-  // "熱帶果香": 熱帶果香,
-  // "果香": 果香,
-  // "口感較厚": 口感較厚,
-  // "野薑花": 野薑花,
-  // "柑橘味": 柑橘味,
-  // "薄荷": 薄荷,
-  // "肉桂味": 肉桂味,
-  // "收斂感": 收斂感,
-  // "甜香": 甜香,
-  // "蜜香": 蜜香,
-  // "中藥味": 中藥味,
-  // "濃郁果香": 濃郁果香,
-  // "果酸": 果酸,
-  // "口感濃稠": 口感濃稠,
-  // "淡雅花香": 淡雅花香,
-  // "草麥味": 草麥味,
-  // "玄米": 玄米,
-  // "茉莉花": 茉莉花,
-  // "奶香": 奶香,
-  // "花香": 花香,
-  // "青香": 青香,
+  "茶色淺": 茶色淺,
+  "茶色深": 茶色深,
+  "焙香": 焙香,
+  "清香": 清香,
+  "龍眼乾": 龍眼乾,
+  "果乾味": 無花果乾,
+  "熱帶水果味": 熱帶水果味,
+  "果香": 果香,
+  "口感較厚": 口感較厚,
+  "野薑花香": 野薑花香,
+  "柑橘味": 柑橘味,
+  "薄荷": 薄荷,
+  "肉桂味": 肉桂味,
+  "微澀": 收斂感,
+  "甜香": 甜香,
+  "蜜香": 蜜香,
+  "中藥味": 中藥味,
+  "濃郁果香": 濃郁果香,
+  "果酸味": 果酸,
+  "口感濃稠": 口感濃稠,
+  "淡雅花香": 淡雅花香,
+  "草麥味": 草麥味,
+  "玄米": 玄米,
+  "茉莉香": 茉莉花,
+  "奶香": 奶香,
+  "花香": 花香,
+  "濃花香": 花香,
+  "青香": 青香,
+  "價低": 茶色淺
 }
 
 export const Share = ({
@@ -79,8 +81,8 @@ export const Share = ({
 }) => {
   const [showShareDialog, setShowShareDialog] = useState(false);
   const [showButton, setShowButton] = useState(true);
-  let img1 = images["蔬菜香"];
-  let img2 = images["豆子"];
+  let img1 = images[hashtags[0]];
+  let img2 = images[hashtags[1]];
 
   const onShare = () => {
     setShowShareDialog(true);
