@@ -379,3 +379,43 @@
         text-align: right;
     }
 }
+
+.hint {
+  position: fixed;
+  width: 100vw;
+  bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 2rem;
+  box-sizing: border-box;
+  z-index: 300;
+
+  .scroll {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    
+    > svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .battery {
+    padding: 0.5rem 1rem;
+    background-color: #30312C;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: row;
+
+    > button {
+      border: none;
+      background-color: transparent;
+      color: #FFEE9E;
+      flex: none;
+    }
+  }
+}

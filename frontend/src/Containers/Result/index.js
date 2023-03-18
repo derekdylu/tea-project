@@ -12,12 +12,13 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import { ReactComponent as Flower } from "../../Images/flower.svg";
 import { ReactComponent as MapSvg } from "../../Images/map.svg"
+import { ReactComponent as HandScrollGesture } from "../../Images/Result/swipe_up.svg";
 import loading from "../../Images/loading.gif"
 import gsap from "gsap";
 import { getGameById } from "../../Utils/Axios";
 
 export const Result = () => {
-  const [data, setData] = useState(teaData[14]);
+  const [data, setData] = useState(teaData[16]);
   const videoRef = useRef();
   const [showLoading, setShowLoading] = useState(true);
   const [prevPosition, setPrevPosition] = useState(0);
@@ -27,9 +28,9 @@ export const Result = () => {
     element: null,
     isSeeking: false,
     endTime: 0,
-    nextSource: "",
+    // nextSource: "",
     reverse: false,
-    currSection: 0
+    currSection: 0,
   });
   const [showTermDialog, setShowTermDialog] = useState(false);
   const [explanation, setExplanation] = useState({
@@ -40,7 +41,7 @@ export const Result = () => {
   const [videoIsHidden, setVideoIsHidden] = useState(false);
 
   const [location, setLocation] = useState({
-    "taipei": true,
+    "taipei": false,
     "newTaipei": false,
     "taoyuan": false,
     "hsinchu": false,
@@ -70,24 +71,26 @@ export const Result = () => {
       id: "third",
       title: "特性",
       start: 21,
-      end: 33,
+      end: 34,
     },
     {
       id: "fourth",
       title: "產區",
-      start: 33,
+      start: 34,
       end: 53
     },
     {
       id: "fifth",
       title: "",
       start: 53,
-      end: 54
+      end: 53
     }
   ]
 
   const [currTime, setCurrTime] = useState(0);
-  const [currSection, setCurrSection] = useState(0);
+
+  const [showScrollHint, setShowScrollHint] = useState(false);
+  const [showBatteryHint, setShowBatteryHint] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -95,8 +98,9 @@ export const Result = () => {
       setCurrTime(video.currentTime);
 
       sections.map((section, i) => {
-        if (section.end < video.currentTime && currSection == i) {
+        if (i < 4 && section.end < video.currentTime && fastFwd.currSection == i) {
           video.pause()
+          setShowScrollHint(true);
         }
       })
     }, 1000);
@@ -104,22 +108,32 @@ export const Result = () => {
     return(() => {
       clearInterval(interval);
     })
-  }, [currTime, currSection]);
+  }, [currTime, fastFwd]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       let video = document.getElementById("video");
+
       if (fastFwd.isSeeking) {
-        if (fastFwd.reverse === true) {
+        if (fastFwd.currSection == 4) {
+          fastFwd.element.style.opacity = 1;
+          video.playbackRate = 1;
+          setVideoIsHidden(true);
+          setFastFwd({...fastFwd, isSeeking: false});
+          setShowScrollHint(false);
+        }
+
+        else if (fastFwd.reverse === true) {
           if(video.currentTime <= fastFwd.endTime + 0.3){
             fastFwd.element.style.opacity = 1;
             video.playbackRate = 1;
-            if (fastFwd.nextSource == `t=${sections[0].start},${sections[0].end}`) {
+            if (fastFwd.currSection < 4) {
               setVideoIsHidden(false);
             }
-            setTimeSource(fastFwd.nextSource);
+            // setTimeSource(fastFwd.nextSource);
             setFastFwd({...fastFwd, isSeeking: false});
             video.play()
+            setShowScrollHint(false);
           }
           else {
             video.currentTime += -0.2;
@@ -129,11 +143,10 @@ export const Result = () => {
         else if (video.currentTime >= fastFwd.endTime) {
           fastFwd.element.style.opacity = 1;
           video.playbackRate = 1;
-          setTimeSource(fastFwd.nextSource);
+          // setTimeSource(fastFwd.nextSource);
           setFastFwd({...fastFwd, isSeeking: false});
           video.play()
-          if (fastFwd.nextSource == `t=${sections[4].start},${sections[4].end}`)
-          setVideoIsHidden(true);
+          setShowScrollHint(false);
         }
       }
       
@@ -157,19 +170,17 @@ export const Result = () => {
         let endTime = reverse ? sections[i].start : sections[i - 1].end;
         video.playbackRate = reverse ? 2 : 10;
 
+        setPrevPosition(i);
+
         setFastFwd({
           element: contentElements[i],
           isSeeking: true,
           endTime: endTime,
-          nextSource: `t=${sections[i].start},${sections[i].end}`,
+          // nextSource: `t=${sections[i].start},${sections[i].end}`,
           reverse: reverse,
-          currSection: reverse ? i : (i - 1)
+          currSection: i,
         });
 
-        setCurrSection(i);
-        console.log(i)
-
-        setPrevPosition(i);
         top = true;
         break;
       }
@@ -202,28 +213,33 @@ export const Result = () => {
   }, [startMap]);
 
   useEffect(() => {
-    let gameId = sessionStorage.getItem("id");
+    // let gameId = sessionStorage.getItem("id");
     // let gameId = "640d799ecbd84b560e405ebe"; // debug
 
-    getGameById(gameId)
-      .then((res) => {
-        setData(teaData[res.decision]);
+    data.areaName.map((area, i) => {
+      location[area] = true
+    });
 
-        let tmpLocation = location;
-        teaData[res.decision].areaName.map((area, i) => {
-          location[area] = true
-        })
-        setLocation(tmpLocation);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    // getGameById(gameId)
+    //   .then((res) => {
+    //     setData(teaData[res.decision]);
+
+    //     let tmpLocation = location;
+    //     teaData[res.decision].areaName.map((area, i) => {
+    //       location[area] = true
+    //     })
+    //     setLocation(tmpLocation);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   })
 
     let video = document.getElementById("video");
     video.pause()
     
     setTimeout(() => {
       setShowLoading(false);
+      setShowBatteryHint(true);
       video.play()
     }, 2000);
   }, [])
@@ -488,6 +504,28 @@ export const Result = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className={styles.hint}>
+        { showScrollHint &&
+          <div id="scroll" className={styles.scroll}>
+            <HandScrollGesture />
+            <Typography variant="bodyLargeHighlighted">
+              下滑以繼續
+            </Typography>
+          </div>
+        }
+        { showBatteryHint &&
+          <div id="battery" className={styles.battery}>
+            <Typography variant="bodyLarge" color="#F2F1E9">
+              請關閉裝置省電模式，以求最佳瀏覽體驗。
+            </Typography>
+            <button onClick={() => setShowBatteryHint(false)}>
+              <Typography variant="labelLarge">
+                知道了
+              </Typography>
+            </button>
+          </div>
+        }
       </div>
       <Dialog
         open={showTermDialog}
