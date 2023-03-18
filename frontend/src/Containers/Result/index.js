@@ -18,43 +18,26 @@ import gsap from "gsap";
 import { getGameById } from "../../Utils/Axios";
 
 export const Result = () => {
-  const [data, setData] = useState(teaData[0]);
-  const videoRef = useRef();
-  const [videoSrc, setVideoSrc] = useState()
+  const defaultBgColor = "#F1F0E0";
+  const [teaColor, setTeaColor] = useState(theme.palette.primary.main);
+  const [bgColor, setBgColor] = useState();
   const [showLoading, setShowLoading] = useState(true);
+
+  const [data, setData] = useState(teaData[0]);
+  // video
+  const videoRef = useRef();
+  const [webmVideoSrc, setWebmVideoSrc] = useState();
+  const [mp4VideoSrc, setMp4VideoSrc] = useState();
+  const [videoIsHidden, setVideoIsHidden] = useState(false);
+
   const [prevPosition, setPrevPosition] = useState(0);
-  const [startMap, setStartMap] = useState(false);
-  const [timeSource, setTimeSource] = useState("t=0,7");
   const [fastFwd, setFastFwd] = useState({
     element: null,
     isSeeking: false,
     endTime: 0,
-    // nextSource: "",
     reverse: false,
     currSection: 0,
   });
-  const [showTermDialog, setShowTermDialog] = useState(false);
-  const [explanation, setExplanation] = useState({
-    "title": "",
-    "context": "",
-  })
-
-  const [videoIsHidden, setVideoIsHidden] = useState(false);
-
-  const [location, setLocation] = useState({
-    "taipei": false,
-    "newTaipei": false,
-    "taoyuan": false,
-    "hsinchu": false,
-    "miaoli": false,
-    "yilan": false,
-    "nantou": false,
-    "hualian": false,
-    "taichung": false,
-    "jiayi": false,
-    "taidong": false,
-  })
-
   const sections = [
     {
       id: "first",
@@ -87,9 +70,30 @@ export const Result = () => {
       end: 53
     }
   ]
-
   const [currTime, setCurrTime] = useState(0);
 
+  // map
+  const [startMap, setStartMap] = useState(false);
+  const [location, setLocation] = useState({
+    "taipei": false,
+    "newTaipei": false,
+    "taoyuan": false,
+    "hsinchu": false,
+    "miaoli": false,
+    "yilan": false,
+    "nantou": false,
+    "hualian": false,
+    "taichung": false,
+    "jiayi": false,
+    "taidong": false,
+  })
+  
+  // hint & dialog
+  const [explanation, setExplanation] = useState({
+    "title": "",
+    "context": "",
+  })
+  const [showTermDialog, setShowTermDialog] = useState(false);
   const [showScrollHint, setShowScrollHint] = useState(false);
   const [showBatteryHint, setShowBatteryHint] = useState(false);
 
@@ -117,6 +121,9 @@ export const Result = () => {
 
       if (fastFwd.isSeeking) {
         if (fastFwd.currSection == 4) {
+          let background = document.getElementById("background");
+          background.style.backgroundColor = defaultBgColor;
+
           fastFwd.element.style.opacity = 1;
           video.playbackRate = 1;
           setVideoIsHidden(true);
@@ -130,6 +137,8 @@ export const Result = () => {
             video.playbackRate = 1;
             if (fastFwd.currSection < 4) {
               setVideoIsHidden(false);
+              let background = document.getElementById("background");
+              background.style.backgroundColor = bgColor;
             }
             // setTimeSource(fastFwd.nextSource);
             setFastFwd({...fastFwd, isSeeking: false});
@@ -146,7 +155,7 @@ export const Result = () => {
           video.playbackRate = 1;
           // setTimeSource(fastFwd.nextSource);
           setFastFwd({...fastFwd, isSeeking: false});
-          video.play()
+          video.play();
           setShowScrollHint(false);
         }
       }
@@ -217,48 +226,69 @@ export const Result = () => {
     let gameId = sessionStorage.getItem("id");
 
     // FOR LOCAL DEBUG
-    // let debugId = 6;
+    // let debugId = 3;
     // setData(teaData[debugId]);
 
     // teaData[debugId].areaName.map((area, i) => {
     //   location[area] = true
     // });
 
-    // let videoSources = {};
+    // let parsedVideoData = {};
 
     // Object.keys(videoData).map((keys, i) => {
     //   let keyList = keys.split(",")
     //   keyList.map((key, j) => {
-    //     videoSources[parseInt(key)] = videoData[keys].video;
-    //     console.log(parseInt(key))
+    //     parsedVideoData[parseInt(key)] = videoData[keys];
     //   })
     // })
 
-    // setVideoSrc(videoSources[debugId]);
+    // setWebmVideoSrc(parsedVideoData[debugId].webmVideo);
+    // setMp4VideoSrc(parsedVideoData[debugId].mp4Video);
+
+    // // set background color and text color
+    // let background = document.getElementById("background");
+    // setBgColor(parsedVideoData[debugId].bgColor);
+    // background.style.backgroundColor = parsedVideoData[debugId].bgColor;
+    // background.style.color = parsedVideoData[debugId].textColor;
+    // setTeaColor(parsedVideoData[debugId].teaColor);
+
+    // // set term color
+    // document.documentElement.style.setProperty("--term-color", parsedVideoData[debugId].linkColor);
 
     getGameById(gameId)
       .then((res) => {
-        setData(teaData[res.decision]);
+        let resId = res.decision
+        setTeaId(resId);
+        setData(teaData[resId]);
 
         // set location for map
         let tmpLocation = location;
-        teaData[res.decision].areaName.map((area, i) => {
+        teaData[resId].areaName.map((area, i) => {
           location[area] = true
         })
         setLocation(tmpLocation);
 
         // set video source
-        let videoSources = {};
+        let parsedVideoData = {};
 
         Object.keys(videoData).map((keys, i) => {
           let keyList = keys.split(",")
           keyList.map((key, j) => {
-            videoSources[parseInt(key)] = videoData[keys].video;
-            console.log(parseInt(key))
+            parsedVideoData[parseInt(key)] = videoData[keys];
           })
         })
 
-        setVideoSrc(videoSources[res.decision]);
+        setWebmVideoSrc(parsedVideoData[resId].webmVideo);
+        setMp4VideoSrc(parsedVideoData[resId].mp4Video);
+
+        // set background color and text color
+        let background = document.getElementById("background");
+        background.style.backgroundColor = parsedVideoData[resId].bgColor;
+        background.style.color = parsedVideoData[resId].textColor;
+        setTeaColor(parsedVideoData[resId].teaColor);
+
+        // set term color
+        document.documentElement.style.setProperty("--term-color", parsedVideoData[resId].linkColor);
       })
       .catch((err) => {
         console.log(err);
@@ -269,14 +299,14 @@ export const Result = () => {
     setTimeout(() => {
       setShowLoading(false);
       setShowBatteryHint(true);
-      video.load()
+      // video.load()
       video.play()
     }, 12000);
   }, [])
 
   useEffect(() => {
     videoRef.current?.load();
-  }, [videoSrc])
+  }, [webmVideoSrc, mp4VideoSrc])
 
   const handleOpenDialog = (keyword) => {
     let video = document.getElementById("video");
@@ -300,11 +330,11 @@ export const Result = () => {
       <div className={styles.loadingPage} hidden={!showLoading}>
         <img src={loading} />
       </div>
-      <div className={styles.background}>
+      <div className={styles.background} id="background">
         <video id="video" ref={videoRef} className={styles.video} muted playsInline hidden={videoIsHidden}>
-          <source id="videoSrc" src={videoSrc} type="video/webm" />
           {/* <source id="videoSrc" src={`videos/noBg.webm`} type="video/webm" /> */}
-          {/* <source id="videoSrc" src={`videos/test.mp4`} type="video/mp4;codecs=hvc1" /> */}
+          <source id="videoSrc" src={webmVideoSrc} type="video/webm" />
+          <source id="videoSrc" src={mp4VideoSrc} type='video/mp4;codes=hvc1' />
         </video>
         <div className={styles.container} onScroll={(e) => handleScroll(e)}>
           { sections.slice(0, 4).map((section, i) => (
@@ -362,7 +392,7 @@ export const Result = () => {
                       <Typography key={j} variant="bodyLarge">
                         { text.split("**").map((keyword, k) => (
                           k % 2 ?
-                          <u onClick={() => handleOpenDialog(keyword)} key={k}>{ keyword }</u>
+                          <div className={styles.keyword} onClick={() => handleOpenDialog(keyword)} key={k}>{ keyword }</div>
                           :
                           <>{ keyword }</>
                         ))}
@@ -552,7 +582,7 @@ export const Result = () => {
               請關閉裝置省電模式，以求最佳瀏覽體驗。
             </Typography>
             <button onClick={() => setShowBatteryHint(false)}>
-              <Typography variant="labelLarge">
+              <Typography variant="labelLarge" color={teaColor}>
                 知道了
               </Typography>
             </button>
@@ -578,7 +608,7 @@ export const Result = () => {
               { explanation.context }
             </Typography>
             <button className={styles.button} onClick={handleCloseDialog}>
-              <Typography variant="labelLarge" color={theme.palette.primary.main}>
+              <Typography variant="labelLarge" color={teaColor}>
                 關閉
               </Typography>
             </button>
