@@ -31,8 +31,11 @@ const Wrapper = () => {
         style={{
           backgroundColor: "#FEFCF4"
         }}
+        sx={{
+          pb: 1
+        }}
       >
-        <Box width={width} height={88} style={{ background: "#fefcf4", position: "fixed"}}>
+        <Box width={width} height={64} style={{ background: "#fefcf4", position: "fixed"}}>
           <NavBar forGame={true}/>
         </Box>
         <Game onChangeIndex={onChangeIndex} onChangePhaseTitle1={onChangePhaseTitle1}/>

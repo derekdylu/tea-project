@@ -86,16 +86,15 @@ const yAxis = keyframes`
 `
 
 const Wall = () => {
-  // TODO add motion tea background, background color, and import all cup motions
-  // TODO align all tea motion materials
-  // TODO create a valid loop function for multiple teas displaying
-  // TODO subscription (GraphQL) or automatic refetch in a certain time without messing up the currently displaying order
-
   const { width, height, ratio } = useWindowDimensions()
   const [isLoading, setIsLoading] = useState(false)
-  const [data, setData] = useState()
   const [path, setPath] = useState("")
-  // const lastUpdateTime = Date.now() - 20999
+  const [path2, setPath2] = useState("")
+  const [path3, setPath3] = useState("")
+  const [path4, setPath4] = useState("")
+  const [path5, setPath5] = useState("")
+  const [startTime, setStartTime] = useState(0)
+  // const lastUpdateTime = Date.now()
   // const lastUpdateTime = "1678947398956"
 
   useEffect(() => {
@@ -109,31 +108,44 @@ const Wall = () => {
 
     const fetchedData = await getGames()
     console.log("fetched data", fetchedData)
-    // const fetchedData = testData
 
-    let demoData = []
-    const _fetchedData = fetchedData.filter(x => x.decision !== -1).filter(y => y.shown === false)
-    if ( data && data.length > 0 ) {
-      const currentData = data
-
-      updateGame(currentData[0].id, null, null, null, null, true).then((res) => {
+    const _fetchedData = fetchedData.filter(x => x.decision !== -1)
+                                      .filter(y => y.shown === false && y.timestamp >= startTime)
+                                      .sort((a, b) => a.timestamp - b.timestamp)
+    
+    if ( _fetchedData === undefined || _fetchedData.length <= 0 ) {
+      setPath("")
+    } else {
+      setPath(teas[_fetchedData[0].decision])
+      updateGame(_fetchedData[0]._id, null, null, null, null, true).then((res) => {
         console.log("res", res)
       }).catch((err) => {
         console.log("err", err)
       })
-
-      const _currentData = currentData.slice(1)
-      const __currentData = _currentData.concat(_fetchedData)
-      demoData = __currentData
-    } else {
-      demoData = _fetchedData
-    }
-    setData(demoData)
-    console.log("demo data", demoData)
-    if ( demoData === undefined || demoData.length <= 0 ) {
-      setPath("")
-    } else {
-      setPath(teas[demoData[0].decision])
+      setPath2(teas[_fetchedData[1].decision])
+      updateGame(_fetchedData[1]._id, null, null, null, null, true).then((res) => {
+        console.log("res", res)
+      }).catch((err) => {
+        console.log("err", err)
+      })
+      setPath3(teas[_fetchedData[2].decision])
+      updateGame(_fetchedData[2]._id, null, null, null, null, true).then((res) => {
+        console.log("res", res)
+      }).catch((err) => {
+        console.log("err", err)
+      })
+      setPath4(teas[_fetchedData[3].decision])
+      updateGame(_fetchedData[3]._id, null, null, null, null, true).then((res) => {
+        console.log("res", res)
+      }).catch((err) => {
+        console.log("err", err)
+      })
+      setPath5(teas[_fetchedData[4].decision])
+      updateGame(_fetchedData[4]._id, null, null, null, null, true).then((res) => {
+        console.log("res", res)
+      }).catch((err) => {
+        console.log("err", err)
+      })
     }
     setIsLoading(false)
   }
@@ -141,7 +153,7 @@ const Wall = () => {
   useEffect(() =>{
     let interval = setInterval(() => {
       fetchAndDrop()
-    }, (21 * 1000))
+    }, (40 * 1000))
     return () => clearInterval(interval)
   })
 
@@ -164,6 +176,89 @@ const Wall = () => {
     }
   `;
 
+  var Cup2 = styled.div`
+    animation-name: ${xAxis};
+    animation-delay: 5s;
+    animation-duration: 40s;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.12, 0, 0.39, 0);
+    &::after {
+      content: "";
+      display: block;
+      width: 200px;
+      height: 200px;
+      background-image: url(${path2});
+      background-size: 200px;
+      animation-name: ${yAxis};
+      animation-delay: 5s;
+      animation-duration: 40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1);
+    }
+  `;
+
+  var Cup3 = styled.div`
+    animation-name: ${xAxis};
+    animation-delay: 10s;
+    animation-duration: 40s;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.12, 0, 0.39, 0);
+    &::after {
+      content: "";
+      display: block;
+      width: 200px;
+      height: 200px;
+      background-image: url(${path3});
+      background-size: 200px;
+      animation-name: ${yAxis};
+      animation-delay: 10s;
+      animation-duration: 40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1);
+    }
+  `;
+  var Cup4 = styled.div`
+    animation-name: ${xAxis};
+    animation-delay: 15s;
+    animation-duration: 40s;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.12, 0, 0.39, 0);
+    &::after {
+      content: "";
+      display: block;
+      width: 200px;
+      height: 200px;
+      background-image: url(${path4});
+      background-size: 200px;
+      animation-name: ${yAxis};
+      animation-delay: 15s;
+      animation-duration: 40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1);
+    }
+  `;
+
+  var Cup5 = styled.div`
+    animation-name: ${xAxis};
+    animation-delay: 20s;
+    animation-duration: 40s;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.12, 0, 0.39, 0);
+    &::after {
+      content: "";
+      display: block;
+      width: 200px;
+      height: 200px;
+      background-image: url(${path5});
+      background-size: 200px;
+      animation-name: ${yAxis};
+      animation-delay: 20s;
+      animation-duration: 40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1);
+    }
+  `;
+
   return (
     <ThemeProvider theme={theme}>
       <div>
@@ -177,6 +272,18 @@ const Wall = () => {
       </div>
       <div style={{ position: 'absolute', left: '400px', top: '-200px' }}>
         <Cup />
+      </div>
+      <div style={{ position: 'absolute', left: '400px', top: '-200px' }}>
+        <Cup2 />
+      </div>
+      <div style={{ position: 'absolute', left: '400px', top: '-200px' }}>
+        <Cup3 />
+      </div>
+      <div style={{ position: 'absolute', left: '400px', top: '-200px' }}>
+        <Cup4 />
+      </div>
+      <div style={{ position: 'absolute', left: '400px', top: '-200px' }}>
+        <Cup5 />
       </div>
       <img alt="bg" src={background} height={ 3 * height / 4} style={{ position: 'fixed', bottom: '0px', right: '-50px' }}/>
     </ThemeProvider>
