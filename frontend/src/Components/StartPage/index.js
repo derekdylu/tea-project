@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavBar } from "../NavBar";
 import { createGame } from "../../Utils/Axios";
@@ -15,6 +15,7 @@ import { ReactComponent as CloudLeft } from "../../Images/Home/cloudLeft.svg";
 import { ReactComponent as CloudRight } from "../../Images/Home/cloudRight.svg";
 import { ReactComponent as MountainLeft } from "../../Images/Home/mountainLeft.svg";
 import { ReactComponent as MountainRight } from "../../Images/Home/mountainRight.svg";
+import { ReactComponent as HandScrollGesture } from "../../Images/swipe_up.svg";
 import styles from "./styles.module.scss";
 
 import { ThemeProvider } from "@emotion/react";
@@ -30,15 +31,16 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ ignoreMobileResize: true });
 
+var _ = require('lodash');
+
 export const StartPage = ({}) => {
   const navigate = useNavigate()
   const { width, height, ratio } = useWindowDimensions()
   const [open, setOpen] = useState(false);
   const [narrow, setNarrow] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const [second, setSecond] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showScrollHint, setShowScrollHint] = useState(false);
 
   const content = [
     "生活中隨處可以看見台灣茶的蹤影，可是我們總是與他們擦身而過，錯失了認識他們的好機會。",
@@ -64,7 +66,9 @@ export const StartPage = ({}) => {
   }, [ratio])
 
   useEffect(() => {
-    console.log("done rendering");
+    setTimeout(() => {
+      setShowScrollHint(true);
+    }, 2000);
 
     let handScrollTrigger = {scrollTrigger: {
       trigger: "#trigger",
@@ -129,12 +133,25 @@ export const StartPage = ({}) => {
     })
   }, []);
 
+  const handleEndScroll = useMemo(
+    () =>
+      _.debounce(() => {
+        setShowScrollHint(true);
+        console.log("END SCROLL");
+      }, 2000),
+    []
+  );
+
   const handleOnScroll = (e) => {
+    setShowScrollHint(false);
+
     let percentage = window.pageYOffset / window.innerHeight;
     if (percentage >= 1.5) {
       setSecond(true);
+      setShowScrollHint(false);
     } else {
       setSecond(false);
+      handleEndScroll();
     }
   }
 
@@ -224,6 +241,17 @@ export const StartPage = ({}) => {
               }
             </Typography>
           </button>
+        </div>
+
+        <div className={styles.hint}>
+          { showScrollHint &&
+            <div id="scroll" className={styles.scroll}>
+              <HandScrollGesture />
+              <Typography variant="bodyLargeHighlighted">
+                下滑以繼續
+              </Typography>
+            </div>
+          }
         </div>
       </div>
     </ThemeProvider>
