@@ -19,6 +19,8 @@ import { Link } from "react-router-dom";
 export const NavBar = ({
   defaultHideLogo = false,
   forGame = false,
+  hidden = false,
+  backgroundColor = "",
 }) => {
   const navigate = useNavigate()
   const [windowHeight, setWindowHeight] = useState(`${document.documentElement.clientHeight}px`);
@@ -49,7 +51,16 @@ export const NavBar = ({
     return(() => {
       window.removeEventListener("resize", onResize);
     })
-  })
+  }, [])
+
+  useEffect(() => {
+    let navBar = document.getElementById("navBar");
+    if (backgroundColor !== "") {
+      navBar.style.backgroundColor = backgroundColor;
+    } else {
+      navBar.style.backgroundColor = "transparent";
+    }
+  }, [backgroundColor])
 
   useEffect(() => {
     const menuTl = gsap.timeline();
@@ -69,7 +80,7 @@ export const NavBar = ({
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={styles.container}>
+      <div className={styles.container} hidden={hidden} id="navBar">
         <div className={`${styles.logo} ${defaultHideLogo && hideLogo ? styles.hidden : ""}`}>
           <Logo onClick={() => navigate("/")} />
         </div>

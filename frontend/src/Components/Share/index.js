@@ -9,36 +9,39 @@ import { Typography } from "@mui/material";
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import { toPng as htmlToImage } from 'html-to-image';
+import domtoimage from 'dom-to-image';
 
-import 蔬菜香 from '../../Images/Card/蔬菜香.png'
-import 豆子 from '../../Images/Card/豆子香.png'
-import 茶色淺 from '../../Images/Card/茶色淺.png'
-import 茶色深 from '../../Images/Card/茶色深.png'
-import 焙香 from '../../Images/Card/焙香.png'
-import 清香 from '../../Images/Card/清香.png'
-import 龍眼乾 from '../../Images/Card/龍眼乾味.png'
-import 無花果乾 from '../../Images/Card/無花果乾味.png'
-import 熱帶水果味 from '../../Images/Card/熱帶水果味.png'
-import 果香 from '../../Images/Card/果香.png'
-import 口感較厚 from '../../Images/Card/口感較厚.png'
-import 野薑花香 from '../../Images/Card/野薑花香.png'
-import 柑橘味 from '../../Images/Card/柑橘味.png'
-import 薄荷 from '../../Images/Card/薄荷味.png'
-import 肉桂味 from '../../Images/Card/肉桂味.png'
-import 口感濃稠 from '../../Images/Card/口感濃稠.png'
-import 甜香 from '../../Images/Card/甜香.png'
-import 蜜香 from '../../Images/Card/蜜香.png'
-import 中藥味 from '../../Images/Card/中藥味.png'
-import 濃郁果香 from '../../Images/Card/濃郁果香.png'
-import 果酸 from '../../Images/Card/果酸味.png'
-import 淡雅花香 from '../../Images/Card/淡雅花香.png'
-import 草麥味 from '../../Images/Card/草麥味.png'
-import 玄米 from '../../Images/Card/玄米味.png'
-import 茉莉花 from '../../Images/Card/茉莉花香.png'
-import 奶香 from '../../Images/Card/奶香.png'
-import 花香 from '../../Images/Card/花香.png'
-import 青香 from '../../Images/Card/青香.png'
-import 收斂感 from '../../Images/Card/收斂感.png'
+import 蔬菜香 from '../../Images/Share/蔬菜香.svg'
+import 豆子 from '../../Images/Share/豆子香.svg'
+import 茶色淺 from '../../Images/Share/茶色淺.svg'
+import 茶色深 from '../../Images/Share/茶色深.svg'
+import 焙香 from '../../Images/Share/焙香.svg'
+import 清香 from '../../Images/Share/清香.svg'
+import 龍眼乾 from '../../Images/Share/龍眼乾味.svg'
+import 無花果乾 from '../../Images/Share/無花果乾味.svg'
+import 熱帶水果味 from '../../Images/Share/熱帶水果味.svg'
+import 果香 from '../../Images/Share/果香.svg'
+import 口感較厚 from '../../Images/Share/口感較厚.svg'
+import 野薑花香 from '../../Images/Share/野薑花香.svg'
+import 柑橘味 from '../../Images/Share/柑橘味.svg'
+import 薄荷 from '../../Images/Share/薄荷味.svg'
+import 肉桂味 from '../../Images/Share/肉桂味.svg'
+import 口感濃稠 from '../../Images/Share/口感濃稠.svg'
+import 甜香 from '../../Images/Share/甜香.svg'
+import 蜜香 from '../../Images/Share/蜜香.svg'
+import 中藥味 from '../../Images/Share/中藥味.svg'
+import 濃郁果香 from '../../Images/Share/濃郁果香.svg'
+import 果酸 from '../../Images/Share/果酸味.svg'
+import 淡雅花香 from '../../Images/Share/淡雅花香.svg'
+import 草麥味 from '../../Images/Share/草麥味.svg'
+import 玄米 from '../../Images/Share/玄米味.svg'
+import 茉莉花 from '../../Images/Share/茉莉花香.svg'
+import 奶香 from '../../Images/Share/奶香.svg'
+import 花香 from '../../Images/Share/花香.svg'
+import 青香 from '../../Images/Share/青香.svg'
+import 收斂感 from '../../Images/Share/收斂感.svg'
+
+// import test from '../../Images/Share/龍眼乾味.svg'
 
 const images = {
   "蔬菜香": 蔬菜香,
@@ -91,13 +94,17 @@ export const Share = ({
     var node = document.getElementById('capture');
     setTimeout(() => {
       htmlToImage(node)
-        .then(function (dataUrl) {
-          let render = document.getElementById('renderer')
-          render.innerHTML = "<img src='" + dataUrl + "' alt='render' width='100%' />"
+        .then(function (cacbe) {
+          htmlToImage(node)
+            .then(function(dataUrl) {
+              let render = document.getElementById('renderer')
+              render.innerHTML = "<img src='" + dataUrl + "' alt='render' width='100%' />"
+            })
         })
         .catch(function (error) {
           console.error('oops, something went wrong!', error);
         });
+
     }, 500)
   }
 
@@ -150,7 +157,7 @@ export const Share = ({
             </Typography>
 
             <div className={styles.wrapper}>
-              <div className={styles.marquee}>
+              <div className={styles.marquee} id="marquee">
                 <div>
                   <img src={img1}/>
                   <img src={img2} />

@@ -37,14 +37,16 @@
 .video {
     position: fixed;
     position: fixed;
-    height: 100%;
-    left: 50%;
-    transform: translateX(-50%);
+    // height: 100%;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .container {
     width: 100vw;
-    height: 100vh;
+    // height: 100vh;
+    height: 100%;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     position: fixed;
@@ -54,7 +56,7 @@
 
 .section {
     overflow-x: hidden;
-    height: 100vh;
+    height: 100%;
     width: 100vw;
     scroll-snap-align: start;
     position: relative;
@@ -135,7 +137,7 @@
     .fourth {
         padding: 0 1.5rem;
         width: 100%;
-        bottom: 10%;
+        bottom: 5%;
         left: 0;
         opacity: 0;
         z-index: 202;
@@ -268,7 +270,7 @@
 
 .nonVideoSection {
     opacity: 0;
-    padding: 4rem 0;
+    padding: 4rem 0 8rem 0;
     // min-height: 100vh;
     width: 100vw;
     height: 100vh;
@@ -399,6 +401,9 @@
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 0.25rem 1rem;
+    border-radius: 1rem;
     
     > svg {
       width: 20px;
