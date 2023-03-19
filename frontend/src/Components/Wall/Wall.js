@@ -27,6 +27,7 @@ import 紅韻紅茶 from '../../Images/Wall/紅韻紅茶.gif'
 import 蜜香紅茶 from '../../Images/Wall/蜜香紅茶.gif'
 import 金萱茶 from '../../Images/Wall/金萱茶.gif'
 import 四季春 from '../../Images/Wall/四季春.gif'
+import 茶杯 from '../../Images/Wall/茶杯.gif'
 
 // const fetcher = (...args) => fetch(...args).then(res => res.json())
 // const fetcher = url => axios.get(url).then(res => res.data)
@@ -286,6 +287,7 @@ const Wall = () => {
         <Cup5 />
       </div>
       <img alt="bg" src={background} height={ 3 * height / 4} style={{ position: 'fixed', bottom: '0px', right: '-50px' }}/>
+      <img alt="cup_pure" src={茶杯} height={ 0.32 * 3 * height / 4} style={{ position: 'fixed', bottom: `${0.14 * 3 * height / 4}px`, right: `${0.51 * 1.3083 * 3 * height / 4}px` }}/>
     </ThemeProvider>
   )
 }
