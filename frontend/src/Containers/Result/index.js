@@ -258,7 +258,6 @@ export const Result = () => {
     getGameById(gameId)
       .then((res) => {
         let resId = res.decision
-        setTeaId(resId);
         setData(teaData[resId]);
 
         // set location for map
@@ -283,6 +282,7 @@ export const Result = () => {
 
         // set background color and text color
         let background = document.getElementById("background");
+        setBgColor(parsedVideoData[resId].bgColor);
         background.style.backgroundColor = parsedVideoData[resId].bgColor;
         background.style.color = parsedVideoData[resId].textColor;
         setTeaColor(parsedVideoData[resId].teaColor);
