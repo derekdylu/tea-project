@@ -15,6 +15,7 @@
     "aws-sdk": "^2.1338.0",
     "axios": "^1.2.4",
     "body-scroll-lock": "^4.0.0-beta.0",
+    "dom-to-image": "^2.6.0",
     "gsap": "^3.11.4",
     "html-to-image": "^1.11.11",
     "html2canvas": "^1.4.1",
