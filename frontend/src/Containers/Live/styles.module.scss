@@ -24,21 +24,22 @@
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-    gap: 5rem;
+    gap: 2.5rem;
+    white-space: pre-wrap;
 
     &.top {
         flex: 1
     }
 
     &.bottom {
-        // justify-content: space-between;
-        gap: 20rem;
+        justify-content: space-between;
     }
 }
 
 .title {
     display: flex;
     flex-direction: column;
+    white-space: pre-wrap;
 }
 
 .graph {
@@ -100,6 +101,8 @@
 
     > img {
         background-color: #FFFFFF;
+        width: 64px;
+        height: 64px;
     }
 }
 
