@@ -704,7 +704,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
             <Typography variant="displaySmall" sx={{ mb: 20, color: theme.palette.neutralVariant[30] }}>
               {phase[0][1]}
             </Typography>
-            <Box sx={{ py: 1, pr: 1, mb: 1, border: theme.palette.surfaceVariant.outline, borderStyle: 'hidden hidden solid hidden' }}>
+            <Box sx={{ py: 1, pr: 1, mb: 1, border: theme.palette.surfaceVariant.outline, borderStyle: 'hidden hidden solid hidden', borderWidth: '0 0 1px 0'}}>
               <Typography variant="bodyMedium" sx={{ color: theme.palette.background.contrastText }}>
                 {phase[0][2]}
               </Typography>
