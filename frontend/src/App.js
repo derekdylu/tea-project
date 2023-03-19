@@ -41,7 +41,7 @@ function App() {
           <Route path="/game" element={<Wrapper />} forceRefresh={true} />
           <Route path="*" element={<Error />} />
           <Route path="/" element={ <StartPage/> } />
-          <Route path="/start" element={ <StartPage/> } />
+          {/* <Route path="/start" element={ <StartPage/> } /> */}
           <Route path="/live" element={ <Live/> } />
           <Route path="/result" element={ <Result/> } />
           <Route path="/map" element={ <Map/> } />
