@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Product } from "../../Components/Product";
 import { Share } from "../../Components/Share";
 import { teaData, termData, videoData } from "./data";
+import { NavBar } from "../../Components/NavBar"
 import styles from "./styles.module.scss";
 
 import { ThemeProvider } from "@emotion/react";
@@ -55,12 +56,12 @@ export const Result = () => {
       id: "third",
       title: "特性",
       start: 21,
-      end: 34,
+      end: 33,
     },
     {
       id: "fourth",
       title: "產區",
-      start: 34,
+      start: 33,
       end: 53
     },
     {
@@ -108,7 +109,7 @@ export const Result = () => {
           setShowScrollHint(true);
         }
       })
-    }, 1000);
+    }, 500);
 
     return(() => {
       clearInterval(interval);
@@ -208,17 +209,17 @@ export const Result = () => {
     const mapTl = gsap.timeline();
 
     if (startMap) {
-      mapTl.to("#map", {left: "0%", top: "50%", y: "-50%", duration: 3, ease: "sine.inOut"})
+      mapTl.to("#map", {left: "15%", top: "12%", y: "0%", duration: 5, ease: "sine.inOut"})
+          // .to("#map", {left: "15%", top: "12%", y: "0", duration: 2, ease: "sine.inOut" })
           .to("#circle", {opacity: 1, duration: 0.3, ease: "sine.inOut"})
           .to("#line", {width: "100%", duration: 0.4, ease: "sine.inOut"})
           .to("#text", {opacity: 1, duration: 0.3, ease: "sine.inOut"})
-          .to("#map", {left: "15%", top: "12%", y: "0", duration: 2, ease: "sine.inOut" })
     }
     else {
-      mapTl.to("#text", {opacity: 0, duration: 0.2, ease: "sine.inOut"})
-          .to("#line", {width: "0%", duration: 0.2, ease: "sine.inOut"})
-          .to("#circle", {opacity: 0, duration: 0.2, ease: "sine.inOut"})
-          .to("#map", {left: "-100%", top: "70%", duration: 0.5, ease: "sine.inOut" })
+      mapTl.to("#text", {opacity: 0, duration: 0.1, ease: "sine.inOut"})
+          .to("#line", {width: "0%", duration: 0.1, ease: "sine.inOut"})
+          .to("#circle", {opacity: 0, duration: 0.1, ease: "sine.inOut"})
+          .to("#map", {left: "-100%", top: "70%", duration: 0.1, ease: "sine.inOut" })
     }
   }, [startMap]);
 
@@ -301,7 +302,7 @@ export const Result = () => {
       setShowBatteryHint(true);
       // video.load()
       video.play()
-    }, 12000);
+    }, 24000);
   }, [])
 
   useEffect(() => {
@@ -327,6 +328,7 @@ export const Result = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <NavBar hidden={showLoading} backgroundColor={fastFwd.currSection == 4 ? defaultBgColor : ""}/>
       <div className={styles.loadingPage} hidden={!showLoading}>
         <img src={loading} />
       </div>

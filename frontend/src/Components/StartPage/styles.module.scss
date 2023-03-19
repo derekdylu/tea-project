@@ -203,7 +203,7 @@
 .intro {
     width: 100vw;
     box-sizing: border-box;
-    padding: 1rem 1.5rem;
+    padding: 1rem 1.5rem 2rem 1.5rem;
     position: fixed;
     top: 100%;
     left: 0%;
@@ -212,7 +212,7 @@
 
     .text {
         width: 70%;
-        margin-bottom: 5rem;
+        margin-bottom: 3.5rem;
         background-color: var(--background-color);
         padding: 0.5rem 0.5rem 0.5rem 0;
         display: flex;
