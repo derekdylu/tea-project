@@ -1,6 +1,6 @@
 export const teaData = [
   {
-    "id": 1,
+    "id": 0,
     "name": [["碧", "螺春"], "綠茶"],
     "subName": "",
     "contents": [
@@ -25,10 +25,10 @@ export const teaData = [
       "shop": "鮮農直賣所",
       "link": "https://www.fresh-farm.com.tw/page/product/show.aspx?num=644&kind=104&page=1&lang=TW"
     },
-    "hashtags": ["清香", "淡雅", "臺灣綠茶", "不發酵茶"]
+    "hashtags": ["青香", "蔬菜香", "臺灣綠茶", "不發酵茶"]
   },
   {
-    "id": 2,
+    "id": 1,
     "name": ["八川綠茶"],
     "subName": "",
     "contents": [
@@ -52,10 +52,10 @@ export const teaData = [
       "shop": "一手私藏-老茶行",
       "link": "https://www.itsoshop.com/product/%e5%8f%b0%e7%81%a3%e8%8c%b6%e7%a6%ae%e7%9b%92%ef%bd%9c%e5%8f%b0%e7%81%a3%e7%8e%89%e9%9c%b2%e7%b6%a0%e8%8c%b6-%e5%8d%8a%e6%96%a4%e8%8c%b6%e8%91%89300%e5%85%ac%e5%85%8b150%e5%85%ac%e5%85%8bx2%e7%bd%90/"
     },
-    "hashtags": ["清香", "淡雅", "臺灣綠茶", "不發酵茶"]
+    "hashtags": ["青香", "花香", "臺灣綠茶", "不發酵茶"]
   },
   {
-    "id": 3,
+    "id": 2,
     "name": ["包種茶"],
     "subName": "",
     "contents": [
@@ -83,7 +83,7 @@ export const teaData = [
     "hashtags": ["野薑花香", "茉莉香", "清香型條型包種茶", "部份發酵茶"]
   },
   {
-    "id": 4,
+    "id": 3,
     "name": ["高山", "烏龍茶"],
     "subName": "南部高海拔",
     "contents": [
@@ -110,7 +110,7 @@ export const teaData = [
     "hashtags": ["花香", "口感濃稠", "清香型球型烏龍茶", "部份發酵茶"]
   },
   {
-    "id": 5,
+    "id": 4,
     "name": ["高山", "烏龍茶"],
     "subName": "北部高海拔",
     "contents": [
@@ -137,7 +137,7 @@ export const teaData = [
     "hashtags": ["淡雅花香", "清香", "清香型球型烏龍茶", "部份發酵茶"]
   },
   {
-    "id": 6,
+    "id": 5,
     "name": ["台灣", "烏龍茶"],
     "subName": "低海拔",
     "contents": [
@@ -164,7 +164,7 @@ export const teaData = [
     "hashtags": ["花香", "清香", "清香型球型烏龍茶", "部份發酵茶"]
   },
   {
-    "id": 7,
+    "id": 6,
     "name": ["凍頂烏龍"],
     "subName": "",
     "contents": [
@@ -191,7 +191,7 @@ export const teaData = [
     "hashtags": ["焙香", "草麥味", "焙香型球型烏龍茶", "部份發酵茶"]
   },
   {
-    "id": 8,
+    "id": 7,
     "name": ["鐵觀音茶"],
     "subName": "",
     "contents": [
@@ -218,7 +218,7 @@ export const teaData = [
     "hashtags": ["焙香", "果酸味", "焙香型球型烏龍茶", "部份發酵茶"]
   },
   {
-    "id": 9,
+    "id": 8,
     "name": ["紅烏龍茶"],
     "subName": "",
     "contents": [
@@ -246,7 +246,7 @@ export const teaData = [
     "hashtags": ["焙香", "果乾味", "焙香型球型烏龍茶", "部份發酵茶"]
   },
   {
-    "id": 10,
+    "id": 9,
     "name": ["東方", ["美", "人茶"]],
     "subName": "",
     "contents": [
@@ -273,7 +273,7 @@ export const teaData = [
     "hashtags": ["甜香", "熱帶水果味", "東方美人茶", "部份發酵茶"]
   },
   {
-    "id": 11,
+    "id": 10,
     "name": ["小葉種紅茶"],
     "subName": "",
     "contents": [
@@ -300,7 +300,7 @@ export const teaData = [
     "hashtags": ["果香", "濃花香", "臺灣紅茶", "全發酵茶"]
   },
   {
-    "id": 12,
+    "id": 11,
     "name": [["阿", "薩姆"], "紅茶"],
     "subName": "南投",
     "contents": [
@@ -327,7 +327,7 @@ export const teaData = [
     "hashtags": ["微澀", "口感濃稠", "臺灣紅茶", "全發酵茶"]
   },
   {
-    "id": 13,
+    "id": 12,
     "name": ["紅玉紅茶"],
     "subName": "",
     "contents": [
@@ -354,7 +354,7 @@ export const teaData = [
     "hashtags": ["果香", "肉桂味", "臺灣紅茶", "全發酵茶"]
   },
   {
-    "id": 14,
+    "id": 13,
     "name": ["紅韻紅茶"],
     "subName": "",
     "contents": [
@@ -381,7 +381,7 @@ export const teaData = [
     "hashtags": ["果香", "柑橘味", "臺灣紅茶", "全發酵茶"]
   },
   {
-    "id": 15,
+    "id": 14,
     "name": ["蜜香紅茶"],
     "subName": "",
     "contents": [
@@ -408,7 +408,7 @@ export const teaData = [
     "hashtags": ["蜜香", "柑橘味", "臺灣紅茶", "全發酵茶"]
   },
   {
-    "id": 16,
+    "id": 15,
     "name": ["金萱茶"],
     "subName": "品種",
     "contents": [
@@ -435,7 +435,7 @@ export const teaData = [
     "hashtags": ["花香", "奶香", "適做烏龍茶", "適做半發酵茶"]
   },
   {
-    "id": 17,
+    "id": 16,
     "name": ["四季春"],
     "subName": "品種",
     "contents": [
@@ -478,4 +478,71 @@ export const termData = {
   "小綠葉蟬": "小綠葉蟬只有針眼般大小，它的成、幼蟲會以刺吸式口器，吸食茶樹芽葉幼嫩組織的汁液，造成芽葉生長與發育受阻，這些被小綠葉蟬危害過的茶菁原料，卻形成一股特殊的蜜香氣味。",
   "白毫": "白毫是茶葉嫩芽背面生長的一層細絨毛，乾燥後呈現白色，如果保持其不脫落，茶葉顯現白色。",
   "揉捻": "使茶葉捲曲形成條狀，並破壞茶葉的細胞組織，使茶葉的汁液流出附著於表面，增加沖泡時的風味；在紅茶揉捻中使茶葉細胞劇烈破壞，促使多元酚氧化酶及兒茶素反應，生成紅茶的色澤風味及品質。"
+}
+
+export const videoData = {
+  "0,1,2": {
+    "webmVideo": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E7%B6%A0%E8%8C%B6-%E5%8C%85%E7%A8%AE_VP9.webm",
+    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E7%B6%A0%E8%8C%B6-%E5%8C%85%E7%A8%AE-1.mov",
+    "bgColor": "#EDE0AB",
+    "textColor": "#423A0A",
+    "linkColor": "#664D00",
+    "teaColor": "#FFEE9E",
+  },
+  "3,4,5,15,16": {
+    "webmVideo": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E9%AB%98%E5%B1%B1%E8%8C%B6-%E9%87%91%E8%90%B1-%E5%9B%9B%E5%AD%A3%E6%98%A5_VP9.webm",
+    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E9%AB%98%E5%B1%B1%E8%8C%B6-%E9%87%91%E8%90%B1-%E5%9B%9B%E5%AD%A3%E6%98%A5-1.mov",
+    "bgColor": "#F4E0BB",
+    "textColor": "#4D3600",
+    "linkColor": "#995900",
+    "teaColor": "#FFD373",
+  },
+  "6,7": {
+    "webmVideo": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E5%87%8D%E9%A0%82%E7%83%8F%E9%BE%8D%EF%BC%8F%E9%90%B5%E8%A7%80%E9%9F%B3%E8%8C%B6_VP9.webm",
+    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E5%87%8D%E9%A0%82%E7%83%8F%E9%BE%8D%EF%BC%8F%E9%90%B5%E8%A7%80%E9%9F%B3%E8%8C%B6-1.mov",
+    "bgColor": "#F4E0BB",
+    "textColor": "#4D3600",
+    "linkColor": "#995900",
+    "teaColor": "#FFD373",
+  },
+  "8": {
+    "webmVideo": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E7%B4%85%E7%83%8F%E9%BE%8D%E8%8C%B6_VP9.webm",
+    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E7%B4%85%E7%83%8F%E9%BE%8D%E8%8C%B6-1.mov",
+    "bgColor": "#FFDCC7",
+    "textColor": "#311300",
+    "linkColor": "#A84900",
+    "teaColor": "#FF903C",
+  },
+  "9": {
+    "webmVideo": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E6%9D%B1%E6%96%B9%E7%BE%8E%E4%BA%BA%E8%8C%B6_VP9.webm",
+    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E6%9D%B1%E6%96%B9%E7%BE%8E%E4%BA%BA%E8%8C%B6-1.mov",
+    "bgColor": "#F4E0BB",
+    "textColor": "#4D3600",
+    "linkColor": "#995900",
+    "teaColor": "#FFD373",
+  },
+  "10": {
+    "webmVideo": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E5%B0%8F%E8%91%89%E7%A8%AE-%E8%9C%9C%E9%A6%99%E7%B4%85%E8%8C%B6_VP9.webm",
+    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E5%B0%8F%E8%91%89%E7%A8%AE-%E8%9C%9C%E9%A6%99%E7%B4%85%E8%8C%B6-1.mov",
+    "bgColor": "#FFDCC7",
+    "textColor": "#311300",
+    "linkColor": "#A84900",
+    "teaColor": "#FF903C",
+  },
+  "11,13": {
+    "webmVideo": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E9%98%BF%E8%96%A9%E5%A7%86-%E7%B4%85%E9%9F%BB_VP9.webm",
+    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E9%98%BF%E8%96%A9%E5%A7%86-%E7%B4%85%E9%9F%BB-1.mov",
+    "bgColor": "#FFDAD3",
+    "textColor": "#3F0300",
+    "linkColor": "#B81C00",
+    "teaColor": "#FF6950",
+  },
+  "12": {
+    "webmVideo": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E7%B4%85%E7%8E%89_VP9.webm",
+    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E7%B4%85%E7%8E%89-1.mov",
+    "bgColor": "#FFDBCF",
+    "textColor": "#380D00",
+    "linkColor": "#852600",
+    "teaColor": "#FF733D"
+  }
 }
