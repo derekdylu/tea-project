@@ -483,7 +483,7 @@ export const termData = {
 export const videoData = {
   "0,1,2": {
     "webmVideo": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E7%B6%A0%E8%8C%B6-%E5%8C%85%E7%A8%AE_VP9.webm",
-    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E7%B6%A0%E8%8C%B6-%E5%8C%85%E7%A8%AE_H.265.mp4",
+    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E7%B6%A0%E8%8C%B6-%E5%8C%85%E7%A8%AE-1.mov",
     "bgColor": "#EDE0AB",
     "textColor": "#423A0A",
     "linkColor": "#664D00",
@@ -491,7 +491,7 @@ export const videoData = {
   },
   "3,4,5,15,16": {
     "webmVideo": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E9%AB%98%E5%B1%B1%E8%8C%B6-%E9%87%91%E8%90%B1-%E5%9B%9B%E5%AD%A3%E6%98%A5_VP9.webm",
-    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E9%AB%98%E5%B1%B1%E8%8C%B6-%E9%87%91%E8%90%B1-%E5%9B%9B%E5%AD%A3%E6%98%A5_H.265.mp4",
+    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E9%AB%98%E5%B1%B1%E8%8C%B6-%E9%87%91%E8%90%B1-%E5%9B%9B%E5%AD%A3%E6%98%A5-1.mov",
     "bgColor": "#F4E0BB",
     "textColor": "#4D3600",
     "linkColor": "#995900",
@@ -499,7 +499,7 @@ export const videoData = {
   },
   "6,7": {
     "webmVideo": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E5%87%8D%E9%A0%82%E7%83%8F%E9%BE%8D%EF%BC%8F%E9%90%B5%E8%A7%80%E9%9F%B3%E8%8C%B6_VP9.webm",
-    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E5%87%8D%E9%A0%82%E7%83%8F%E9%BE%8D%EF%BC%8F%E9%90%B5%E8%A7%80%E9%9F%B3%E8%8C%B6_H.265.mp4",
+    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E5%87%8D%E9%A0%82%E7%83%8F%E9%BE%8D%EF%BC%8F%E9%90%B5%E8%A7%80%E9%9F%B3%E8%8C%B6-1.mov",
     "bgColor": "#F4E0BB",
     "textColor": "#4D3600",
     "linkColor": "#995900",
@@ -507,7 +507,7 @@ export const videoData = {
   },
   "8": {
     "webmVideo": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E7%B4%85%E7%83%8F%E9%BE%8D%E8%8C%B6_VP9.webm",
-    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E7%B4%85%E7%83%8F%E9%BE%8D%E8%8C%B6_H.265.mp4",
+    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E7%B4%85%E7%83%8F%E9%BE%8D%E8%8C%B6-1.mov",
     "bgColor": "#FFDCC7",
     "textColor": "#311300",
     "linkColor": "#A84900",
@@ -515,7 +515,7 @@ export const videoData = {
   },
   "9": {
     "webmVideo": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E6%9D%B1%E6%96%B9%E7%BE%8E%E4%BA%BA%E8%8C%B6_VP9.webm",
-    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E6%9D%B1%E6%96%B9%E7%BE%8E%E4%BA%BA%E8%8C%B6_H.265.mp4",
+    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E6%9D%B1%E6%96%B9%E7%BE%8E%E4%BA%BA%E8%8C%B6-1.mov",
     "bgColor": "#F4E0BB",
     "textColor": "#4D3600",
     "linkColor": "#995900",
@@ -523,7 +523,7 @@ export const videoData = {
   },
   "10": {
     "webmVideo": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E5%B0%8F%E8%91%89%E7%A8%AE-%E8%9C%9C%E9%A6%99%E7%B4%85%E8%8C%B6_VP9.webm",
-    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E5%B0%8F%E8%91%89%E7%A8%AE-%E8%9C%9C%E9%A6%99%E7%B4%85%E8%8C%B6_H.265.mp4",
+    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E5%B0%8F%E8%91%89%E7%A8%AE-%E8%9C%9C%E9%A6%99%E7%B4%85%E8%8C%B6-1.mov",
     "bgColor": "#FFDCC7",
     "textColor": "#311300",
     "linkColor": "#A84900",
@@ -531,7 +531,7 @@ export const videoData = {
   },
   "11,13": {
     "webmVideo": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E9%98%BF%E8%96%A9%E5%A7%86-%E7%B4%85%E9%9F%BB_VP9.webm",
-    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E9%98%BF%E8%96%A9%E5%A7%86-%E7%B4%85%E9%9F%BB_H.265.mp4",
+    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E9%98%BF%E8%96%A9%E5%A7%86-%E7%B4%85%E9%9F%BB-1.mov",
     "bgColor": "#FFDAD3",
     "textColor": "#3F0300",
     "linkColor": "#B81C00",
@@ -539,7 +539,7 @@ export const videoData = {
   },
   "12": {
     "webmVideo": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E7%B4%85%E7%8E%89_VP9.webm",
-    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E7%B4%85%E7%8E%89_H.265.mp4",
+    "mp4Video": "https://ntu-tea-project.s3.ap-northeast-2.amazonaws.com/%E7%B4%85%E7%8E%89-1.mov",
     "bgColor": "#FFDBCF",
     "textColor": "#380D00",
     "linkColor": "#852600",

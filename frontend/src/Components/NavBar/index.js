@@ -28,8 +28,14 @@ export const NavBar = ({
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [hideLogo, setHideLogo] = useState(true);
   const menus = [
-    "開始探索",
-    "關於"
+    {
+      title: "開始探索",
+      link: "/game",
+    },
+    {
+      title: "關於",
+      link: "/"
+    }
   ]
 
   const handleSoundOnClick = () => {
@@ -78,6 +84,10 @@ export const NavBar = ({
     }
   }, [menuIsOpen]);
 
+  const handleMenuOnClick = (link) => {
+    navigate(link);
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <div className={styles.container} hidden={hidden} id="navBar">
@@ -104,9 +114,9 @@ export const NavBar = ({
           <div id="menu" className={styles.menu}>
             <div id="row" className={styles.rowContainer}>
               { menus.map((menu, i) => (
-                <div key={i} className={styles.row}>
+                <div key={i} className={styles.row} onClick={() => handleMenuOnClick(menu.link)}>
                   <Typography variant="titleLarge" color={theme.palette.surface.contrastText}>
-                    { menu }
+                    { menu.title }
                   </Typography>
                   <ArrowForward />
                 </div>

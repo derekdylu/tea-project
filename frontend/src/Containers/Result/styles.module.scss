@@ -41,6 +41,7 @@
     width: 100%;
     top: 50%;
     transform: translateY(-50%);
+    background-color: var(--background-color);
 }
 
 .container {
@@ -404,6 +405,8 @@
     background-color: rgba(255, 255, 255, 0.5);
     padding: 0.25rem 1rem;
     border-radius: 1rem;
+    animation: moveUpDown 1s linear infinite;
+
     
     > svg {
       width: 20px;
@@ -413,7 +416,7 @@
 
   .battery {
     padding: 0.5rem 1rem;
-    background-color: #30312C;
+    background-color: rgba(48, 49, 44, 0.9);
     border-radius: 0.5rem;
     display: flex;
     flex-direction: row;
@@ -432,4 +435,19 @@
   text-decoration: underline;
   text-underline-offset: 3px;
   display: inline;
+}
+
+@keyframes moveUpDown {
+  0% {
+    transform: translateY(0);
+  }
+  10% {
+    transform: translateY(1px);
+  }
+  80% {
+    transform: translateY(-1px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }

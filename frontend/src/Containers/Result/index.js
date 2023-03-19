@@ -1,4 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import useWindowDimensions from '../../Hooks/useWindowDimensions';
+import Grid from '@mui/material/Grid';
 import { Product } from "../../Components/Product";
 import { Share } from "../../Components/Share";
 import { teaData, termData, videoData } from "./data";
@@ -11,14 +14,18 @@ import theme from "../../Themes/Theme";
 import Marquee from "react-fast-marquee";
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import { ReactComponent as Flower } from "../../Images/flower.svg";
 import { ReactComponent as MapSvg } from "../../Images/map.svg"
-import { ReactComponent as HandScrollGesture } from "../../Images/Result/swipe_up.svg";
+import { ReactComponent as HandScrollGesture } from "../../Images/swipe_up.svg";
 import loading from "../../Images/loading.gif"
 import gsap from "gsap";
 import { getGameById } from "../../Utils/Axios";
 
 export const Result = () => {
+  const navigate = useNavigate();
+  const { width, height, ratio } = useWindowDimensions();
+  const [open, setOpen] = useState(false);
+  const [narrow, setNarrow] = useState(false);
+
   const defaultBgColor = "#F1F0E0";
   const [teaColor, setTeaColor] = useState(theme.palette.primary.main);
   const [bgColor, setBgColor] = useState();
@@ -97,6 +104,24 @@ export const Result = () => {
   const [showTermDialog, setShowTermDialog] = useState(false);
   const [showScrollHint, setShowScrollHint] = useState(false);
   const [showBatteryHint, setShowBatteryHint] = useState(false);
+
+  useEffect(() => {
+    if (width < 320) {
+      setNarrow(true)
+      setOpen(true)
+      return
+    } else {
+      if (ratio > 1) {
+        setNarrow(false)
+        setOpen(true)
+        return
+      } else {
+        setNarrow(false)
+        setOpen(false)
+        return
+      }
+    }
+  }, [ratio])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -226,8 +251,62 @@ export const Result = () => {
   useEffect(() => {
     let gameId = sessionStorage.getItem("id");
 
+    if (gameId) {
+      getGameById(gameId)
+        .then((res) => {
+          let resId = res.decision
+          setData(teaData[resId]);
+
+          // set location for map
+          let tmpLocation = location;
+          teaData[resId].areaName.map((area, i) => {
+            location[area] = true
+          })
+          setLocation(tmpLocation);
+
+          // set video source
+          let parsedVideoData = {};
+
+          Object.keys(videoData).map((keys, i) => {
+            let keyList = keys.split(",")
+            keyList.map((key, j) => {
+              parsedVideoData[parseInt(key)] = videoData[keys];
+            })
+          })
+
+          setWebmVideoSrc(parsedVideoData[resId].webmVideo);
+          setMp4VideoSrc(parsedVideoData[resId].mp4Video);
+
+          // set background color and text color
+          let background = document.getElementById("background");
+          setBgColor(parsedVideoData[resId].bgColor);
+          background.style.backgroundColor = parsedVideoData[resId].bgColor;
+          background.style.color = parsedVideoData[resId].textColor;
+          setTeaColor(parsedVideoData[resId].teaColor);
+
+          // set term color
+          document.documentElement.style.setProperty("--term-color", parsedVideoData[resId].linkColor);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+
+      let video = document.getElementById("video");
+    
+      setTimeout(() => {
+        setShowLoading(false);
+        setShowBatteryHint(true);
+        // video.load()
+        video.play()
+      }, 24000);
+    }
+
+    else {
+      navigate("/");
+    }
+
     // FOR LOCAL DEBUG
-    // let debugId = 3;
+    // let debugId = 10;
     // setData(teaData[debugId]);
 
     // teaData[debugId].areaName.map((area, i) => {
@@ -253,56 +332,18 @@ export const Result = () => {
     // background.style.color = parsedVideoData[debugId].textColor;
     // setTeaColor(parsedVideoData[debugId].teaColor);
 
+    // let video = document.getElementById("video");
+    // video.style.backgroundColor = parsedVideoData[debugId].bgColor;
+
     // // set term color
     // document.documentElement.style.setProperty("--term-color", parsedVideoData[debugId].linkColor);
 
-    getGameById(gameId)
-      .then((res) => {
-        let resId = res.decision
-        setData(teaData[resId]);
-
-        // set location for map
-        let tmpLocation = location;
-        teaData[resId].areaName.map((area, i) => {
-          location[area] = true
-        })
-        setLocation(tmpLocation);
-
-        // set video source
-        let parsedVideoData = {};
-
-        Object.keys(videoData).map((keys, i) => {
-          let keyList = keys.split(",")
-          keyList.map((key, j) => {
-            parsedVideoData[parseInt(key)] = videoData[keys];
-          })
-        })
-
-        setWebmVideoSrc(parsedVideoData[resId].webmVideo);
-        setMp4VideoSrc(parsedVideoData[resId].mp4Video);
-
-        // set background color and text color
-        let background = document.getElementById("background");
-        setBgColor(parsedVideoData[resId].bgColor);
-        background.style.backgroundColor = parsedVideoData[resId].bgColor;
-        background.style.color = parsedVideoData[resId].textColor;
-        setTeaColor(parsedVideoData[resId].teaColor);
-
-        // set term color
-        document.documentElement.style.setProperty("--term-color", parsedVideoData[resId].linkColor);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-
-    let video = document.getElementById("video");
-    
-    setTimeout(() => {
-      setShowLoading(false);
-      setShowBatteryHint(true);
-      // video.load()
-      video.play()
-    }, 24000);
+    // setTimeout(() => {
+    //   setShowLoading(false);
+    //   setShowBatteryHint(true);
+    //   // video.load()
+    //   video.play()
+    // }, 24000);
   }, [])
 
   useEffect(() => {
@@ -328,6 +369,24 @@ export const Result = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Dialog aria-labelledby="window-size" open={open} fullScreen>
+        <Grid container direction="column" alignItems="center" justifyContent="center" sx={{ my: 1 }} height="100%">
+          {
+            narrow ?
+            (
+              <Typography variant="body2" color="#2D3748" fontWeight="500" sx={{mt: 2.5}} align="center">
+                最小螢幕寬度 320 px
+              </Typography>
+            ):(
+              <>
+                <Typography variant="h6" color="#2D3748" fontWeight="700" sx={{mt: 2.5}} align="center">
+                  豎直手機螢幕或瀏覽器視窗以享受最佳遊戲體驗
+                </Typography>
+              </>
+            )
+          }
+        </Grid>
+      </Dialog>
       <NavBar hidden={showLoading} backgroundColor={fastFwd.currSection == 4 ? defaultBgColor : ""}/>
       <div className={styles.loadingPage} hidden={!showLoading}>
         <img src={loading} />
@@ -336,7 +395,7 @@ export const Result = () => {
         <video id="video" ref={videoRef} className={styles.video} muted playsInline hidden={videoIsHidden}>
           {/* <source id="videoSrc" src={`videos/noBg.webm`} type="video/webm" /> */}
           <source id="videoSrc" src={webmVideoSrc} type="video/webm" />
-          <source id="videoSrc" src={mp4VideoSrc} type='video/mp4;codes=hvc1' />
+          <source id="videoSrc" src={mp4VideoSrc} type='video/mp4' /> {/* ;codecs=hvc1 */}
         </video>
         <div className={styles.container} onScroll={(e) => handleScroll(e)}>
           { sections.slice(0, 4).map((section, i) => (
