@@ -292,7 +292,7 @@ export const Result = () => {
         })
 
       let video = document.getElementById("video");
-    
+
       setTimeout(() => {
         setShowLoading(false);
         setShowBatteryHint(true);
