@@ -6,7 +6,7 @@ export const db = [
     description: '',
   },
   {
-    name: '通常是在什麼時間？', 
+    name: '通常是在什麼時間喝茶？', 
     engName: '', 
     img: '',
     description: '',
@@ -148,7 +148,7 @@ export const db = [
     name: '蜜香', 
     engName: 'Honey', 
     img: '../../Images/Card/蜜香.png',
-    description: '水果散發的濃稠香氣',
+    description: '如焦糖或蜂蜜的甜香',
   },
   {
     name: '濃郁果香', 
