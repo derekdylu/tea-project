@@ -64,7 +64,7 @@ import 花香 from '../../Images/Card/花香.png'
 import 青香 from '../../Images/Card/青香.png'
 import 收斂感 from '../../Images/Card/收斂感.png'
 
-const INTERVAL = 556;
+const INTERVAL = 480;
 const MINCARDHEIGHT = 164;
 
 const cards = [
@@ -131,12 +131,12 @@ const phase = [
   [
     "你喜歡",
     "什麼樣的茶？",
-    "Phase 1",
+    "階段一",
     "依據你的偏好探索茶的風味"
   ],[
     "描述一下",
     "喝茶的情境",
-    "Phase 2",
+    "階段二",
     "依據喝茶的時機找到合適的茶"
   ]
 ]
@@ -674,13 +674,13 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
               direction="row"
               width="100%"
             >
-              <Box sx={{ height: '64px', width: 0.49, border: theme.palette.neutralVariant[50], borderStyle: 'solid solid solid hidden' }}>
+              <Box sx={{ height: '64px', width: 0.49, border: theme.palette.neutralVariant[50], borderStyle: 'solid solid solid hidden', borderWidth: '1px 1px 1px 0'}}>
                 <Button onClick={() => buttonSwipe(cards.length - selection.length - 1, -1)} color="button" fullWidth sx={{ height: '64px' }}>
                   <CloseIcon sx={{ mr: 1, color: theme.palette.neutralVariant[30] }} />
                   不喜歡
                 </Button>
               </Box>
-              <Box sx={{ height: '64px', width: 0.49, border: theme.palette.neutralVariant[50], borderStyle: 'solid hidden solid hidden' }}>
+              <Box sx={{ height: '64px', width: 0.49, border: theme.palette.neutralVariant[50], borderStyle: 'solid hidden solid hidden', borderWidth: '1px 0 1px 0'}}>
                 <Button onClick={() => buttonSwipe(cards.length - selection.length - 1, 1)} color="button" fullWidth sx={{ height: '64px' }}>
                   <FavoriteBorderIcon sx={{ mr: 1, color: theme.palette.neutralVariant[30] }} />
                   喜歡
@@ -729,7 +729,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
             <Typography variant="displaySmall" sx={{ mb: 20, color: theme.palette.neutralVariant[30] }}>
               {phase[1][1]}
             </Typography>
-            <Box sx={{ py: 1, pr: 1, mb: 1, border: theme.palette.surfaceVariant.outline, borderStyle: 'hidden hidden solid hidden' }}>
+            <Box sx={{ py: 1, pr: 1, mb: 1, border: theme.palette.surfaceVariant.outline, borderStyle: 'hidden hidden solid hidden', borderWidth: '0 0 1px 0'}}>
               <Typography variant="bodyMedium" sx={{ color: theme.palette.background.contrastText }}>
                 {phase[1][2]}
               </Typography>
@@ -755,7 +755,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
             }}
           >
             {multipleChoice[multipleChoiceIndex].map((ele, key) => (
-              <Box sx={{ height: '80px', border: theme.palette.neutralVariant[50], borderStyle: 'hidden hidden solid hidden' }}>
+              <Box sx={{ height: '80px', border: theme.palette.neutralVariant[50], borderStyle: 'hidden hidden solid hidden', borderWidth: '0 0 1px 0' }}>
                 <Button color="button" fullWidth onClick={() => pushSelection(key, -1)} sx={{ height: '80px' }}>
                   <Grid container direction="row" justifyContent="space-between" alignItems="center">
                     <Typography variant="titleLarge">
