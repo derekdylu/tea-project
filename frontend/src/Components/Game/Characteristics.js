@@ -1,6 +1,6 @@
 export const db = [
   {
-    name: '喝茶時會搭配什麼？', 
+    name: '喝茶時通常會搭配什麼？', 
     engName: '', 
     img: '',
     description: '',
