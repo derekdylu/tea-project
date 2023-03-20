@@ -65,7 +65,7 @@ import 青香 from '../../Images/Card/青香.png'
 import 收斂感 from '../../Images/Card/收斂感.png'
 
 const INTERVAL = 480;
-const MINCARDHEIGHT = 164;
+const MINCARDHEIGHT = 220;
 
 const cards = [
   茶色淺,
@@ -234,7 +234,11 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
     if (height - INTERVAL < MINCARDHEIGHT) {
       setCardHeight(MINCARDHEIGHT)
     } else {
-      setCardHeight(height - INTERVAL)
+      if (height - INTERVAL > width - 60) {
+        setCardHeight(width - 60)
+      } else {
+        setCardHeight(height - INTERVAL)
+      }
     }
   }, [ratio])
 
