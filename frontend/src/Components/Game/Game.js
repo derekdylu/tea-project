@@ -587,7 +587,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
         {
           ( index >= 0 && !phaseTitle1 && !phaseTitle2 ) &&
           <>
-            <Box width="100%" sx={{ py: 1, mb: 1, border: theme.palette.surface.contrastText, borderStyle: 'hidden hidden solid hidden' }}>
+            <Box width="100%" sx={{ py: 1, mb: 1, border: theme.palette.surface.contrastText, borderStyle: 'hidden hidden solid hidden', borderWidth: '0 0 1px 0' }}>
               <Grid
                 container
                 direction="row"
