@@ -89,6 +89,7 @@ const yAxis = keyframes`
 const Wall = () => {
   const { width, height, ratio } = useWindowDimensions()
   const [isLoading, setIsLoading] = useState(false)
+  const [preload, setPreload] = useState(false)
   const [path, setPath] = useState("")
   const [path2, setPath2] = useState("")
   const [path3, setPath3] = useState("")
@@ -99,6 +100,7 @@ const Wall = () => {
   // const lastUpdateTime = "1678947398956"
 
   useEffect(() => {
+    setPreload(true)
     fetchAndDrop()
   }, [])
 
@@ -158,7 +160,7 @@ const Wall = () => {
     return () => clearInterval(interval)
   })
 
-  var Cup = styled.div`
+  var Cup01 = styled.div`
     animation-name: ${xAxis};
     animation-duration: 40s;
     animation-iteration-count: infinite;
@@ -177,7 +179,7 @@ const Wall = () => {
     }
   `;
 
-  var Cup2 = styled.div`
+  var Cup02 = styled.div`
     animation-name: ${xAxis};
     animation-delay: 5s;
     animation-duration: 40s;
@@ -198,7 +200,7 @@ const Wall = () => {
     }
   `;
 
-  var Cup3 = styled.div`
+  var Cup03 = styled.div`
     animation-name: ${xAxis};
     animation-delay: 10s;
     animation-duration: 40s;
@@ -218,7 +220,7 @@ const Wall = () => {
       animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1);
     }
   `;
-  var Cup4 = styled.div`
+  var Cup04 = styled.div`
     animation-name: ${xAxis};
     animation-delay: 15s;
     animation-duration: 40s;
@@ -239,7 +241,7 @@ const Wall = () => {
     }
   `;
 
-  var Cup5 = styled.div`
+  var Cup05 = styled.div`
     animation-name: ${xAxis};
     animation-delay: 20s;
     animation-duration: 40s;
@@ -271,20 +273,26 @@ const Wall = () => {
           )
         }
       </div>
+      {
+        preload &&
+        teas.map((tea) => {
+          <img src={tea} alt="preload" />
+        })
+      }
       <div style={{ position: 'absolute', left: '400px', top: '-200px' }}>
-        <Cup />
+        <Cup01 />
       </div>
       <div style={{ position: 'absolute', left: '400px', top: '-200px' }}>
-        <Cup2 />
+        <Cup02 />
       </div>
       <div style={{ position: 'absolute', left: '400px', top: '-200px' }}>
-        <Cup3 />
+        <Cup03 />
       </div>
       <div style={{ position: 'absolute', left: '400px', top: '-200px' }}>
-        <Cup4 />
+        <Cup04 />
       </div>
       <div style={{ position: 'absolute', left: '400px', top: '-200px' }}>
-        <Cup5 />
+        <Cup05 />
       </div>
       <img alt="bg" src={background} height={ 3 * height / 4} style={{ position: 'fixed', bottom: '0px', right: '-50px' }}/>
       <img alt="cup_pure" src={茶杯} height={ 0.32 * 3 * height / 4} style={{ position: 'fixed', bottom: `${0.14 * 3 * height / 4}px`, right: `${0.51 * 1.3083 * 3 * height / 4}px` }}/>
