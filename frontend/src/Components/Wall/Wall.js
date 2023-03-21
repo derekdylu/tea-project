@@ -4,7 +4,6 @@ import { ThemeProvider } from "@emotion/react";
 import theme from '../../Themes/Theme'
 import useWindowDimensions from '../../Hooks/useWindowDimensions';
 import { getGames, updateGame } from '../../Utils/Axios';
-import useSWR from 'swr'
 import './wall.css'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -28,6 +27,7 @@ import 蜜香紅茶 from '../../Images/Wall/蜜香紅茶.gif'
 import 金萱茶 from '../../Images/Wall/金萱茶.gif'
 import 四季春 from '../../Images/Wall/四季春.gif'
 import 茶杯 from '../../Images/Wall/茶杯.gif'
+import { Typography } from '@mui/material';
 
 // const fetcher = (...args) => fetch(...args).then(res => res.json())
 // const fetcher = url => axios.get(url).then(res => res.data)
@@ -96,15 +96,13 @@ const Wall = () => {
   const [path4, setPath4] = useState("")
   const [path5, setPath5] = useState("")
   const [startTime, setStartTime] = useState(0)
-  // const lastUpdateTime = Date.now()
-  // const lastUpdateTime = "1678947398956"
 
   useEffect(() => {
+    setStartTime(Date.now())
     setPreload(true)
     fetchAndDrop()
+    setPreload(false)
   }, [])
-
-  // console.log("last update time: " + lastUpdateTime)
 
   async function fetchAndDrop () {
     setIsLoading(true)
@@ -112,40 +110,43 @@ const Wall = () => {
     const fetchedData = await getGames()
     console.log("fetched data", fetchedData)
 
-    const _fetchedData = fetchedData.filter(x => x.decision !== -1)
-                                      .filter(y => y.shown === false && y.timestamp >= startTime)
-                                      .sort((a, b) => a.timestamp - b.timestamp)
+    const _fetchedData = fetchedData.filter(x => x.decision !== -1 && x.shown === false && x.timestamp >= startTime)
+                                    .sort((a, b) => a.timestamp - b.timestamp)
     
     if ( _fetchedData === undefined || _fetchedData.length <= 0 ) {
       setPath("")
+      setPath2("")
+      setPath3("")
+      setPath4("")
+      setPath5("")
     } else {
       setPath(teas[_fetchedData[0].decision])
       updateGame(_fetchedData[0]._id, null, null, null, null, true).then((res) => {
-        console.log("res", res)
+        console.log("set shown", res)
       }).catch((err) => {
         console.log("err", err)
       })
       setPath2(teas[_fetchedData[1].decision])
       updateGame(_fetchedData[1]._id, null, null, null, null, true).then((res) => {
-        console.log("res", res)
+        console.log("set shown", res)
       }).catch((err) => {
         console.log("err", err)
       })
       setPath3(teas[_fetchedData[2].decision])
       updateGame(_fetchedData[2]._id, null, null, null, null, true).then((res) => {
-        console.log("res", res)
+        console.log("set shown", res)
       }).catch((err) => {
         console.log("err", err)
       })
       setPath4(teas[_fetchedData[3].decision])
       updateGame(_fetchedData[3]._id, null, null, null, null, true).then((res) => {
-        console.log("res", res)
+        console.log("set shown", res)
       }).catch((err) => {
         console.log("err", err)
       })
       setPath5(teas[_fetchedData[4].decision])
       updateGame(_fetchedData[4]._id, null, null, null, null, true).then((res) => {
-        console.log("res", res)
+        console.log("set shown", res)
       }).catch((err) => {
         console.log("err", err)
       })
@@ -264,20 +265,11 @@ const Wall = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div>
-        {
-          isLoading && (
-            <Box sx={{ m: 2, display: 'flex' }}>
-              <CircularProgress size={18} style={{ color: theme.palette.neutral[80] }} />
-            </Box>
-          )
-        }
-      </div>
       {
         preload &&
-        teas.map((tea) => {
+        teas.map((tea) => (
           <img src={tea} alt="preload" />
-        })
+        ))
       }
       <div style={{ position: 'absolute', left: '400px', top: '-200px' }}>
         <Cup01 />
@@ -296,6 +288,16 @@ const Wall = () => {
       </div>
       <img alt="bg" src={background} height={ 3 * height / 4} style={{ position: 'fixed', bottom: '0px', right: '-50px' }}/>
       <img alt="cup_pure" src={茶杯} height={ 0.32 * 3 * height / 4} style={{ position: 'fixed', bottom: `${0.14 * 3 * height / 4}px`, right: `${0.51 * 1.3083 * 3 * height / 4}px` }}/>
+      <div style={{ position: 'fixed', bottom: '4px', left: '8px'}}>
+        {
+          isLoading && (
+            <Box sx={{ m: 2, display: 'flex' }}>
+              <CircularProgress size={18} style={{ color: theme.palette.neutral[80] }} />
+            </Box>
+          )
+        }
+        <Typography variant='bodySmall'>{Date(startTime)}</Typography>
+      </div>
     </ThemeProvider>
   )
 }
