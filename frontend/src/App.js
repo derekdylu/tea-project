@@ -16,25 +16,6 @@ function App() {
 
   return (
     <div>
-      {/* TODO page for bigger screen doesn't need this vertical restriction */}
-      {/* <Dialog aria-labelledby="window-size" open={open} fullScreen>
-          <Grid container direction="column" alignItems="center" justifyContent="center" sx={{ my: 1 }} height="100%">
-            {
-              narrow ?
-              (
-                <Typography variant="body2" color="#2D3748" fontWeight="500" sx={{mt: 2.5}} align="center">
-                  最小螢幕寬度 320 px
-                </Typography>
-              ):(
-                <>
-                  <Typography variant="h6" color="#2D3748" fontWeight="700" sx={{mt: 2.5}} align="center">
-                    豎直手機螢幕或瀏覽器視窗以享受最佳遊戲體驗
-                  </Typography>
-                </>
-              )
-            }
-          </Grid>
-        </Dialog> */}
       <Router>
         <Routes>
           {/* mobile */}
