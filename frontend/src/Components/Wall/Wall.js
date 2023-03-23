@@ -4,11 +4,17 @@ import { ThemeProvider } from "@emotion/react";
 import theme from '../../Themes/Theme'
 import useWindowDimensions from '../../Hooks/useWindowDimensions';
 import { getGames, updateGame } from '../../Utils/Axios';
-import useSWR from 'swr'
-import './wall.css'
+import Typography from "@mui/material/Typography";
+import Dialog from '@mui/material/Dialog';
+import Grid from '@mui/material/Grid';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import background from '../../Images/Wall/background.png'
+import './wall.css'
+
+import backgroundBL from '../../Images/Wall/background-bl.png'
+import backgroundUR from '../../Images/Wall/background-ur.png'
+import backgroundUL from '../../Images/Wall/background-ul.png'
+import object from '../../Images/Wall/object.png'
 
 import 碧螺春綠茶 from '../../Images/Wall/碧螺春綠茶.gif'
 import 八川綠茶 from '../../Images/Wall/八川綠茶.gif'
@@ -264,10 +270,17 @@ const Wall = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Dialog aria-labelledby="window-size" open={width < 650} fullScreen>
+        <Grid container direction="column" alignItems="center" justifyContent="center" sx={{ my: 1 }} height="100%">
+          <Typography variant="body2" color="#2D3748" fontWeight="500" sx={{mt: 2.5}} align="center">
+            最小螢幕寬度 650 px
+          </Typography>
+        </Grid>
+      </Dialog>
       <div>
         {
           isLoading && (
-            <Box sx={{ m: 2, display: 'flex' }}>
+            <Box sx={{ m: 2, display: 'flex' }} style={{ position: 'fixed', bottom: '50px', right: '50px' }}>
               <CircularProgress size={18} style={{ color: theme.palette.neutral[80] }} />
             </Box>
           )
@@ -294,8 +307,11 @@ const Wall = () => {
       <div style={{ position: 'absolute', left: '400px', top: '-200px' }}>
         <Cup05 />
       </div>
-      <img alt="bg" src={background} height={ 3 * height / 4} style={{ position: 'fixed', bottom: '0px', right: '-50px' }}/>
-      <img alt="cup_pure" src={茶杯} height={ 0.32 * 3 * height / 4} style={{ position: 'fixed', bottom: `${0.14 * 3 * height / 4}px`, right: `${0.51 * 1.3083 * 3 * height / 4}px` }}/>
+      <img alt="background-bl" src={backgroundBL} style={{ scale: '0.6', position: 'fixed', bottom: '-1250px', left: '-800px' }}/>
+      <img alt="background-ur" src={backgroundUR} style={{ scale: '0.6', position: 'fixed', top: '-1000px', right: '-1650px' }}/>
+      <img alt="background-ul" src={backgroundUL} style={{ scale: '0.6', position: 'fixed', top: '-1550px', left: '-1300px', animationName: 'upleftAnim', animationDuration: '3s', animationIterationCount: 'infinite', animationDirection: 'alternate'}}/>
+      <img alt="object" src={object} height={ 619 } style={{ position: 'fixed', bottom: '0px', right: '-50px' }}/>
+      <img alt="cup_pure" src={茶杯} height={ 200 } style={{ position: 'fixed', bottom: '96px', right: '410px' }}/>
     </ThemeProvider>
   )
 }
