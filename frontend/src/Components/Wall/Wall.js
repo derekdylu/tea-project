@@ -4,7 +4,7 @@ import { ThemeProvider } from "@emotion/react";
 import theme from '../../Themes/Theme'
 import useWindowDimensions from '../../Hooks/useWindowDimensions';
 import { getGames, updateGame } from '../../Utils/Axios';
-import Typography from "@mui/material/Typography";
+import Typography from '@mui/material/Typography';
 import Dialog from '@mui/material/Dialog';
 import Grid from '@mui/material/Grid';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -34,7 +34,6 @@ import 蜜香紅茶 from '../../Images/Wall/蜜香紅茶.gif'
 import 金萱茶 from '../../Images/Wall/金萱茶.gif'
 import 四季春 from '../../Images/Wall/四季春.gif'
 import 茶杯 from '../../Images/Wall/茶杯.gif'
-import { Typography } from '@mui/material';
 
 // const fetcher = (...args) => fetch(...args).then(res => res.json())
 // const fetcher = url => axios.get(url).then(res => res.data)
