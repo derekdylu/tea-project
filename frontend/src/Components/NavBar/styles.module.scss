@@ -4,13 +4,14 @@
     position: fixed;
     z-index: 500;
     width: 100vw;
-    padding: 12px 1.5rem 12px 1.5rem;
+    padding: 12px 1rem 12px 1.5rem;
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    transition: background-color 2s ease-in-out;
+    transition: background-color 0s ease-in-out;
+    transition-delay: 2s;
 
     &.alignLeft {
         justify-content: flex-end;

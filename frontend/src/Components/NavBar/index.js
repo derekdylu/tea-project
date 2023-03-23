@@ -19,7 +19,6 @@ import { Link } from "react-router-dom";
 export const NavBar = ({
   defaultHideLogo = false,
   forGame = false,
-  hidden = false,
   backgroundColor = "",
 }) => {
   const navigate = useNavigate()
@@ -63,8 +62,10 @@ export const NavBar = ({
     let navBar = document.getElementById("navBar");
     if (backgroundColor !== "") {
       navBar.style.backgroundColor = backgroundColor;
+      navBar.style.transitionDelay = "2s";
     } else {
       navBar.style.backgroundColor = "transparent";
+      navBar.style.transitionDelay = "0s";
     }
   }, [backgroundColor])
 
@@ -90,7 +91,7 @@ export const NavBar = ({
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={styles.container} hidden={hidden} id="navBar">
+      <div className={styles.container} id="navBar">
         <div className={`${styles.logo} ${defaultHideLogo && hideLogo ? styles.hidden : ""}`}>
           <Logo onClick={() => navigate("/")} />
         </div>

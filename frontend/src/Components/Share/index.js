@@ -9,7 +9,7 @@ import { Typography } from "@mui/material";
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import { toPng as htmlToImage } from 'html-to-image';
-import domtoimage from 'dom-to-image';
+import ReactLoading from 'react-loading';
 
 import 蔬菜香 from '../../Images/Share/蔬菜香.svg'
 import 豆子 from '../../Images/Share/豆子香.svg'
@@ -86,26 +86,42 @@ export const Share = ({
   const [showButton, setShowButton] = useState(true);
   let img1 = images[hashtags[0]];
   let img2 = images[hashtags[1]];
+  const [isLoadingImage, setIsLoadingImage] = useState(false);
+  const [imgSrc, setImgSrc] = useState(null);
 
   const onShare = () => {
     setShowShareDialog(true);
     setShowButton(false);
 
-    var node = document.getElementById('capture');
-    setTimeout(() => {
-      htmlToImage(node)
-        .then(function (cacbe) {
+    if (imgSrc !== null) {
+      setIsLoadingImage(true);
+      setTimeout(() => {
+        setIsLoadingImage(false);
+        let render = document.getElementById("renderer");
+        render.innerHTML = "<img src='" + imgSrc + "' alt='render' width='100%' />"
+      }, 500);
+    } else {
+      setIsLoadingImage(true);
+      var node = document.getElementById('capture');
+      setTimeout(() => {
+        if (!imgSrc) {
           htmlToImage(node)
-            .then(function(dataUrl) {
-              let render = document.getElementById('renderer')
-              render.innerHTML = "<img src='" + dataUrl + "' alt='render' width='100%' />"
+            .then(function (cache) {
+              htmlToImage(node)
+                .then(function(dataUrl) {
+                  setIsLoadingImage(false);
+                  setImgSrc(dataUrl);
+                  let render = document.getElementById('renderer')
+                  render.innerHTML = "<img src='" + dataUrl + "' alt='render' width='100%' />"
+                })
             })
-        })
-        .catch(function (error) {
-          console.error('oops, something went wrong!', error);
-        });
+            .catch(function (error) {
+              console.error('oops, something went wrong!', error);
+            });
+        }
 
-    }, 500)
+      }, 500);
+    }
   }
 
   const handleCloseDialog = () => {
@@ -218,7 +234,11 @@ export const Share = ({
                 生成圖片後請長按下載圖片
               </Typography>
               <div id="renderer" />
-              
+              { isLoadingImage &&
+                <Typography variant="bodySmall" color={theme.palette.primary.main}>
+                  Loading...
+                </Typography>
+              }
               <button className={styles.button} onClick={handleCloseDialog}>
                 <Typography variant="labelLarge" color={theme.palette.primary.main}>
                   關閉
