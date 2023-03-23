@@ -9,11 +9,12 @@
 .mapContainer {
     width: 100%;
     position: absolute;
-    left: -100%;
-    top: 70%;
-    left: 50%; // debugging
-    top: 50%; // debugging
-    transform: translate(-50%, -50%); // debugging
+    top: 100%;
+    left: 10%;
+    opacity: 0;
+    // left: 50%; // debugging
+    // top: 50%; // debugging
+    // transform: translate(-50%, -50%); // debugging
 
     .map {
         display: block;
@@ -88,7 +89,7 @@
         }
 
         .text {
-            opacity: 1; // debuggging 0
+            opacity: 0; // debuggging 0
             color: var(--text-color);
         }
         
@@ -100,7 +101,7 @@
             
             .line {
                 // display: block;
-                width: 100%; // debugging 0%
+                width: 0%; // debugging 0%
                 height: 100%;
                 position: absolute;
                 top: 0;
@@ -117,7 +118,7 @@
                 stroke-width: 1px;
                 stroke: var(--text-color);
                 fill: var(--text-color);
-                opacity: 1; // debugging 0
+                opacity: 0; // debugging 0
                 position: absolute;
                 left: 0;
                 top: 0;
