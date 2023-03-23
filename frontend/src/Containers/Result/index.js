@@ -100,6 +100,7 @@ export const Result = () => {
   const [explanation, setExplanation] = useState({
     "title": "",
     "context": "",
+    "play": false,
   })
   const [showTermDialog, setShowTermDialog] = useState(false);
   const [showScrollHint, setShowScrollHint] = useState(false);
@@ -199,9 +200,6 @@ export const Result = () => {
 
     for (var i = position.length - 1; i >= 0; i--) {
       if (position[i] === 0) {
-        if (i === 3) {
-          setStartMap(true);
-        }
         let reverse = i < prevPosition;
         let endTime = reverse ? sections[i].start : sections[i - 1].end;
         video.playbackRate = reverse ? 2 : 10;
@@ -218,6 +216,13 @@ export const Result = () => {
         });
 
         top = true;
+
+        if (i === 3) {
+          setTimeout(() => {
+            setStartMap(true);
+          }, reverse ? 4000 : 3000);
+        }
+
         break;
       }
     }
@@ -234,17 +239,16 @@ export const Result = () => {
     const mapTl = gsap.timeline();
 
     if (startMap) {
-      mapTl.to("#map", {left: "15%", top: "12%", y: "0%", duration: 5, ease: "sine.inOut"})
-          // .to("#map", {left: "15%", top: "12%", y: "0", duration: 2, ease: "sine.inOut" })
-          .to("#circle", {opacity: 1, duration: 0.3, ease: "sine.inOut"})
-          .to("#line", {width: "100%", duration: 0.4, ease: "sine.inOut"})
-          .to("#text", {opacity: 1, duration: 0.3, ease: "sine.inOut"})
+      mapTl.to("#map", {top: "12%", opacity: 1, duration: 2.5, ease: "sine.easeIn"})
+          .to("#circle", {opacity: 1, duration: 0.3, ease: "sine.easeIn"})
+          .to("#line", {width: "100%", duration: 0.4, ease: "sine.easeIn"})
+          .to("#text", {opacity: 1, duration: 0.3, ease: "sine.easeIn"})
     }
     else {
-      mapTl.to("#text", {opacity: 0, duration: 0.1, ease: "sine.inOut"})
-          .to("#line", {width: "0%", duration: 0.1, ease: "sine.inOut"})
-          .to("#circle", {opacity: 0, duration: 0.1, ease: "sine.inOut"})
-          .to("#map", {left: "-100%", top: "70%", duration: 0.1, ease: "sine.inOut" })
+      mapTl.to("#text", {opacity: 0, duration: 0})
+          .to("#line", {width: "0%", duration: 0})
+          .to("#circle", {opacity: 0, duration: 0})
+          .to("#map", {top: "100%", duration: 0})
     }
   }, [startMap]);
 
@@ -306,7 +310,7 @@ export const Result = () => {
     }
 
     // FOR LOCAL DEBUG
-    // let debugId = 10;
+    // let debugId = 12;
     // setData(teaData[debugId]);
 
     // teaData[debugId].areaName.map((area, i) => {
@@ -352,17 +356,25 @@ export const Result = () => {
 
   const handleOpenDialog = (keyword) => {
     let video = document.getElementById("video");
-    video.pause();
+    let toBePlayed = true;
+    if (!video.paused){
+      video.pause();
+    } else {
+      toBePlayed = false;
+    }
     setExplanation({...explanation,
       "title": keyword,
-      "context": termData[keyword]
+      "context": termData[keyword],
+      "play": toBePlayed
     })
     setShowTermDialog(true);
   }
 
   const handleCloseDialog = () => {
     let video = document.getElementById("video");
-    video.play();
+    if (explanation.play) {
+      video.play();
+    }
     setShowTermDialog(false);
   }
   
@@ -387,15 +399,17 @@ export const Result = () => {
           }
         </Grid>
       </Dialog>
-      <NavBar hidden={showLoading} backgroundColor={fastFwd.currSection == 4 ? defaultBgColor : ""}/>
+      { !showLoading &&
+        <NavBar backgroundColor={fastFwd.currSection == 4 ? defaultBgColor : ""}/>
+      }
       <div className={styles.loadingPage} hidden={!showLoading}>
         <img src={loading} />
       </div>
       <div className={styles.background} id="background">
         <video id="video" ref={videoRef} className={styles.video} muted playsInline hidden={videoIsHidden}>
-          {/* <source id="videoSrc" src={`videos/noBg.webm`} type="video/webm" /> */}
+          {/* <source id="videoSrc" src={`videos/test.webm`} type="video/webm" /> */}
           <source id="videoSrc" src={webmVideoSrc} type="video/webm" />
-          <source id="videoSrc" src={mp4VideoSrc} type='video/mp4' /> {/* ;codecs=hvc1 */}
+          <source id="videoSrc" src={mp4VideoSrc} type='video/mp4' /> ;codecs=hvc1
         </video>
         <div className={styles.container} onScroll={(e) => handleScroll(e)}>
           { sections.slice(0, 4).map((section, i) => (
@@ -455,7 +469,7 @@ export const Result = () => {
                           k % 2 ?
                           <div className={styles.keyword} onClick={() => handleOpenDialog(keyword)} key={k}>{ keyword }</div>
                           :
-                          <>{ keyword }</>
+                          <div className={styles.notKeyword}  key={k}>{ keyword }</div>
                         ))}
                       </Typography>
                     ))}
@@ -669,7 +683,7 @@ export const Result = () => {
               { explanation.context }
             </Typography>
             <button className={styles.button} onClick={handleCloseDialog}>
-              <Typography variant="labelLarge" color={teaColor}>
+              <Typography variant="labelLarge" color={theme.palette.primary.main}>
                 關閉
               </Typography>
             </button>
