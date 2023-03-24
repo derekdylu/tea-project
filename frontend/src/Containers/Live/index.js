@@ -88,7 +88,8 @@ export const Live = () => { // 1570 x 1200
     "14": 90,
   });
 
-  const title = "符合喜好之\n前六名茶品項\n即時排名"
+  const headline = "符合喜好之"
+  const title = "前六名茶品項\n即時排名"
 
   const description = "上方圖表顯示符合現場使用者喜好的茶品項統計結果。\n圖表僅顯示前六名品項，並會隨著排名的即時異動而改變。"
   const qrDescription = [
@@ -123,6 +124,9 @@ export const Live = () => { // 1570 x 1200
       <div className={styles.container} style={{backgroundImage:`url(${liveBackground})`}}>
         <div className={`${styles.rowContainer} ${styles.top}`}>
           <div className={styles.title}>
+            <Typography variant="headlineLarge">
+              { headline }
+            </Typography>
             <Typography variant="displayLarge">
               { title }
             </Typography>

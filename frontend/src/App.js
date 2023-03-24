@@ -25,8 +25,8 @@ function App() {
           {/* <Route path="/start" element={ <StartPage/> } /> */}
           <Route path="/live" element={ <Live/> } />
           <Route path="/result" element={ <Result/> } />
-          <Route path="/map" element={ <Map/> } />
-          <Route path="/share" element={ <Share/> } />
+          {/* <Route path="/map" element={ <Map/> } />
+          <Route path="/share" element={ <Share/> } /> */}
           <Route path="/wall" element={ <Wall /> } />
           <Route path="/live" element={ <Live/> } />
         </Routes>
