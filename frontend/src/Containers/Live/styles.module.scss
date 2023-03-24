@@ -3,7 +3,7 @@
 .container {
     width: 100vw;
     height: 100vh;
-    padding: 10rem;
+    padding: 4rem 6rem 6rem 6rem;
     background-color: var(--background-color);
     color: var(--text-color);
     box-sizing: border-box;
@@ -17,6 +17,10 @@
         height:  1px;
         stroke-width: 1px;
         stroke: var(--border-color);
+    }
+
+    @media (min-height: 1000px) {
+      padding: 10rem;
     }
 }
 
@@ -40,6 +44,7 @@
     display: flex;
     flex-direction: column;
     white-space: pre-wrap;
+    gap: 0.5rem;
 }
 
 .graph {
@@ -62,8 +67,8 @@
         height: fit-content;
 
         > img {
-            width: 96px;
-            height: 96px;
+            width: 10%;
+            height: 10%;
         }
     }
 
