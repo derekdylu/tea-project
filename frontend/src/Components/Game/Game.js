@@ -390,9 +390,6 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
     }
     window.scrollTo(0, 0)
     handlePhase1Change()
-    window.onload = function() {
-      console.log("window loaded")
-    };
   }, [])
 
   const handleDialog = () => {
