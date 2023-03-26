@@ -1,0 +1,11 @@
+{
+  "name": "tea-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/derekdylu/tea-project.git",
+  "author": "Derek Lu <derekdylu@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "cd frontend && yarn start"
+  }
+}
