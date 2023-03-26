@@ -390,6 +390,9 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
     }
     window.scrollTo(0, 0)
     handlePhase1Change()
+    window.onload = function() {
+      console.log("window loaded")
+    };
   }, [])
 
   const handleDialog = () => {
@@ -438,7 +441,6 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
     swipeAnimation(index, down, mx, dir, velocity)
     return
   })
-  // console.log("props", index-2, "x animation from", props[index-2].x.animation)
 
   return (
     <ThemeProvider theme={theme}>
