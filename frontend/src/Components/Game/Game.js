@@ -64,7 +64,7 @@ import 花香 from '../../Images/Card/花香.png'
 import 青香 from '../../Images/Card/青香.png'
 import 收斂感 from '../../Images/Card/收斂感.png'
 
-const INTERVAL = 480;
+const INTERVAL = 400;
 const MINCARDHEIGHT = 220;
 
 const cards = [
@@ -220,6 +220,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
   const [dialogIndex, setDialogIndex] = useState(0)
   const [openTypeDialog, setOpenTypeDialog] = useState(false)
   const [typeDialogIndex, setTypeDialogIndex] = useState(0)
+  const [showHelpHint, setShowHelpHint] = useState(false)
 
   const [multipleChoiceIndex, setMultipleChoiceIndex] = useState(0)
   const [index, setIndex] = useState(db.length - 1)
@@ -331,6 +332,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
       setTypeDialogIndex(0)
       setOpenTypeDialog(true)
       handleTypeDialogClose()
+      setShowHelpHint(true)
     }
     if ( val === 16 ) {
       setTypeDialogIndex(1)
@@ -574,6 +576,19 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
           </Grid>
         </Grid>
       </Dialog>
+
+      { showHelpHint &&
+        <div id="helpHint" className={styles.help}>
+          <Typography variant="bodyLarge" color="#F2F1E9">
+            遇到問題嗎？嘗試重新整理或換個瀏覽器吧！
+          </Typography>
+          <button onClick={() => setShowHelpHint(false)}>
+            <Typography variant="labelLarge">
+              知道了
+            </Typography>
+          </button>
+        </div>
+      }
       
       {/* --- module wrapper */}
       <Grid
