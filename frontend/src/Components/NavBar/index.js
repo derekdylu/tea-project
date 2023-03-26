@@ -33,7 +33,7 @@ export const NavBar = ({
     },
     {
       title: "關於",
-      link: "/"
+      link: "/about"
     }
   ]
 
