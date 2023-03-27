@@ -14,13 +14,14 @@ ScrollTrigger.config({ ignoreMobileResize: true });
 export const Map = ({}) => {
   const areaName = "新北市";
   const textColor = theme.palette.background.contrastText;
-  const [start, setStart] = useState(true)
+  const [start, setStart] = useState(false)
 
   useEffect(() => {
     const mapTl = gsap.timeline();
 
     if(start) {
-      mapTl.to("#map", {top: "12%", opacity: 1, duration: 2.5, ease: "sine.easeIn"})
+      mapTl.to("#map", {top: "12%", duration: 2.5, ease: "sine.easeIn"})
+          .to("#map", {opacity: 1, duration: 0.5, ease: "sine.easeIn"}, 1.5)
           .to("#circle", {opacity: 1, duration: 0.3, ease: "sine.easeIn"})
           .to("#line", {width: "100%", duration: 0.4, ease: "sine.easeIn"})
           .to("#text", {opacity: 1, duration: 0.3, ease: "sine.easeIn"})
