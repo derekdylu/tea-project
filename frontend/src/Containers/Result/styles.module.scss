@@ -4,7 +4,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 300;
+    z-index: 310;
     background-color: var(--background-color);
 
     > img {
@@ -47,7 +47,7 @@
     width: 100vw;
     // height: 100vh;
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: hidden;
     scroll-snap-type: y mandatory;
     position: fixed;
     z-index: 100;
@@ -137,7 +137,7 @@
     .fourth {
         padding: 0 1.5rem;
         width: 100%;
-        bottom: 5%;
+        bottom: 11%;
         left: 0;
         opacity: 0;
         z-index: 202;
@@ -403,15 +403,53 @@
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.12);
     padding: 0.25rem 1rem;
     border-radius: 1rem;
-    animation: moveUpDown 1s linear infinite;
+    position: relative;
+    overflow: hidden;
+    // animation: moveUpDown 1s linear infinite;
+    transition: all 200ms ease-out 1s;
 
+    .left {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      // width: 50% !important;
+      transition: width 0.5s linear;
+      background-color: white;
+      // transition: background 100ms ease-out;
+    }
+    
+
+    .content {
+      z-index: 302;
+      opacity: 0.38;
+      color: #423A0A;
+      transition: all 200ms ease-out 0.5s;
+
+      &.full {
+        opacity: 1;
+      }
+    }
     
     > svg {
       width: 20px;
       height: 20px;
+    }
+
+    &.enabled {
+      opacity: 1;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+    }
+
+    &:active {
+      transition: all 200ms ease-out 0s;
+      .left {
+        background: linear-gradient(0deg, rgba(102, 77, 0, 0.12), rgba(102, 77, 0, 0.12)), #FFFFFF;
+      }
     }
   }
 
@@ -454,5 +492,27 @@
   }
   100% {
     transform: translateY(0);
+  }
+}
+
+.pageButton {
+  position: fixed;
+  padding: 0 1rem 1.5rem 0;
+  bottom: 0;
+  right: 0;
+  // background-color: black;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 600;
+
+  > div {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 99%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
   }
 }
