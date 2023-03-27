@@ -9,70 +9,87 @@ import qrCode from "../../Images/Live/qr-code.svg"
 
 const data = [
   {
+    id: 0,
     name: "碧螺春綠茶",
     color: "#FFD306",
   },
   {
+    id: 1,
     name: "",
     color: "",
   },
   {
+    id: 2,
     name: "包種茶",
     color: "#FBCC0A",
   },
   {
+    id: 3,
     name: "高山烏龍茶（南部高海拔）",
     color: "#F0B717",
   },
   {
+    id: 4,
     name: "高山烏龍茶（北部高海拔）",
     color: "#ECB01B",
   },
   {
+    id: 5,
     name: "台灣烏龍茶（低海拔）",
     color: "#E8A91F",
   },
   {
+    id: 6,
     name: "凍頂烏龍",
     color: "#E4A223",
   },
   {
+    id: 7,
     name: "鐵觀音茶",
     color: "#E09C27",
   },
   {
+    id: 8,
     name: "紅烏龍茶",
     color: "#D88E2F",
   },
   {
+    id: 9,
     name: "東方美人茶",
     color: "#DC952B",
   },
   {
+    id: 10,
     name: "小葉種紅茶",
     color: "#D48733",
   },
   {
+    id: 11,
     name: "阿薩姆紅茶（南投）",
     color: "#D18038",
   },
   {
+    id: 12,
     name: "紅玉紅茶",
     color: "#C97240",
   },
   {
+    id: 13,
     name: "紅韻紅茶",
     color: "#C56B44",
   },
   {
+    id: 14,
     name: "蜜香紅茶",
     color: "#CD793C",
   },
   {
+    id: 15,
     name: "金萱茶（品種）",
     color: "#F3BE12",
   },
   {
+    id: 16,
     name: "四季春（品種）",
     color: "#F7C50E",
   }
