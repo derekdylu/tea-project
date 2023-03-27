@@ -34,9 +34,11 @@ export const Result = () => {
   const [data, setData] = useState(teaData[0]);
   // video
   const videoRef = useRef();
+  const [videoLoadedProgress, setVideoLoadedProgress] = useState(0);
   const [webmVideoSrc, setWebmVideoSrc] = useState();
   const [mp4VideoSrc, setMp4VideoSrc] = useState();
   const [videoIsHidden, setVideoIsHidden] = useState(false);
+  const [enableNextPage, setEnableNextPage] = useState(false);
 
   const [prevPosition, setPrevPosition] = useState(0);
   const [fastFwd, setFastFwd] = useState({
@@ -69,13 +71,13 @@ export const Result = () => {
       id: "fourth",
       title: "產區",
       start: 33,
-      end: 53
+      end: 50
     },
     {
       id: "fifth",
       title: "",
-      start: 53,
-      end: 53
+      start: 50,
+      end: 50
     }
   ]
   const [currTime, setCurrTime] = useState(0);
@@ -103,7 +105,7 @@ export const Result = () => {
     "play": false,
   })
   const [showTermDialog, setShowTermDialog] = useState(false);
-  const [showScrollHint, setShowScrollHint] = useState(false);
+  const [showScrollHint, setShowScrollHint] = useState(true);
   const [showBatteryHint, setShowBatteryHint] = useState(false);
 
   useEffect(() => {
@@ -129,10 +131,22 @@ export const Result = () => {
       let video = document.getElementById("video");
       setCurrTime(video.currentTime);
 
+      if (fastFwd.currSection < 4) {
+        let videoProgress = document.getElementById("videoProgress");
+        let sectionStartTime = sections[fastFwd.currSection].start;
+        let sectionEndTime = sections[fastFwd.currSection].end;
+  
+        videoProgress.style.width = `${(100 * (video.currentTime - sectionStartTime)) / (sectionEndTime - sectionStartTime)}%`
+      }
+
+
       sections.map((section, i) => {
-        if (i < 4 && section.end < video.currentTime && fastFwd.currSection == i) {
-          video.pause()
-          setShowScrollHint(true);
+        if (section.end < video.currentTime && fastFwd.currSection == i) {
+          setEnableNextPage(true);
+
+          if (i < 4) {
+            video.pause()
+          }
         }
       })
     }, 500);
@@ -167,10 +181,9 @@ export const Result = () => {
               let background = document.getElementById("background");
               background.style.backgroundColor = bgColor;
             }
-            // setTimeSource(fastFwd.nextSource);
             setFastFwd({...fastFwd, isSeeking: false});
             video.play()
-            setShowScrollHint(false);
+            // setShowScrollHint(false);
           }
           else {
             video.currentTime += -0.2;
@@ -180,10 +193,9 @@ export const Result = () => {
         else if (video.currentTime >= fastFwd.endTime) {
           fastFwd.element.style.opacity = 1;
           video.playbackRate = 1;
-          // setTimeSource(fastFwd.nextSource);
           setFastFwd({...fastFwd, isSeeking: false});
           video.play();
-          setShowScrollHint(false);
+          // setShowScrollHint(false);
         }
       }
       
@@ -199,7 +211,7 @@ export const Result = () => {
     let video = document.getElementById("video");
 
     for (var i = position.length - 1; i >= 0; i--) {
-      if (position[i] === 0) {
+      if (position[i] === 0 && i !== fastFwd.currSection) {
         let reverse = i < prevPosition;
         let endTime = reverse ? sections[i].start : sections[i - 1].end;
         video.playbackRate = reverse ? 2 : 10;
@@ -218,9 +230,7 @@ export const Result = () => {
         top = true;
 
         if (i === 3) {
-          setTimeout(() => {
-            setStartMap(true);
-          }, reverse ? 4000 : 3000);
+          setStartMap(true);
         }
 
         break;
@@ -239,7 +249,8 @@ export const Result = () => {
     const mapTl = gsap.timeline();
 
     if (startMap) {
-      mapTl.to("#map", {top: "12%", opacity: 1, duration: 2.5, ease: "sine.easeIn"})
+      mapTl.to("#map", {top: "12%", duration: 2.5, ease: "sine.easeIn"})
+          .to("#map", {opacity: 1, duration: 0.5, ease: "sine.easeIn"}, 1.5)
           .to("#circle", {opacity: 1, duration: 0.3, ease: "sine.easeIn"})
           .to("#line", {width: "100%", duration: 0.4, ease: "sine.easeIn"})
           .to("#text", {opacity: 1, duration: 0.3, ease: "sine.easeIn"})
@@ -294,15 +305,6 @@ export const Result = () => {
         .catch((err) => {
           console.log(err);
         })
-
-      let video = document.getElementById("video");
-
-      setTimeout(() => {
-        setShowLoading(false);
-        setShowBatteryHint(true);
-        // video.load()
-        video.play()
-      }, 24000);
     }
 
     else {
@@ -310,7 +312,7 @@ export const Result = () => {
     }
 
     // FOR LOCAL DEBUG
-    // let debugId = 12;
+    // let debugId = 7;
     // setData(teaData[debugId]);
 
     // teaData[debugId].areaName.map((area, i) => {
@@ -336,19 +338,28 @@ export const Result = () => {
     // background.style.color = parsedVideoData[debugId].textColor;
     // setTeaColor(parsedVideoData[debugId].teaColor);
 
-    // let video = document.getElementById("video");
     // video.style.backgroundColor = parsedVideoData[debugId].bgColor;
-
+    
     // // set term color
     // document.documentElement.style.setProperty("--term-color", parsedVideoData[debugId].linkColor);
+    
+    let video = videoRef.current;
 
-    // setTimeout(() => {
-    //   setShowLoading(false);
-    //   setShowBatteryHint(true);
-    //   // video.load()
-    //   video.play()
-    // }, 24000);
-  }, [])
+    const videoListener = () => {
+      setTimeout(() => {
+        setShowLoading(false);
+        setShowBatteryHint(true);
+        video.play();
+      }, 5000)
+    }
+
+    video.addEventListener("canplaythrough", videoListener);
+
+    return(() => {
+      video.removeEventListener("canplaythrough", videoListener);
+    })
+
+  }, [videoRef])
 
   useEffect(() => {
     videoRef.current?.load();
@@ -376,6 +387,15 @@ export const Result = () => {
       video.play();
     }
     setShowTermDialog(false);
+  }
+
+
+  const handleNextPage = () => {
+    if (enableNextPage) {
+      let element = document.getElementById("scrollContainer");
+      element.scrollBy(0, 20);
+      setEnableNextPage(false);
+    }
   }
   
 
@@ -409,9 +429,9 @@ export const Result = () => {
         <video id="video" ref={videoRef} className={styles.video} muted playsInline hidden={videoIsHidden}>
           {/* <source id="videoSrc" src={`videos/test.webm`} type="video/webm" /> */}
           <source id="videoSrc" src={webmVideoSrc} type="video/webm" />
-          <source id="videoSrc" src={mp4VideoSrc} type='video/mp4' /> ;codecs=hvc1
+          <source id="videoSrc" src={mp4VideoSrc} type='video/mp4' />
         </video>
-        <div className={styles.container} onScroll={(e) => handleScroll(e)}>
+        <div className={styles.container} id="scrollContainer" onScroll={(e) => handleScroll(e)}>
           { sections.slice(0, 4).map((section, i) => (
             <div key={i} className={styles.section} id={section.id}>
               { i == 0 ?
@@ -644,9 +664,10 @@ export const Result = () => {
       </div>
       <div className={styles.hint}>
         { showScrollHint &&
-          <div id="scroll" className={styles.scroll}>
-            <HandScrollGesture />
-            <Typography variant="bodyLargeHighlighted">
+          <div id="scroll" className={`${styles.scroll} ${enableNextPage ? styles.enabled : ""}`} onClick={() => handleNextPage()}>
+            <div className={`${styles.left} ${styles.runAnimation}`} id="videoProgress"/>
+            <HandScrollGesture className={`${styles.content} ${enableNextPage ? styles.full : ""}`}/>
+            <Typography variant="bodyLargeHighlighted" className={`${styles.content} ${enableNextPage ? styles.full : ""}`}>
               下滑以繼續
             </Typography>
           </div>
