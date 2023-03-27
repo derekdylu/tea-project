@@ -9,7 +9,10 @@ import Dialog from '@mui/material/Dialog';
 import Grid from '@mui/material/Grid';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import './wall.css'
+
+import CachedIcon from '@mui/icons-material/Cached';
 
 import backgroundBL from '../../Images/Wall/background-bl.png'
 import backgroundUR from '../../Images/Wall/background-ur.png'
@@ -102,6 +105,7 @@ const Wall = () => {
   const [path4, setPath4] = useState("")
   const [path5, setPath5] = useState("")
   const [startTime, setStartTime] = useState(0)
+  const [showOnlyCurrentCup, setShowOnlyCurrentCup] = useState(true)
 
   useEffect(() => {
     setStartTime(Date.now())
@@ -110,14 +114,30 @@ const Wall = () => {
     setPreload(false)
   }, [])
 
-  async function fetchAndDrop () {
+  function switchMode () {
+    setShowOnlyCurrentCup(!showOnlyCurrentCup)
+    fetchAndDrop(!showOnlyCurrentCup)
+  }
+
+  async function fetchAndDrop (onlyCurrent = true) {
     setIsLoading(true)
 
     const fetchedData = await getGames()
     console.log("fetched data", fetchedData)
 
-    const _fetchedData = fetchedData.filter(x => x.decision !== -1 && x.shown === false && x.timestamp >= startTime)
-                                    .sort((a, b) => a.timestamp - b.timestamp)
+    let _fetchedData = []
+
+    if (onlyCurrent) {
+      console.log("show only current cup")
+      _fetchedData = fetchedData.filter(x => x.decision !== -1 && x.shown === false && x.timestamp >= startTime)
+                                .sort((a, b) => a.timestamp - b.timestamp)
+    } else {
+      console.log("show all cup")
+      _fetchedData = fetchedData.filter(x => x.decision !== -1 && x.shown === false)
+                                .sort((a, b) => a.timestamp - b.timestamp)
+    }
+
+    console.log("tidied data", _fetchedData)
     
     if ( _fetchedData === undefined || _fetchedData.length <= 0 ) {
       setPath("")
@@ -278,15 +298,28 @@ const Wall = () => {
           </Typography>
         </Grid>
       </Dialog>
-      <div>
+      <Grid container direction="column" alignItems="flex-end" justifyContent="flex-end" style={{ position: 'fixed', bottom: '50px', right: '50px', zIndex: 10}}>
         {
-          isLoading && (
-            <Box sx={{ m: 2, display: 'flex' }} style={{ position: 'fixed', bottom: '50px', right: '50px' }}>
-              <CircularProgress size={18} style={{ color: theme.palette.neutral[80] }} />
+          isLoading ?
+          (
+            <Box sx={{ m: 2, pr: 0.9, display: 'flex' }}>
+              <CircularProgress size={18} style={{ color: theme.palette.button }} />
             </Box>
+          ) : (
+            <Button sx={{ mb: 0.6 }} onClick={() => fetchAndDrop()}>
+              <CachedIcon sx={{ color: theme.palette.button }} />
+            </Button>
           )
         }
-      </div>
+        {/* <Typography variant='bodyMedium'>
+          顯示所有結果？
+        </Typography> */}
+        <Button onClick={() => switchMode()} disabled={isLoading}>
+          {
+            showOnlyCurrentCup ? '切換為顯示所有結果' : '切換為僅顯示目前結果'
+          }
+        </Button>
+      </Grid>
       {
         preload &&
         teas.map((tea) => (
