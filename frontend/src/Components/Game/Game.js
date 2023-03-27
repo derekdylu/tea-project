@@ -64,8 +64,8 @@ import 花香 from '../../Images/Card/花香.png'
 import 青香 from '../../Images/Card/青香.png'
 import 收斂感 from '../../Images/Card/收斂感.png'
 
-const INTERVAL = 400;
-const MINCARDHEIGHT = 220;
+const INTERVAL = 120;
+const MINCARDWIDTH = 250;
 
 const cards = [
   茶色淺,
@@ -210,7 +210,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
   const navigate = useNavigate()
   const id = sessionStorage.getItem('id') || 'game_id_not_found'
   const { width, height, ratio } = useWindowDimensions()
-  const [cardHeight, setCardHeight] = useState(height - INTERVAL)
+  const [cardWidth, setCardWidth] = useState(width - INTERVAL)
   const [phaseTitle1, setPhaseTitle1] = useState(false)
   const [phaseTitle2, setPhaseTitle2] = useState(false)
 
@@ -232,14 +232,10 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
   }))
 
   useEffect(() => {
-    if (height - INTERVAL < MINCARDHEIGHT) {
-      setCardHeight(MINCARDHEIGHT)
+    if (width - INTERVAL < MINCARDWIDTH) {
+      setCardWidth(MINCARDWIDTH)
     } else {
-      if (height - INTERVAL > width - 60) {
-        setCardHeight(width - 60)
-      } else {
-        setCardHeight(height - INTERVAL)
-      }
+      setCardWidth(width - INTERVAL)
     }
   }, [ratio])
 
@@ -655,19 +651,19 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
               container
               direction="column"
               width="100%"
-              height={cardHeight + 90}
+              height={cardWidth + 90}
               justifyContent="center"
               alignItems="center"
             >
               {props.map(({ x, y, rot, scale }, i) => (
-                <animated.div className={styles.deck} key={i} style={{ x, y, display: x.animation.to > width ? 'none' : 'flex', width: `${cardHeight}px`, height: `${cardHeight}px`, }}>
+                <animated.div className={styles.deck} key={i} style={{ x, y, display: x.animation.to > width ? 'none' : 'flex', width: `${cardWidth}px`, height: `${cardWidth}px`, }}>
                   <animated.div
                     {...bind(i)}
                     style={{
                       transform: interpolate([rot, scale], trans),
                       backgroundImage: `url(${cards[i]})`,
-                      width: `${cardHeight}px`,
-                      height: `${cardHeight}px`,
+                      width: `${cardWidth}px`,
+                      height: `${cardWidth}px`,
                     }}
                   />
                 </animated.div>
