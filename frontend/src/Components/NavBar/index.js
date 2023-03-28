@@ -29,7 +29,7 @@ export const NavBar = ({
   const menus = [
     {
       title: "開始探索",
-      link: "/game",
+      link: "/",
     },
     {
       title: "關於",
