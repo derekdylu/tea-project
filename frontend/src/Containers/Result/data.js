@@ -274,7 +274,7 @@ export const teaData = [
   },
   {
     "id": 10,
-    "name": ["小葉種紅茶"],
+    "name": ["小葉種", "紅茶"],
     "subName": "",
     "contents": [
       [
