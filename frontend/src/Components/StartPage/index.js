@@ -137,22 +137,40 @@ export const StartPage = ({}) => {
     () =>
       _.debounce(() => {
         setShowScrollHint(true);
-        console.log("END SCROLL");
-      }, 2000),
+      }, 1500),
     []
   );
+
+  function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) + 30 &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
 
   const handleOnScroll = (e) => {
     setShowScrollHint(false);
 
+    // frame
     let percentage = window.pageYOffset / window.innerHeight;
+
     if (percentage >= 1.5) {
       setSecond(true);
-    } else if (percentage >= 1.25) {
-      setSecond(true);
-      setShowScrollHint(false);
     } else {
       setSecond(false);
+    }
+
+    // button
+    let button = document.getElementById("startButton");
+
+    if (isInViewport(button)) {
+      setShowScrollHint(false);
+    } else if (percentage >= 1.5) {
+      setShowScrollHint(false);
+    } else {
       handleEndScroll();
     }
   }
@@ -161,9 +179,7 @@ export const StartPage = ({}) => {
     setIsLoading(true)
     createGame([], [], -1, Date.now(), false)
     .then((res) => {
-      console.log(res);
       sessionStorage.setItem('id', res.id);
-      console.log(sessionStorage);
       window.scrollTo({ top: 0 });
       navigate("/game");
     })
@@ -235,7 +251,7 @@ export const StartPage = ({}) => {
             )}
           </div>
 
-          <button className={styles.button} onClick={handleStartButtonOnClick}>
+          <button className={styles.button} onClick={handleStartButtonOnClick} id="startButton">
             <Typography variant="labelLarge" color={theme.palette.background.contrastText}>
               { isLoading ?
                 <div>Loading...</div> :

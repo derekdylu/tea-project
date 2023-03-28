@@ -6,6 +6,7 @@ import { Typography } from "@mui/material";
 import theme from "../../Themes/Theme";
 import tea from "../../Images/Live/tea.png"
 import qrCode from "../../Images/Live/qr-code.svg"
+import { getGames } from "../../Utils/Axios";
 
 const data = [
   {
@@ -96,14 +97,43 @@ const data = [
 ]
 
 export const Live = () => { // 1570 x 1200
-  const [rank, setRank] = useState({
-    "0": 60,
-    "3": 80,
-    "5": 70,
-    "8": 85,
-    "10": 50,
-    "14": 90,
-  });
+  const [timestamp, setTimestamp] = useState(0);
+  const [rank, setRank] = useState({});
+
+  const fetchGames = () => {
+    getGames()
+      .then((res) => {
+        var filtered = res.filter(obj => obj.timestamp >= timestamp);
+        let totalResult = {};
+        
+        for (let i = 0; i < 17; i++) {
+          var filteredPerTea = filtered.filter(obj => obj.decision == i);
+          totalResult[i] = filteredPerTea.length;
+        }
+
+        let sortedTotalResultKey = Object.keys(totalResult).sort(function(a, b) {return totalResult[b] - totalResult[a]});
+        
+        let sortedTotalResult = {};
+        for (let i = 0; i < 6; i++) {
+          let id = sortedTotalResultKey[i]
+          sortedTotalResult[id] = totalResult[id];
+        }
+        
+        setRank(sortedTotalResult);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  useEffect(() => {
+    fetchGames();
+    let interval = setInterval(() => {
+      fetchGames();
+    }, (30000))
+
+    return () => clearInterval(interval)
+  }, [timestamp])
 
   const headline = "符合喜好之"
   const title = "前六名茶品項\n即時排名"
@@ -125,15 +155,22 @@ export const Live = () => { // 1570 x 1200
     setSortedKeys(Object.keys(rank).sort(function(a, b) {return rank[b] - rank[a]}));
     sorted.map((key, i) => {
       let element = document.getElementById(key)
-      console.log(element.style)
       element.style.bottom = position[i]
     })
   }, [rank]);
 
-  function handleOnClick(key) {
-    const updatedRank = rank;
-    updatedRank[key] += 5;
-    setRank({...updatedRank});
+  const [showTimestamp, setShowTimestamp] = useState(false);
+
+  const toggleTimestamp = () => {
+    setShowTimestamp((prevState) => !prevState);
+  }
+
+  const handleChangeTimestamp = () => {
+    setShowTimestamp(false);
+    let timestampInput = document.getElementById("timestampInput");
+    let date = new Date(timestampInput.value);
+    let epochTime = date.getTime();
+    setTimestamp(epochTime);
   }
 
   return (
@@ -149,17 +186,17 @@ export const Live = () => { // 1570 x 1200
             </Typography>
           </div>
           <div className={styles.graph}>
-            { Object.keys(rank).map((key) => (
-              <div className={styles.row} id={key}>
+            { Object.keys(rank).map((key, i) => (
+              <div className={styles.row} id={key} key={i}>
                 <img src={tea} />
 
                 <div className={styles.column} >
-                  <Typography variant="titleLarge" onClick={ (e) => handleOnClick(key) }>
-                    { data[parseInt(key)].name }
+                  <Typography variant="titleLarge">
+                    { data[key].name }
                   </Typography>
                   <div className={styles.bar} style={{ width: `calc(${rank[key] / max * 100}% - 1rem)` }}>
-                    <div className={styles.filled} style={{ backgroundColor: data[parseInt(key)].color }}/>
-                    <Typography variant="titleMedium" onClick={ (e) => handleOnClick(key) }>
+                    <div className={styles.filled} style={{ backgroundColor: data[key].color }}/>
+                    <Typography variant="titleMedium">
                       {rank[key]}
                     </Typography>
                   </div>
@@ -178,14 +215,20 @@ export const Live = () => { // 1570 x 1200
           <div className={styles.qrContainer}>
             <div style={{display: "flex", flexDirection: "column"}}>
               { qrDescription.map((text, i) => (
-                <Typography variant="headlineSmall" className={styles.description}>
+                <Typography variant="headlineSmall" className={styles.description} key={i}>
                   { text }
                 </Typography>
               ))}
             </div>
-            <img src={qrCode} />
+            <img src={qrCode} onClick={toggleTimestamp} />
           </div>
         </div>
+        { showTimestamp &&
+          <div className={styles.timestampContainer}>
+            <input type="datetime-local" id="timestampInput"/>
+            <button onClick={handleChangeTimestamp}>改</button>
+          </div>
+        }
       </div>
     </ThemeProvider>
   )
