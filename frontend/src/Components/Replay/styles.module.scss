@@ -1,0 +1,64 @@
+.container {
+  width: 100vw;
+  // background-color: var(--background-color);
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+  margin-bottom: -1rem;
+}
+
+.group {
+  color: var(--text-color);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  text-align: justify;
+  gap: 1rem;
+  background: linear-gradient(0deg, rgba(95, 98, 0, 0.14), rgba(95, 98, 0, 0.14)), #FEFCF4;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+
+  .leaf {
+    position: absolute;
+    left: -4rem;
+    z-index: 18;
+  }
+
+  .cup {
+    position: absolute;
+    z-index: 19;
+    width: 250px;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -25%;
+  }
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    z-index: 20;
+  }
+
+  .replayButton {
+    display: flex;
+    flex-direction: row;
+    background-color: transparent;
+    border: solid 1px var(--border-color);
+    border-radius: 100px;
+    padding: 0.5rem 1rem;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    color: var(--text-color);
+    z-index: 20;
+
+    > svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+a {
+text-decoration: none;
+}
