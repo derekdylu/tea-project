@@ -21,16 +21,16 @@
   .leaf {
     position: absolute;
     left: -4rem;
-    z-index: 18;
+    // z-index: 18;
   }
 
   .cup {
     position: absolute;
-    z-index: 19;
     width: 250px;
     top: 50%;
     transform: translateY(-50%);
     right: -25%;
+    // z-index: 19;
   }
 
   .title {

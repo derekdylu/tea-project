@@ -96,10 +96,10 @@ export const NavBar = ({
           <Logo onClick={() => navigate("/")} />
         </div>
         <div className={styles.left}>
-          { soundIsOn ?
+          {/* { soundIsOn ?
             <SoundOn onClick={handleSoundOnClick} /> :
             <SoundOff onClick={handleSoundOnClick} />
-          }
+          } */}
           { !forGame &&
             <svg className={styles.burger} onClick={handleBurgerOnClick}>
               <line x1="12%" y1="50%" x2="88%" y2="50%"

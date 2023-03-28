@@ -148,6 +148,8 @@ export const StartPage = ({}) => {
     let percentage = window.pageYOffset / window.innerHeight;
     if (percentage >= 1.5) {
       setSecond(true);
+    } else if (percentage >= 1.25) {
+      setSecond(true);
       setShowScrollHint(false);
     } else {
       setSecond(false);
