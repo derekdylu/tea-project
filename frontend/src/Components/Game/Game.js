@@ -30,10 +30,6 @@ import SmallVerticalDivider from '../../Images/Icon/small_vertical_divider.svg';
 
 import { db } from './Characteristics';
 
-import dislike from '../../Images/Dialog/dislike.gif';
-import like from '../../Images/Dialog/like.gif';
-import undo from '../../Images/Dialog/undo.gif';
-
 import 蔬菜香 from '../../Images/Card/蔬菜香.png'
 import 豆子香 from '../../Images/Card/豆子香.png'
 import 茶色淺 from '../../Images/Card/茶色淺.png'
@@ -141,32 +137,6 @@ const phase = [
   ]
 ]
 
-const dialogGif = [
-  like,
-  dislike,
-  undo,
-]
-
-const dialog = [
-  [
-    "向右滑動卡片",
-    "表示「喜歡」",
-    "除了右滑，也可以點擊「愛心」按鈕來表示喜歡。",
-    "下一步",
-  ],[
-    "向左滑動卡片",
-    "表示「不喜歡」",
-    "除了左滑，也可以點擊「叉叉」按鈕來表示不喜歡。",
-    "下一步",
-  ],
-  [
-    "回心轉意",
-    "",
-    "點擊「返回」按鍵，即可重返到上一張卡片重作決定。",
-    "開始！"
-  ]
-]
-
 const multipleChoice = [
   [
     "早上剛起床",
@@ -206,7 +176,7 @@ const from = (_i: number) => ({ x: 0, rot: 0, scale: 1.5, y: -1000 })
 const trans = (r: number, s: number) =>
   `perspective(1500px) rotateX(9deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
-const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
+const Game = ({ onChangeIndex, onChangePhaseTitle1}) => {
   const navigate = useNavigate()
   const id = sessionStorage.getItem('id') || 'game_id_not_found'
   const { width, height, ratio } = useWindowDimensions()
@@ -216,8 +186,6 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
 
   const [openSnackYes, setOpenSnackYes] = useState(false)
   const [openSnackNo, setOpenSnackNo] = useState(false)
-  const [openDialog, setOpenDialog] = useState(false)
-  const [dialogIndex, setDialogIndex] = useState(0)
   const [openTypeDialog, setOpenTypeDialog] = useState(false)
   const [typeDialogIndex, setTypeDialogIndex] = useState(0)
   const [showHelpHint, setShowHelpHint] = useState(false)
@@ -230,6 +198,14 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
     ...to(i),
     from: from(i),
   }))
+
+  useEffect(() => {
+    if (id === 'game_id_not_found') {
+      navigate("/")
+    }
+    window.scrollTo(0, 0)
+    handlePhase1Change()
+  }, [])
 
   useEffect(() => {
     if (width - INTERVAL < MINCARDWIDTH) {
@@ -298,6 +274,45 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
     swipeAnimation(index, false, 0, 0, 0)
   }
 
+  const swipeAnimation = (index, down, mx, dir, velocity) => {
+    if ( mx >= 72 ) {
+      handleCloseSnackNo()
+      handleClickSnackYes()
+    }
+    if ( mx <= -72 ) {
+      handleCloseSnackYes()
+      handleClickSnackNo()
+    }
+    api.start(i => {
+      if (index !== i) return
+      const isGone = gone.has(index)
+      const x = isGone ? (200 + window.innerWidth) * dir : down ? mx : 0
+      const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0)
+      const scale = down ? 1.1 : 1
+      return {
+        x,
+        rot,
+        scale,
+        delay: undefined,
+        config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 },
+      }
+    })
+  }
+
+  // Create a gesture, we're interested in down-state, delta (current-pos - click-pos), direction and velocity
+  const bind = useDrag(({ args: [index], down, movement: [mx], direction: [xDir], velocity }) => {
+    const trigger = velocity >= 0.2
+    const dir = xDir < 0 ? -1 : 1
+    const select = dir === -1 ? 0 : 1
+    if (!down && trigger) {
+      gone.add(index)
+      pushSelection(select, index)
+    }
+    // console.log("index", index, "down", down, "mx", mx, "dir", dir, "velocity", velocity)
+    swipeAnimation(index, down, mx, dir, velocity)
+    return
+  })
+
   const handleClickSnackYes = () => {
     setOpenSnackYes(true);
   };
@@ -313,15 +328,6 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
   const handleCloseSnackNo = () => {
     setOpenSnackNo(false);
   };
-
-  const handleDialogOpen = () => {
-    setOpenDialog(true);
-  }
-
-  const handleDialogClose = () => {
-    setOpenDialog(false);
-    handleTypeDialogOpen("startPage")
-  }
 
   const handleTypeDialogOpen = (val) => {
     if ( val === "startPage" ) {
@@ -362,7 +368,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
     await timeout(2000)
     setPhaseTitle1(false)
     onChangePhaseTitle1(false)
-    handleDialogOpen()
+    handleTypeDialogOpen("startPage")
   }
 
   async function handlePhase2Change () {
@@ -381,61 +387,6 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
       console.log(err);
     })
   }
-
-  useEffect(() => {
-    if (id === 'game_id_not_found') {
-      navigate("/")
-    }
-    window.scrollTo(0, 0)
-    handlePhase1Change()
-  }, [])
-
-  const handleDialog = () => {
-    if (dialogIndex + 1 === 3) {
-      handleDialogClose()
-      return
-    }
-    setDialogIndex(dialogIndex + 1)
-  }
-  
-  const swipeAnimation = (index, down, mx, dir, velocity) => {
-    if ( mx >= 72 ) {
-      handleCloseSnackNo()
-      handleClickSnackYes()
-    }
-    if ( mx <= -72 ) {
-      handleCloseSnackYes()
-      handleClickSnackNo()
-    }
-    api.start(i => {
-      if (index !== i) return
-      const isGone = gone.has(index)
-      const x = isGone ? (200 + window.innerWidth) * dir : down ? mx : 0
-      const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0)
-      const scale = down ? 1.1 : 1
-      return {
-        x,
-        rot,
-        scale,
-        delay: undefined,
-        config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 },
-      }
-    })
-  }
-
-  // Create a gesture, we're interested in down-state, delta (current-pos - click-pos), direction and velocity
-  const bind = useDrag(({ args: [index], down, movement: [mx], direction: [xDir], velocity }) => {
-    const trigger = velocity >= 0.2
-    const dir = xDir < 0 ? -1 : 1
-    const select = dir === -1 ? 0 : 1
-    if (!down && trigger) {
-      gone.add(index)
-      pushSelection(select, index)
-    }
-    // console.log("index", index, "down", down, "mx", mx, "dir", dir, "velocity", velocity)
-    swipeAnimation(index, down, mx, dir, velocity)
-    return
-  })
 
   return (
     <ThemeProvider theme={theme}>
@@ -495,39 +446,6 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
       </Snackbar>
 
       {/* --- dialog */}
-      <Dialog
-        open={openDialog}
-        onClose={handleDialogClose}
-        PaperProps={{
-          style: { backgroundColor: theme.palette.surface.main, borderRadius: 28 }
-        }}
-      >
-        <Grid
-          container
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          sx={{ px: 3, pt: 3 }}
-          style={{ borderRadius: '28px' }}
-        >
-          <img src={dialogGif[dialogIndex]} alt="placeholder" width="278px" style={{ marginBottom: '8px' }}/>
-          <Typography variant="headlineMedium" style={{ color: theme.palette.neutralVariant[30], mt: 3 }}>
-            {dialog[dialogIndex][0]}
-          </Typography>
-          <Typography variant="headlineMedium" sx={{ color: theme.palette.neutralVariant[30], mt: 1/2 }}>
-            {dialog[dialogIndex][1]}
-          </Typography>
-          <Typography variant="bodyMedium" sx={{ color: theme.palette.neutralVariant[30], mt: 1 }}>
-            {dialog[dialogIndex][2]}
-          </Typography>
-        </Grid>
-        <DialogActions sx={{ m: 2 }}>
-          <Button color="primary" onClick={() => handleDialog()} autoFocus>
-            {dialog[dialogIndex][3]}
-          </Button>
-        </DialogActions>
-      </Dialog>
-      
       <Dialog
         open={openTypeDialog}
         onClose={handleTypeDialogClose}
@@ -788,7 +706,7 @@ const Game = ({ onChangeIndex, onChangePhaseTitle1 }) => {
 
         {
           ( phaseTitle1 || phaseTitle2 ) && (
-            <img alt="bg" src={background} width={2 * width} />
+            <img alt="bg" src={background} width={width} style={{objectFit: 'cover'}} />
           )
         }
 
