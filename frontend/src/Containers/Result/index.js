@@ -72,12 +72,12 @@ export const Result = () => {
       id: "fourth",
       title: "產區",
       start: 33,
-      end: 43
+      end: 38
     },
     {
       id: "fifth",
       title: "",
-      start: 43,
+      start: 38,
       end: 50
     }
   ]
