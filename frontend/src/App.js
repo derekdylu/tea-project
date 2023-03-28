@@ -11,6 +11,7 @@ import { Live } from "./Containers/Live";
 import { Result } from "./Containers/Result";
 import { Map } from "./Components/Map";
 import { Share } from './Components/Share';
+import { Replay } from './Components/Replay';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           {/* <Route path="/share" element={ <Share/> } /> */}
           <Route path="/wall" element={ <Wall /> } />
           <Route path="/live" element={ <Live/> } />
+          {/* <Route path="/replay" element={ <Replay/> } /> */}
         </Routes>
       </Router>
     </div>

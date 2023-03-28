@@ -6,6 +6,7 @@ import { Product } from "../../Components/Product";
 import { Share } from "../../Components/Share";
 import { teaData, termData, videoData } from "./data";
 import { NavBar } from "../../Components/NavBar"
+import { Replay } from "../../Components/Replay";
 import styles from "./styles.module.scss";
 
 import { ThemeProvider } from "@emotion/react";
@@ -71,12 +72,12 @@ export const Result = () => {
       id: "fourth",
       title: "產區",
       start: 33,
-      end: 50
+      end: 43
     },
     {
       id: "fifth",
       title: "",
-      start: 50,
+      start: 43,
       end: 50
     }
   ]
@@ -312,7 +313,7 @@ export const Result = () => {
     }
 
     // FOR LOCAL DEBUG
-    // let debugId = 7;
+    // let debugId = 6;
     // setData(teaData[debugId]);
 
     // teaData[debugId].areaName.map((area, i) => {
@@ -396,6 +397,17 @@ export const Result = () => {
       element.scrollBy(0, 20);
       setEnableNextPage(false);
     }
+  }
+
+  const handleReplay = () => {
+    const firstSection = document.getElementById("first").childNodes[0];
+    firstSection.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    const video = document.getElementById("video");
+    video.currentTime = 0;
+
+    setEnableNextPage(false);
+    setShowScrollHint(true);
   }
   
 
@@ -649,6 +661,12 @@ export const Result = () => {
           ))}
           <div id="fifth">
             <div className={styles.nonVideoSection}>
+              <Replay
+                id={data.id}
+                teaName={data.name}
+                teaSubName={data.subName}
+                handleOnClick={handleReplay}
+              />
               <div>
                 <Marquee gradient={false} speed={10} className={styles.scrollingText}>
                   <Typography variant="displayMedium">
@@ -668,7 +686,7 @@ export const Result = () => {
             <div className={`${styles.left} ${styles.runAnimation}`} id="videoProgress"/>
             <HandScrollGesture className={`${styles.content} ${enableNextPage ? styles.full : ""}`}/>
             <Typography variant="bodyLargeHighlighted" className={`${styles.content} ${enableNextPage ? styles.full : ""}`}>
-              下滑以繼續
+              點擊繼續
             </Typography>
           </div>
         }
