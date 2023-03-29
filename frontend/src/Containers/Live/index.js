@@ -8,6 +8,38 @@ import tea from "../../Images/Live/tea.png"
 import qrCode from "../../Images/Live/qr-code.svg"
 import { getGames } from "../../Utils/Axios";
 
+import cup0 from "../../Images/Live/cup0.png";
+import cup2 from "../../Images/Live/cup2.png";
+import cup3 from "../../Images/Live/cup3.png";
+import cup6 from "../../Images/Live/cup6.png";
+import cup7 from "../../Images/Live/cup7.png";
+import cup8 from "../../Images/Live/cup8.png";
+import cup9 from "../../Images/Live/cup9.png";
+import cup10 from "../../Images/Live/cup10.png";
+import cup11 from "../../Images/Live/cup11.png";
+import cup12 from "../../Images/Live/cup12.png";
+import cup13 from "../../Images/Live/cup13.png";
+import cup14 from "../../Images/Live/cup14.png";
+
+const cupImg = {
+  0: cup0,
+  2: cup2,
+  3: cup3,
+  4: cup3,
+  5: cup3,
+  6: cup6,
+  7: cup7,
+  8: cup8,
+  9: cup9,
+  10: cup10,
+  11: cup11,
+  12: cup12,
+  13: cup13,
+  14: cup14,
+  15: cup3,
+  16: cup3,
+}
+
 const data = [
   {
     id: 0,
@@ -188,7 +220,10 @@ export const Live = () => { // 1570 x 1200
           <div className={styles.graph}>
             { Object.keys(rank).map((key, i) => (
               <div className={styles.row} id={key} key={i}>
-                <img src={tea} />
+                {/* <img src={tea} /> */}
+                <div className={styles.img}>
+                  <img src={cupImg[key]} />
+                </div>
 
                 <div className={styles.column} >
                   <Typography variant="titleLarge">

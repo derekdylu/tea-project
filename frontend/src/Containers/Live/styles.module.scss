@@ -1,118 +1,124 @@
 @import "../../variable.scss";
 
 .container {
-    width: 100vw;
-    height: 100vh;
-    padding: 4rem 6rem 6rem 6rem;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    box-sizing: border-box;
-    background-size: fit;
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
+  width: 100vw;
+  height: 100vh;
+  padding: 4rem 6rem 6rem 6rem;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  box-sizing: border-box;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
 
-    > svg {
-        width: 100%;
-        height:  1px;
-        stroke-width: 1px;
-        stroke: var(--border-color);
-    }
+  > svg {
+    width: 100%;
+    height:  1px;
+    stroke-width: 1px;
+    stroke: var(--border-color);
+  }
 
-    @media (min-height: 1000px) {
-      padding: 10rem;
-    }
+  @media (min-height: 1000px) {
+    padding: 10rem;
+  }
 }
 
 .rowContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    gap: 2.5rem;
-    white-space: pre-wrap;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 2.5rem;
+  white-space: pre-wrap;
 
-    &.top {
-        flex: 1
-    }
+  &.top {
+    flex: 1
+  }
 
-    &.bottom {
-        justify-content: space-between;
-    }
+  &.bottom {
+    justify-content: space-between;
+  }
 }
 
 .title {
-    display: flex;
-    flex-direction: column;
-    white-space: pre-wrap;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  white-space: pre-wrap;
+  gap: 0.5rem;
 }
 
 .graph {
-    flex: 1;
-    height: 100%;
-    position: relative;
-    padding: 0 0.5rem;
+  flex: 1;
+  height: 100%;
+  position: relative;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
+
+  .row {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
     box-sizing: border-box;
+    bottom: 0%;
+    transition: all 1s ease-in;
+    height: fit-content;
 
-    .row {
-        position: absolute;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 2rem;
+    .img {
+      width: 5%;
+      height: 5%;
+
+      > img {
         width: 100%;
-        box-sizing: border-box;
-        bottom: 0%;
-        transition: all 1s ease-in;
-        height: fit-content;
-
-        > img {
-            width: 10%;
-            height: 10%;
-        }
+        height: 100%;
+      }
     }
+  }
 
 
-    .column {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        gap: 0.25rem;
+  .column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.25rem;
 
-        @media (min-height: 1000px) {
-          gap: 0.5rem;
-        }
+    @media (min-height: 1000px) {
+      gap: 0.5rem;
     }
-    
-    .bar {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 4px;
+  }
+  
+  .bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
 
-        .filled {
-            height: 1rem;
-            background-color: #82753E;
-            transition: width 0.5s ease-in;
-            flex: 1;
-        }
+    .filled {
+      height: 1rem;
+      background-color: #82753E;
+      transition: width 0.5s ease-in;
+      flex: 1;
     }
+  }
 }
 
 .qrContainer {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 
-    .description {
-        text-align: right;
-        white-space: nowrap;
-    }
+  .description {
+    text-align: right;
+    white-space: nowrap;
+  }
 
-    > img {
-        background-color: #FFFFFF;
-        width: 64px;
-        height: 64px;
-    }
+  > img {
+    background-color: #FFFFFF;
+    width: 64px;
+    height: 64px;
+  }
 }
 
 .timestampContainer {
