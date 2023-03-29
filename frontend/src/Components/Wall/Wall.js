@@ -104,11 +104,10 @@ const Wall = () => {
   const [path3, setPath3] = useState("")
   const [path4, setPath4] = useState("")
   const [path5, setPath5] = useState("")
-  const [startTime, setStartTime] = useState(0)
+  const [startTime, setStartTime] = useState(Date.now())
   const [showOnlyCurrentCup, setShowOnlyCurrentCup] = useState(true)
 
   useEffect(() => {
-    setStartTime(Date.now())
     setPreload(true)
     fetchAndDrop()
     setPreload(false)
@@ -119,7 +118,8 @@ const Wall = () => {
     fetchAndDrop(!showOnlyCurrentCup)
   }
 
-  async function fetchAndDrop (onlyCurrent = true) {
+  async function fetchAndDrop (onlyCurrent) {
+    console.log("update time", startTime)
     setIsLoading(true)
 
     const fetchedData = await getGames()
@@ -128,18 +128,18 @@ const Wall = () => {
     let _fetchedData = []
 
     if (onlyCurrent) {
-      console.log("show only current cup")
+      console.log("show only current results")
       _fetchedData = fetchedData.filter(x => x.decision !== -1 && x.shown === false && x.timestamp >= startTime)
                                 .sort((a, b) => a.timestamp - b.timestamp)
     } else {
-      console.log("show all cup")
+      console.log("show all results")
       _fetchedData = fetchedData.filter(x => x.decision !== -1 && x.shown === false)
                                 .sort((a, b) => a.timestamp - b.timestamp)
     }
 
     console.log("tidied data", _fetchedData)
     
-    if ( _fetchedData === undefined || _fetchedData.length <= 0 ) {
+    if ( _fetchedData === undefined || _fetchedData.length === 0 ) {
       setPath("")
       setPath2("")
       setPath3("")
@@ -306,7 +306,7 @@ const Wall = () => {
               <CircularProgress size={18} style={{ color: theme.palette.button }} />
             </Box>
           ) : (
-            <Button sx={{ mb: 0.6 }} onClick={() => fetchAndDrop()}>
+            <Button sx={{ mb: 0.6 }} onClick={() => fetchAndDrop(showOnlyCurrentCup)}>
               <CachedIcon sx={{ color: theme.palette.button }} />
             </Button>
           )
