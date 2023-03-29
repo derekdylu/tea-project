@@ -16,7 +16,7 @@ import Marquee from "react-fast-marquee";
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import { ReactComponent as MapSvg } from "../../Images/map.svg"
-import { ReactComponent as HandScrollGesture } from "../../Images/swipe_up.svg";
+import { ReactComponent as HandClickGesture } from "../../Images/Result/click.svg";
 import loading from "../../Images/loading.gif"
 import gsap from "gsap";
 import { getGameById } from "../../Utils/Axios";
@@ -684,7 +684,7 @@ export const Result = () => {
         { showScrollHint &&
           <div id="scroll" className={`${styles.scroll} ${enableNextPage ? styles.enabled : ""}`} onClick={() => handleNextPage()}>
             <div className={`${styles.left} ${styles.runAnimation}`} id="videoProgress"/>
-            <HandScrollGesture className={`${styles.content} ${enableNextPage ? styles.full : ""}`}/>
+            <HandClickGesture className={`${styles.content} ${enableNextPage ? styles.full : ""}`}/>
             <Typography variant="bodyLargeHighlighted" className={`${styles.content} ${enableNextPage ? styles.full : ""}`}>
               點擊繼續
             </Typography>
