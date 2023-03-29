@@ -41,8 +41,27 @@ export const NavBar = ({
     setSoundIsOn((prevState) => !prevState);
   }
 
+  const [toBePlayed, setToBePlayed] = useState(false);
+
   const handleBurgerOnClick = () => {
-    menuIsOpen ? enableBodyScroll(document) : disableBodyScroll(document)
+    menuIsOpen ? enableBodyScroll(document) : disableBodyScroll(document);
+    let path = window.location.pathname;
+
+    if (path === "/result") {
+      let video = document.getElementById("video");
+      if (menuIsOpen && toBePlayed) {
+        setTimeout(() => {
+          video.play();
+        }, 1600)
+      } else {
+        if (!video.paused) {
+          video.pause();
+          setToBePlayed(true);
+        } else {
+          setToBePlayed(false);
+        }
+      }
+    }
     setMenuIsOpen((prevState) => !prevState);
     setHideLogo((prevState) => !prevState);
   }
