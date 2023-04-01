@@ -53,6 +53,8 @@
 <img src="https://img.icons8.com/color/480/mongodb.png" height="50" align="center" alt="mongoDB">
 </p>
 
+Backend repository is stored in anthoer private place. Please contact us if you want to access it.
+
 ### Deployment
 <p align="left">
 <img src="https://cdn4.iconfinder.com/data/icons/logos-brands-5/24/netlify-512.png" height="42" align="center" alt="netlify">
