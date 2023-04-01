@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Wrapper from './Components/Game/Wrapper';
 import Wall from './Components/Wall/Wall';
 import Error from './Containers/Error';
+import About from './Containers/About';
 
 import { NavBar } from "./Components/NavBar";
 import { StartPage } from "./Components/StartPage";
@@ -31,6 +32,7 @@ function App() {
           <Route path="/wall" element={ <Wall /> } />
           <Route path="/live" element={ <Live/> } />
           {/* <Route path="/replay" element={ <Replay/> } /> */}
+          <Route path="/about" element={ <About/> } />
         </Routes>
       </Router>
     </div>
