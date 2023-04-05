@@ -153,7 +153,7 @@ const Wall = () => {
         speed={20}
         style={{
           position: 'relative',
-          top: `${height/5}px`,
+          top: `${height/2 - 200}px`,
           zIndex: '0',
         }}
       >
@@ -169,8 +169,8 @@ const Wall = () => {
       <img alt="background-bl" src={backgroundBL} style={{ scale: '0.6', position: 'fixed', bottom: '-1250px', left: '-800px' }}/>
       <img alt="background-ur" src={backgroundUR} style={{ scale: '0.6', position: 'fixed', top: '-1000px', right: '-1650px' }}/>
       <img alt="background-ul" src={backgroundUL} style={{ scale: '0.6', position: 'fixed', top: '-1550px', left: '-1300px', animationName: 'upleftAnim', animationDuration: '3s', animationIterationCount: 'infinite', animationDirection: 'alternate'}}/>
-      <img alt="object" src={object} height={ 619 } style={{ position: 'fixed', bottom: '-20px', right: '-50px' }}/>
-      <img alt="cup_pure" src={茶杯} height={ 200 } style={{ position: 'fixed', bottom: '76px', right: '410px' }}/>
+      <img alt="object" src={object} height={ 520 } style={{ position: 'fixed', bottom: '-100px', right: '140px' }}/>
+      <img alt="cup_pure" src={茶杯} height={ 260 } style={{ position: 'fixed', bottom: '25px', right: '590px' }}/>
     </ThemeProvider>
   )
 }
