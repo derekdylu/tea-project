@@ -109,12 +109,12 @@ const Wrapper = () => {
           {
             narrow ?
             (
-              <Typography variant="body2" color="#2D3748" fontWeight="500" sx={{mt: 2.5}} align="center">
-                最小螢幕寬度 320 px
+              <Typography variant="titleMedium" color="#2D3748" fontWeight="500" sx={{mt: 2.5}} align="center">
+                螢幕最小寬度 320 px
               </Typography>
             ):(
               <>
-                <Typography variant="h6" color="#2D3748" fontWeight="700" sx={{mt: 2.5}} align="center">
+                <Typography variant="titleMedium" color="#2D3748" fontWeight="700" sx={{mt: 2.5}} align="center">
                   豎直手機螢幕或瀏覽器視窗以享受最佳遊戲體驗
                 </Typography>
               </>
