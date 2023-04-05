@@ -41,7 +41,7 @@ const teas = [
 const Loader = ({tea}) => {
   return (
     <div>
-      <img src={teas[tea]} alt="tea" style={{ height: "200px", width: "200px", marginLeft: "16px", marginRight: "16px"}} />
+      <img src={teas[tea]} alt="tea" style={{ height: "260px", width: "260px", marginLeft: "18px", marginRight: "18px"}} />
     </div>
   )
 }
