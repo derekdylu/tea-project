@@ -6,13 +6,10 @@ import Wall from './Components/Wall/Wall';
 import Error from './Containers/Error';
 import About from './Containers/About';
 
-import { NavBar } from "./Components/NavBar";
 import { StartPage } from "./Components/StartPage";
 import { Live } from "./Containers/Live";
 import { Result } from "./Containers/Result";
-import { Map } from "./Components/Map";
-import { Share } from './Components/Share';
-import { Replay } from './Components/Replay';
+import { Video } from "./Containers/Video"
 
 function App() {
 
@@ -24,15 +21,11 @@ function App() {
           <Route path="/game" element={<Wrapper />} forceRefresh={true} />
           <Route path="*" element={<Error />} />
           <Route path="/" element={ <StartPage/> } />
-          {/* <Route path="/start" element={ <StartPage/> } /> */}
-          <Route path="/live" element={ <Live/> } />
           <Route path="/result" element={ <Result/> } />
-          {/* <Route path="/map" element={ <Map/> } /> */}
-          {/* <Route path="/share" element={ <Share/> } /> */}
           <Route path="/wall" element={ <Wall /> } />
           <Route path="/live" element={ <Live/> } />
-          {/* <Route path="/replay" element={ <Replay/> } /> */}
           <Route path="/about" element={ <About/> } />
+          <Route path="/video" element={ <Video/> } />
         </Routes>
       </Router>
     </div>
