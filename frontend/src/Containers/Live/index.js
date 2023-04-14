@@ -261,7 +261,7 @@ export const Live = () => { // 1570 x 1200
         { showTimestamp &&
           <div className={styles.timestampContainer}>
             <input type="datetime-local" id="timestampInput"/>
-            <button onClick={handleChangeTimestamp}>改</button>
+            <button onClick={handleChangeTimestamp}>套用</button>
           </div>
         }
       </div>
