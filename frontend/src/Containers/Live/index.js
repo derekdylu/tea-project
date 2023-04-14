@@ -23,6 +23,7 @@ import cup14 from "../../Images/Live/cup14.png";
 
 const cupImg = {
   0: cup0,
+  1: cup3,
   2: cup2,
   3: cup3,
   4: cup3,
@@ -48,8 +49,8 @@ const data = [
   },
   {
     id: 1,
-    name: "",
-    color: "",
+    name: "蜜香紅茶",
+    color: "#CD793C",
   },
   {
     id: 2,
@@ -162,7 +163,7 @@ export const Live = () => { // 1570 x 1200
     fetchGames();
     let interval = setInterval(() => {
       fetchGames();
-    }, (30000))
+    }, (10000))
 
     return () => clearInterval(interval)
   }, [timestamp])
