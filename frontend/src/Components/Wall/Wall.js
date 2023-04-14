@@ -11,10 +11,13 @@ import Grid from '@mui/material/Grid';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 import TeaCup from './TeaCup';
 import './wall.css'
 
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import CachedIcon from '@mui/icons-material/Cached';
 import backgroundBL from '../../Images/Wall/background-bl.png'
 import backgroundUR from '../../Images/Wall/background-ur.png'
@@ -22,14 +25,19 @@ import backgroundUL from '../../Images/Wall/background-ul.png'
 import object from '../../Images/Wall/object.png'
 import 茶杯 from '../../Images/Wall/茶杯.gif'
 
-const maxShowTeasLength = 8
-
 const Wall = () => {
+  const [maxShowTeasLength, setMaxShowTeasLength] = useState(8)
+  const [updateInterval, setUpdateInterval] = useState(10)
+  const [marqueeSpeed, setMarqueeSpeed] = useState(20)
   const { width, height, ratio } = useWindowDimensions()
   const [open, setOpen] = useState(false)
+  const [openPanel, setOpenPanel] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [startTime, setStartTime] = useState(Date.now())
+  const [epochTimeBegin, setEpochTimeBegin] = useState()
+  const [epochTimeEnd, setEpochTimeEnd] = useState()
   const [showOnlyCurrentCup, setShowOnlyCurrentCup] = useState(true)
+  const [confirmClear, setConfirmClear] = useState(false)
   const showTeas = useRef([])
 
   useEffect(() => {
@@ -39,7 +47,7 @@ const Wall = () => {
   useEffect(() =>{
     let interval = setInterval(() => {
       fetchAndDrop(showOnlyCurrentCup)
-    }, (10 * 1000))
+    }, (updateInterval * 1000))
     return () => clearInterval(interval)
   })
 
@@ -51,10 +59,50 @@ const Wall = () => {
     }
   }, [ratio])
 
-  function switchMode () {
-    showTeas.current = []
-    setShowOnlyCurrentCup(!showOnlyCurrentCup)
-    fetchAndDrop(!showOnlyCurrentCup)
+  function switchMode (mode) {
+    if (mode !== null) {
+      showTeas.current = []
+      setEpochTimeBegin()
+      setEpochTimeEnd()
+      setShowOnlyCurrentCup(mode)
+      fetchAndDrop(mode)
+    }
+  }
+
+  function switchUpdateInterval (value) {
+    if (value !== null) setUpdateInterval(value)
+  }
+
+  function switchMaxShowTeasLength (value) {
+    if (value !== null) setMaxShowTeasLength(value)
+  }
+
+  function switchMarqueeSpeed (value) {
+    if (value !== null) setMarqueeSpeed(value)
+  }
+
+  function switchEpochTimeRange () {
+    let begin = document.getElementById("timestampInputBegin");
+    let end = document.getElementById("timestampInputEnd");
+    let beginDate = new Date(begin.value);
+    let endDate = new Date(end.value);
+    let beginTime = beginDate.getTime();
+    let endTime = endDate.getTime();
+    if (beginTime > endTime) {
+      alert("開始時間不得大於結束時間")
+      return
+    }
+    setEpochTimeBegin(beginTime)
+    setEpochTimeEnd(endTime)
+  }
+
+  function setDefault () {
+    if (!showOnlyCurrentCup) switchMode(true)
+    setMaxShowTeasLength(8)
+    setUpdateInterval(10)
+    setMarqueeSpeed(20)
+    setEpochTimeBegin()
+    setEpochTimeEnd()
   }
 
   async function fetchAndDrop (onlyCurrent) {
@@ -72,8 +120,8 @@ const Wall = () => {
                                 .sort((a, b) => a.timestamp - b.timestamp)
                                 // from oldest to latest
     } else {
-      console.log("show all results")
-      _fetchedData = fetchedData.filter(x => x.decision !== -1 && x.shown === false)
+      console.log("show dedicated results")
+      _fetchedData = fetchedData.filter(x => x.decision !== -1 && x.timestamp >= epochTimeBegin && x.timestamp <= epochTimeEnd)
                                 .sort((a, b) => a.timestamp - b.timestamp)
     }
 
@@ -85,6 +133,8 @@ const Wall = () => {
     } else {
       updateLimit = 1
     }
+
+    console.log("update limit", updateLimit)
 
     if ( _fetchedData !== undefined && _fetchedData.length !== 0 ) {
     
@@ -128,29 +178,143 @@ const Wall = () => {
           </Button>
         </Grid>
       </Dialog>
-      <Grid container direction="column" alignItems="flex-end" justifyContent="flex-end" style={{ position: 'fixed', bottom: '50px', right: '50px', zIndex: 10}}>
+      <Dialog 
+        open={openPanel}
+        PaperProps={{
+          style: { backgroundColor: theme.palette.surface.main, borderRadius: 28, }
+        }}
+      >
+        <Grid container direction="column" alignItems="flex-start" justifyContent="flex-start" sx={{ px: 4, py: 2}}>
+          <Typography variant='titleLarge' sx={{mt: 2}}>
+            設定
+          </Typography>
+          <Typography variant='titleMedium' sx={{mt: 2}}>
+            茶杯顯示模式
+          </Typography>
+          <ToggleButtonGroup
+            color="primary"
+            value={showOnlyCurrentCup}
+            exclusive
+            onChange={(e, value) => switchMode(value)}
+            sx={{mt:1, mb:1.5}}
+          >
+            <ToggleButton value={true}>僅顯示目前結果</ToggleButton>
+            <ToggleButton value={false}>顯示特定期間結果</ToggleButton>
+          </ToggleButtonGroup>
+          {
+            !showOnlyCurrentCup &&
+            <>
+              <div>
+                <input type="datetime-local" id="timestampInputBegin" style={{marginRight: "5px"}} />
+                -
+                <input type="datetime-local" id="timestampInputEnd" style={{marginLeft: "5px"}}/>
+              </div>
+              <Grid container direction="column" alignItems="center" justifyContent="center" sx={{ mt: 1 }}>
+                <Typography variant='labelSmall' sx={{ml: 1}}>
+                  顯示期間 {epochTimeBegin ? new Date(epochTimeBegin).toLocaleString() : "未套用"} - {epochTimeEnd ? new Date(epochTimeEnd).toLocaleString() : "未套用"}
+                </Typography>
+                <Button onClick={() => switchEpochTimeRange()}>套用</Button>
+              </Grid>
+            </>
+          }
+          <Typography variant='titleMedium' sx={{mt: 2}}>
+            茶杯更新速度 {updateInterval} 秒
+          </Typography>
+          <ToggleButtonGroup
+            color="primary"
+            value={updateInterval}
+            exclusive
+            onChange={(e, value) => {switchUpdateInterval(value)}}
+            sx={{mt:1}}
+          >
+            <ToggleButton value={5}>5</ToggleButton>
+            <ToggleButton value={10}>10</ToggleButton>
+            <ToggleButton value={20}>20</ToggleButton>
+            <ToggleButton value={30}>30</ToggleButton>
+            <ToggleButton value={60}>60</ToggleButton>
+            <ToggleButton value={300}>300</ToggleButton>
+          </ToggleButtonGroup>
+          <Typography variant='titleMedium' sx={{mt: 2}}>
+            最大茶杯數量 {maxShowTeasLength} 杯
+          </Typography>
+          <ToggleButtonGroup
+            color="primary"
+            value={maxShowTeasLength}
+            exclusive
+            onChange={(e, value) => {switchMaxShowTeasLength(value)}}
+            sx={{mt:1}}
+          >
+            <ToggleButton value={5}>5</ToggleButton>
+            <ToggleButton value={8}>8</ToggleButton>
+            <ToggleButton value={10}>10</ToggleButton>
+            <ToggleButton value={15}>15</ToggleButton>
+            <ToggleButton value={20}>20</ToggleButton>
+            <ToggleButton value={25}>25</ToggleButton>
+            <ToggleButton value={50}>50</ToggleButton>
+          </ToggleButtonGroup>
+          <Typography variant='titleMedium' sx={{mt: 2}}>
+            跑馬燈速度 {marqueeSpeed / 20}
+          </Typography>
+          <ToggleButtonGroup
+            color="primary"
+            value={marqueeSpeed}
+            exclusive
+            onChange={(e, value) => {switchMarqueeSpeed(value)}}
+            sx={{mt:1}}
+          >
+            <ToggleButton value={10}>0.5</ToggleButton>
+            <ToggleButton value={15}>0.75</ToggleButton>
+            <ToggleButton value={20}>1</ToggleButton>
+            <ToggleButton value={30}>1.5</ToggleButton>
+            <ToggleButton value={40}>2</ToggleButton>
+            <ToggleButton value={60}>3</ToggleButton>
+          </ToggleButtonGroup>
+          <Typography variant="labelSmall" sx={{mt: 2}}>
+            部分設定於下次更新時套用
+          </Typography>
+          <Grid direction="row" width="auto" justifyContent="center" alignItems="flex-start" sx={{mt: 2}}>
+            <Button onClick={() => {setOpenPanel(false); setConfirmClear(false)}} sx={{ }} color="primary" >
+              關閉
+            </Button>
+            <Button onClick={() => setDefault()} sx={{ ml: 2 }} color="button" >
+              恢復預設
+            </Button>
+            <>
+            {
+              confirmClear ? 
+              <Button onClick={() => {showTeas.current = []; setConfirmClear(false);}} sx={{ ml: 2 }} color="error">
+                確定清空？
+              </Button>
+              :
+              <Button onClick={() => {setConfirmClear(true)}} sx={{ ml: 2 }} color="error" >
+                清空畫面
+              </Button>
+            }
+            </>
+          </Grid>
+        </Grid>
+      </Dialog>
+      <Grid container direction="row" alignItems="flex-end" justifyContent="flex-end" style={{ position: 'fixed', bottom: '50px', right: '50px', zIndex: 10}}>
+        <Button onClick={() => setOpenPanel(!openPanel)}>
+          <SettingsOutlinedIcon sx={{ color: theme.palette.button }} />
+        </Button>
         {
           isLoading ?
           (
-            <Box sx={{ m: 2, pr: 0.9, display: 'flex' }}>
+            <Box sx={{ mx: 2.42, mb: 1.2, pr: 0.9, display: 'flex' }}>
               <CircularProgress size={18} style={{ color: theme.palette.button }} />
             </Box>
           ) : (
-            <Button sx={{ mb: 0.6 }} onClick={() => fetchAndDrop(showOnlyCurrentCup)}>
+            <Button onClick={() => fetchAndDrop(showOnlyCurrentCup)}>
               <CachedIcon sx={{ color: theme.palette.button }} />
             </Button>
           )
         }
-        <Button onClick={() => switchMode()} disabled={isLoading}>
-          {
-            showOnlyCurrentCup ? '切換為顯示所有結果' : '切換為僅顯示目前結果'
-          }
-        </Button>
       </Grid>
       <Marquee
         pauseOnClick={true}
         gradient={false}
-        speed={20}
+        speed={marqueeSpeed}
         style={{
           position: 'relative',
           top: `${height/2 - 200}px`,
