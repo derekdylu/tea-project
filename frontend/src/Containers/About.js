@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ThemeProvider } from "@emotion/react"
 import theme from '../Themes/Theme'
 import useWindowDimensions from '../Hooks/useWindowDimensions'
@@ -60,18 +60,12 @@ const cautions = [
 ]
 
 const About = () => {
-  const ref = useRef(null)
-  
-  useEffect(() => {
-    ref.current?.scrollIntoView({behavior: 'smooth'});
-  }, [])
-
   return (
     <ThemeProvider theme={theme}>
       <Box width="100%" height={64} style={{ background: "#fefcf4", position: "fixed"}}>
         <NavBar />
       </Box>
-      <Grid ref={ref} sx={{ pt: 10, px: 3 }} style={{ background: "#FEFCF4", backgroundImage: `url(${bg0})`, backgroundSize: "100%", backgroundRepeat: 'no-repeat', backgroundPosition: '0px 64px'}}>
+      <Grid sx={{ pt: 10, px: 3 }} style={{ background: "#FEFCF4", backgroundImage: `url(${bg0})`, backgroundSize: "100%", backgroundRepeat: 'no-repeat', backgroundPosition: '0px 64px'}}>
         <Grid container direction="column" justifyContent="flex-start" alignItems="flex-start" sx={{ pt: 24 }}>
           {
             titles.map((title, index) => {
