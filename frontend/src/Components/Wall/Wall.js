@@ -52,7 +52,7 @@ const Wall = () => {
   })
 
   useEffect(() => {
-    if (width < 650 || height < 830) {
+    if (width < 830 || height < 830) {
       setOpen(true)
     } else {
       setOpen(false)
@@ -171,7 +171,7 @@ const Wall = () => {
       <Dialog aria-labelledby="window-size" open={open} fullScreen>
         <Grid container direction="column" alignItems="center" justifyContent="center" sx={{ my: 1 }} height="100%">
           <Typography variant="titleMedium" color="#2D3748" fontWeight="500" sx={{mt: 2.5}} align="center">
-            螢幕尺寸不足 (寬度需大於 650 px，高度需大於 830 px)
+            螢幕尺寸不足 (寬度需大於 830 px，高度需大於 830 px)
           </Typography>
           <Button onClick={() => setOpen(false)} sx={{mt: 1}} color="error" >
             仍要使用
