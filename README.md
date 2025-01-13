@@ -5,7 +5,6 @@
 
 <p align="center">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png" height="40" align="center"  alt="react">
-    <img src="https://camo.githubusercontent.com/973c99d17e4ce72d08c4433449045d8391948711f11ac5f328a585e2a7bc8663/68747470733a2f2f692e696d6775722e636f6d2f515a6f776e68672e706e67" height="45" align="center"  alt="reactspring">
     <img src="https://cdn.worldvectorlogo.com/logos/fastapi.svg" height="42" align="center" alt="fastAPI">
     <img src="https://img.icons8.com/color/480/mongodb.png" height="50" align="center" alt="mongoDB">
 </p>
@@ -43,7 +42,6 @@
 ### Frontend
 <p align="left">
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png" height="40" align="center"  alt="react">
-<img src="https://camo.githubusercontent.com/973c99d17e4ce72d08c4433449045d8391948711f11ac5f328a585e2a7bc8663/68747470733a2f2f692e696d6775722e636f6d2f515a6f776e68672e706e67" height="50" align="center"  alt="reactspring">
 <img src="https://mui.com/static/logo.png" height="52" align="center"  alt="mui">
 </p>
 
