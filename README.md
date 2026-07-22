@@ -1,6 +1,6 @@
 # Tea Project
 
-Tea Project (與我最香配) is a Taiwanese tea recommendation experience. Visitors answer a sequence of preference questions, receive a tea match, and can view event-oriented result walls and live rankings.
+Tea Project (純心找茶) is a Taiwanese tea recommendation experience. Visitors answer a sequence of preference questions, receive a tea match, and can view event-oriented result walls and live rankings.
 
 The application was commissioned by a National Taiwan University agricultural economics research group and built by the credited project team. The interface and source data are primarily in Traditional Chinese; project documentation is in English for public maintainability.
 
