@@ -1,4 +1,4 @@
-@import "../../variable.scss";
+@use "../../variable" as *;
 
 .container {
     margin: 0;
@@ -37,20 +37,20 @@
 .front {
     position: absolute;
     width: 100%;
-    
+
     &.center {
         z-index: 10;
         top: 50%;
         left: 50%;
         transform: translateX(-50%);
     }
-    
+
     &.right {
         z-index: 8;
         top: 45%;
         right: 0%;
     }
-    
+
     &.left {
         z-index: 9;
         top: 45%;
@@ -74,7 +74,7 @@
         z-index: 7;
         right: 0%;
     }
-    
+
     &.right {
         top: 55%;
         z-index: 5;
@@ -172,12 +172,12 @@
     position: relative;
     overflow: hidden;
     transition: all 1.5s ease;
-    
+
     &.target {
         width: 80%;
         height: 50%;
     }
-    
+
     &::before {
         content: '';
         position: absolute;
@@ -235,7 +235,7 @@
         top: calc(220.5vh);
     }
 
-    
+
 }
 
 .button {
@@ -268,7 +268,7 @@
     border-radius: 1rem;
     animation: moveUpDown 1s linear infinite;
 
-    
+
     > svg {
       width: 20px;
       height: 20px;

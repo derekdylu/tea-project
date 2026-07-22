@@ -1,8 +1,8 @@
 import axios from "axios"
 
-const SERVER_URL = "https://ntu-tea-project.herokuapp.com/"
+const SERVER_URL = (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000').replace(/\/+$/, '')
 
-const instance = axios.create({ baseURL: SERVER_URL || 'http://127.0.0.1:8000' })
+const instance = axios.create({ baseURL: SERVER_URL })
 const jsonHeader = {
   headers: {
     'Content-Type': 'application/json'
@@ -48,23 +48,23 @@ export const calculateGame = async (id, selection) => {
 
 export const updateGame = async (id, _selection, _selected, _decision, _timestamp, _shown) => {
   let param = {}
-  
+
   if (_selection != null) {
     param = {...param, "selection": _selection}
   }
-  
+
   if (_selected != null) {
     param = {...param, "selected": _selected}
   }
-  
+
   if (_decision != null) {
     param = {...param, "decision": _decision}
   }
-  
+
   if (_timestamp != null) {
     param = {...param, "timestamp": _timestamp}
   }
-  
+
   if (_shown != null) {
     param = {...param, "shown": _shown}
   }
