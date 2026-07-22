@@ -1,33 +1,25 @@
 import os
-import uvicorn
-import motor.motor_asyncio
-from dotenv import load_dotenv
-from fastapi import FastAPI, Body, HTTPException, status
+from typing import List
+
+from fastapi import Body, FastAPI, HTTPException, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse, HTMLResponse
-from typing import List
-from pymongo import MongoClient
-from decouple import config
+from pymongo import DESCENDING, MongoClient
 
 from . import calculate
 from . import models
 
-# import calculate
-# import models
-
-if __name__ == "__main__":
-  uvicorn.run("app", host="0.0.0.0", port=8000, reload=True)
-
-load_dotenv()
-
 app = FastAPI()
 
-origins = [
+default_origins = [
   "http://localhost",
-  "http://localhost:3000",
+  "http://localhost:5173",
   "https://ntu-tea-tinder.netlify.app",
 ]
+configured_origins = os.environ.get("CORS_ORIGINS", "")
+origins = [origin.strip() for origin in configured_origins.split(",") if origin.strip()]
+if not origins:
+  origins = default_origins
 
 app.add_middleware(
   CORSMiddleware,
@@ -38,97 +30,85 @@ app.add_middleware(
 )
 
 MONGO_URI = os.environ.get("MONGO_URI")
-PORT = os.environ.get("PORT")
+client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5_000) if MONGO_URI else None
+game_col = client["db"]["game"] if client is not None else None
 
-client = MongoClient(MONGO_URI, int(PORT))
 
-database = client["db"]
-game_col = database["game"]
-
-def ResponseModel(data, message="success"):
-  return {
-    "data": [data],
-    "code": 200,
-    "message": message,
-  }
-
-def ErrorResponseModel(error, code, message):
-  return {"error": error, "code": code, "message": message}
+def get_game_collection():
+  if game_col is None:
+    raise HTTPException(status_code=503, detail="Database is not configured")
+  return game_col
 
 # --- API --------------------------------
 
 @app.get("/")
-async def test():
-  return {"server": "OK"}
+def health():
+  return {"status": "ok", "database_configured": game_col is not None}
 
 # --- Game
 # get all games
 @app.get("/games", response_description="get all games", response_model=List[models.Game])
-async def list_games():
-  list = []
+def list_games(limit: int = Query(default=1_000, ge=1, le=5_000)):
+  collection = get_game_collection()
+  games = []
 
-  for ele in game_col.find():
-    list.append(models.game_helper(ele))
+  for game in collection.find().sort("timestamp", DESCENDING).limit(limit):
+    games.append(models.game_helper(game))
 
-  return list
+  return games
 
 # get a game
 @app.get("/game/{id}", response_description="get a game", response_model=models.Game)
-async def get_game(id: str):
-  if (game := game_col.find_one({"_id": id})) is not None:
-    return game
+def get_game(id: str):
+  collection = get_game_collection()
+  if (game := collection.find_one({"_id": id})) is not None:
+    return models.game_helper(game)
   raise HTTPException(status_code=404, detail=f"Game {id} not found")
 
 # create a game
-@app.post("/create_game", response_description="create a game", response_model=models.Game)
-async def create_game(game: models.Game = Body(...)):
+@app.post("/create_game", response_description="create a game", response_model=models.Game, status_code=status.HTTP_201_CREATED)
+def create_game(game: models.Game = Body(...)):
+  collection = get_game_collection()
   game = jsonable_encoder(game)
-  new_game = game_col.insert_one(game)
-  created_game = game_col.find_one({"_id": new_game.inserted_id})
-  return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(models.game_helper(created_game)))
-
-# delete a game
-@app.delete("/delete_game/{id}", response_description="delete a game")
-async def delete_student(id: str):
-  delete_result = game_col.delete_one({"_id": id})
-
-  if delete_result.deleted_count == 1:
-    return status.HTTP_204_NO_CONTENT
+  new_game = collection.insert_one(game)
+  created_game = collection.find_one({"_id": new_game.inserted_id})
+  return models.game_helper(created_game)
 
 # update a game
 @app.put("/update_game/{id}", response_description="update a game", response_model=models.Game)
-async def update_game(id: str, game: models.UpdateGame = Body(...)):
-  game = {k: v for k, v in game.dict().items() if v is not None}
+def update_game(id: str, game: models.UpdateGame = Body(...)):
+  collection = get_game_collection()
+  game = game.model_dump(exclude_none=True)
 
   if len(game) >= 1:
-    update_result = game_col.update_one({"_id": id}, {"$set": game})
+    update_result = collection.update_one({"_id": id}, {"$set": game})
 
     if update_result.modified_count == 1:
       if (
-        updated_game := game_col.find_one({"_id": id})
+        updated_game := collection.find_one({"_id": id})
       ) is not None:
-        return JSONResponse(status_code=status.HTTP_200_OK, content=jsonable_encoder(models.game_helper(updated_game)))
+        return models.game_helper(updated_game)
 
-  if (existing_game := game_col.find_one({"_id": id})) is not None:
-    return JSONResponse(status_code=status.HTTP_200_OK, content=jsonable_encoder(models.game_helper(existing_game)))
+  if (existing_game := collection.find_one({"_id": id})) is not None:
+    return models.game_helper(existing_game)
 
   raise HTTPException(status_code=404, detail=f"Game {id} not found")
 
 # calculate a game
 @app.put("/calculate_game/{id}", response_description="calculate a game", response_model=models.Game)
-async def calculate_game(id: str, selection: list):
+def calculate_game(id: str, selection: models.GameSelection = Body(...)):
+  collection = get_game_collection()
   selected = calculate.similarity(selection)
 
-  # CHECK directly choose the first selected one to be the decision
-  update_result = game_col.update_one({"_id": id}, {"$set": { "selected": selected, "decision": selected[0] }})
-  
+  update_result = collection.update_one({"_id": id}, {"$set": { "selection": selection, "selected": selected, "decision": selected[0] }})
+
   if update_result.modified_count == 1:
     if (
-      updated_game := game_col.find_one({"_id": id})
+      updated_game := collection.find_one({"_id": id})
     ) is not None:
-      return JSONResponse(status_code=status.HTTP_200_OK, content=jsonable_encoder(models.game_helper(updated_game)))
-  
-  if (existing_game := game_col.find_one({"_id": id})) is not None:
-    return JSONResponse(status_code=status.HTTP_200_OK, content=jsonable_encoder(models.game_helper(existing_game)))
+      return models.game_helper(updated_game)
+
+  if (existing_game := collection.find_one({"_id": id})) is not None:
+    return models.game_helper(existing_game)
 
   raise HTTPException(status_code=404, detail=f"Game {id} not found")

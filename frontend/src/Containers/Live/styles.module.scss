@@ -1,4 +1,4 @@
-@import "../../variable.scss";
+@use "../../variable" as *;
 
 .container {
   width: 100vw;
@@ -89,7 +89,7 @@
       gap: 0.5rem;
     }
   }
-  
+
   .bar {
     display: flex;
     flex-direction: row;

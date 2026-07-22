@@ -36,18 +36,19 @@ TEA = [
   "四季春",
 ]
 
-def similarity(input):
+def similarity(user_input):
+  if len(user_input) != len(GROUND[0]):
+    raise ValueError(f"Expected {len(GROUND[0])} selections")
+
   result = []
 
   for i in range(len(GROUND)):
     cnt = 0
     for j in range(len(GROUND[i])):
-      if input[j] == GROUND[i][j]:
+      if user_input[j] == GROUND[i][j]:
         cnt += 1
     result.append(cnt)
-  
-  print("raw result", result)
-  
+
   maxCnt = max(result)
   selected = []
 
@@ -57,8 +58,4 @@ def similarity(input):
     if result[i] >= maxCnt:
       selected.append(i)
 
-  for i in range(len(selected)):
-    print("id", i, ", name", TEA[i])
-
-  # CHECK only return the first one
   return selected

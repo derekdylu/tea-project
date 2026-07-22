@@ -1,68 +1,61 @@
 from bson import ObjectId
-from pydantic import BaseModel, Field
-from typing import Dict, List, Optional
-from sympy import true
+from pydantic import BaseModel, ConfigDict, Field, StringConstraints
+from typing import Annotated, List, Optional
 
-class PyObjectId(ObjectId):
-  @classmethod
-  def __get_validators__(cls):
-    yield cls.validate
-
-  @classmethod
-  def validate(cls, v):
-    if not ObjectId.is_valid(v):
-      raise ValueError("Invalid objectid")
-    return ObjectId(v)
-
-  @classmethod
-  def __modify_schema__(cls, field_schema):
-    field_schema.update(type="string")
+Decision = Annotated[int, Field(ge=-1, le=16)]
+SelectionValue = Annotated[int, Field(ge=0, le=1)]
+GameSelection = Annotated[List[SelectionValue], Field(min_length=31, max_length=31)]
+StoredSelection = Annotated[List[SelectionValue], Field(max_length=31)]
+SelectedTeas = Annotated[List[Annotated[int, Field(ge=0, le=16)]], Field(max_length=17)]
+Timestamp = Annotated[str, StringConstraints(pattern=r"^[0-9]{1,13}$")]
 
 class Game(BaseModel):
-  id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-  selection: list = Field(...)
-  selected: list = Field(...)
-  decision: int = Field(...)
-  timestamp: str = Field(...)
+  id: str = Field(default_factory=lambda: str(ObjectId()), alias="_id", pattern=r"^[0-9a-f]{24}$")
+  selection: StoredSelection = Field(...)
+  selected: SelectedTeas = Field(...)
+  decision: Decision = Field(...)
+  timestamp: Timestamp = Field(...)
   shown: bool = Field(...)
 
-  class Config:
-    allow_population_by_field_name = True
-    arbitrary_types_allowed = True
-    json_encoders = {ObjectId: str}
-    schema_extra = {
+  model_config = ConfigDict(
+    populate_by_name=True,
+    coerce_numbers_to_str=True,
+    extra="forbid",
+    json_schema_extra={
       "example": {
         "selection": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         "selected": [0,1,2,3],
         "decision": 3,
-        "timestamp": '"1234567890',
+        "timestamp": 1234567890,
         "shown": False,
       }
-    }
+    },
+  )
 
 class UpdateGame(BaseModel):
-  selection: Optional[list]
-  selected: Optional[list]
-  decision: Optional[int]
-  timestamp: Optional[str]
-  shown: Optional[bool]
+  selection: Optional[StoredSelection] = None
+  selected: Optional[SelectedTeas] = None
+  decision: Optional[Decision] = None
+  timestamp: Optional[Timestamp] = None
+  shown: Optional[bool] = None
 
-  class Config:
-    arbitrary_types_allowed = True
-    json_encoders = {ObjectId: str}
-    schema_extra = {
+  model_config = ConfigDict(
+    extra="forbid",
+    coerce_numbers_to_str=True,
+    json_schema_extra={
       "example": {
         "selection": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         "selected": [0,1,2,3],
         "decision": 3,
-        "timestamp": '"1234567890',
+        "timestamp": 1234567890,
         "shown": False,
       }
-    }
+    },
+  )
 
 def game_helper(game) -> dict:
   return {
-    "id": game["_id"],
+    "id": str(game["_id"]),
     "selection": game["selection"],
     "selected": game["selected"],
     "decision": game["decision"],
