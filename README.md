@@ -1,5 +1,7 @@
 # Tea Project
 
+<img width="2030" height="1292" alt="1776402262059-proj_TEA" src="https://github.com/user-attachments/assets/d9a1ebd5-58f2-439f-92de-952b7765f36b" />
+
 Tea Project (純心找茶) is a Taiwanese tea recommendation experience. Visitors answer a sequence of preference questions, receive a tea match, and can view event-oriented result walls and live rankings.
 
 The application was commissioned by a National Taiwan University agricultural economics research group and built by the credited project team. The interface and source data are primarily in Traditional Chinese; project documentation is in English for public maintainability.
